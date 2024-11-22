@@ -3,7 +3,7 @@
 ### Lecture Notes on Abstract Algebra
 
 This repository contains the source files for my book
-*Lecture Notes in Abstract Algebra*.
+*Lecture Notes on Abstract Algebra*.
 
 A copy of the compiled PDF file can be found in this repository, where
 it is named `all-in-one.pdf`, or by visiting the author's home page at
@@ -30,10 +30,11 @@ makeindex all-in-one
 pdflatex all-in-one
 pdflatex all-in-one
 ```
-in a terminal.
-Yes, you do need to run pdflatex more than once. There are other
-approaches and other compilation commands available; see the LaTeX
-documentation for your local installation.
+in a terminal. (This assumes that you have kept the name of the main
+file `all-in-one.tex` intact. If you change that name, then use the
+new name above.)  Yes, you do need to run pdflatex more than
+once. There are other approaches and other compilation commands
+available; see the LaTeX documentation for your local installation.
 
 #### Dependencies
 
