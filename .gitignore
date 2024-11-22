@@ -1,5 +1,6 @@
 # Latex files
- 
+
+*.pdf
 *.ps
 *.aux
 *.glo

@@ -5,9 +5,8 @@
 This repository contains the source files for my book
 *Lecture Notes on Abstract Algebra*.
 
-A copy of the compiled PDF file can be found in this repository, where
-it is named `all-in-one.pdf`, or by visiting the author's home page at
-<https://doty.math.luc.edu>.
+A copy of the compiled PDF file can be downloaded from the author's
+home page at <https://doty.math.luc.edu>.
 
 
 The book is an open source, open textbook. The book's source code is
