@@ -1,0 +1,607 @@
+\documentclass[11pt]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag,amscd,epic} %packages
+\usepackage{graphicx}  
+\usepackage{enumitem}
+\setlist{topsep=1pt,itemsep=0pt,parsep=1pt,leftmargin=0.7cm}
+\setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem*{conv*}{Convention}
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\compose}{\circ} % functional composition
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\iff}{\Leftrightarrow}
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\Map}{\operatorname{Map}}
+\newcommand{\Rot}{\Theta}
+\newcommand{\D}{\mathbb{D}}
+
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+
+%\appendix
+\setcounter{section}{0}
+\renewcommand{\thesection}{\Alph{section}}
+\section{Appendix: Symmetries of polynomials} 
+\noindent
+Symmetry also plays an important role in the study of polynomial
+equations\index{polynomial}, where the symmetry groups turn out to be
+permutation groups. This was Lagrange's motivation to study
+permutations.  But the definition of the symmetry group
+\index{symmetry~group} of a polynomial, which is now known as its
+\emph{Galois group}\index{Galois~group}, is not as accessible as the
+symmetry group of a geometric object such as a polygon.  In this
+appendix, we indicate the definition only in an intuitive way.
+
+Our approach is difficult to use, so it turns out to be useful to
+replace it by something less intuitive, but ultimately easier to work
+with. The modern approach uses the theory of {\em field
+  extensions}. Field extensions are typically studied in a second
+course in abstract algebra, but they will not be considered here.
+
+
+
+Suppose we have an $n$th degree polynomial $p(x)$ with real number
+coefficients, say
+\[
+  p(x) = x^n + c_1x^{n-1} + c_2x^{n-2} + \cdots + c_{n-1}x + c_n . \tag{$*$}
+\] 
+The coefficients are the real numbers $c_j$ for $j = 1, \dots, n$.
+According to the fundamental theorem of algebra
+\index{fundamental~theorem!of~algebra}, the polynomial $p(x)$
+has exactly $n$ roots $z_1, z_2, \dots, z_n$ in the complex number
+system $\C$, where we agree to list multiple roots according to their
+multiplicity. 
+
+\begin{examples}
+1. The polynomial $(x-1)^3 = x^3 - 3x^2+3x-1$ has three identical
+roots $1, 1, 1$. There is one root of multiplicity three (a triple root).
+
+2. The polynomial $(x^2-2)^2 = x^4 - 4x^2 + 4$ has roots $\sqrt{2}$,
+$\sqrt{2}$, $-\sqrt{2}$, $-\sqrt{2}$. There are two real roots, each
+of multiplicity two (two double roots).
+
+3. The polynomial $(x^2+1)^2 = x^4+2x^2+1$ has roots $i, i, -i, -i$.
+There are two non-real complex roots, each of multiplicity two (two
+double roots). Here $i$ stands for the \emph{imaginary unit} in the
+complex number system $\C$. (By definition, $i^2= -1$.) 
+
+4. The polynomial $x(x^3-3x+2) = x^4 - 3x^2 + 2x$ has roots
+$0,1,1,-2$.  This has one root of multiplicity two (one double
+root). You can verify the roots by expanding the product
+$x(x-1)^2(x+2)$.
+\end{examples}
+
+For definiteness, we assume that the polynomial $p(x)$ in equation
+($*$) above has \emph{rational} coefficients, and that $p(x)$ is
+irreducible, meaning that it cannot be factored into polynomials (with
+rational coefficients) of strictly smaller degree. If $p(x)$ had such
+a factorization, then we could deal separately with the two smaller
+polynomials in order to solve $p(x) = 0$, so it makes sense to
+restrict our attention to irreducible polynomials. 
+
+We also assume, for simplicity, that the roots of $p(x)$ are all
+\emph{distinct}, i.e., all the roots have multiplicity one.
+
+\begin{defn}
+Under the above assumptions, we define the {\em Galois
+  group}\index{Galois~group} of the polynomial $p(x)$ to be the
+permutation group consisting of all permutations of the roots $\{z_1,
+\dots, z_n\}$ which preserve any algebraic relations among them.
+\end{defn}
+
+
+
+For a general polynomial\footnote{A general polynomial is one whose
+  coefficients are represented by variables. For instance, $ax^2 + bx
+  + c$ is the general polynomial of degree 2 (the general quadratic),
+  $ax^3+bx^2+cx+d$ is the general polynomial of degree $3$ (the
+  general cubic), and so on.} of degree $n$ there will be only trivial
+relations among the roots, and thus the Galois group of the polynomial
+will be unconstrained; it will thus be the full symmetric group
+$\Sym_n$ consisting of all permutations of the $n$ roots. For special
+polynomials, however, there can be non-trivial relations among the
+roots imposing constraints on the permutations in the group; in such
+cases the Galois group of the polynomial is often smaller than
+$\Sym_n$. In all cases, the Galois group of an $n$th degree polynomial
+will be a permutation group contained in $\Sym_n$.
+
+Let's look at some concrete examples.
+
+\begin{example}\label{ex:1}
+Consider the polynomial $p(x)=x^4+x^3+x^2+x+1$.  Clearly we have
+$$
+p(x) = (x^5-1)/(x-1)
+$$ as you can see by clearing denominators and expanding the resulting
+product. The roots of $p(x)$ are $z_1=e^{2\pi i/5}$, $z_2 = e^{4\pi
+i/5}$, $z_3 = e^{6\pi i/5}$, $z_4= e^{8\pi i/5}$. These complex
+numbers all lie on the unit circle in the complex plane $\C$. (Recall
+that $e^{i \theta} = \cos \theta + i \sin \theta$ for any angle
+$\theta$, where the imaginary unit $i$ satisfies $i^2 = -1$.)
+The roots satisfy the relations
+$$
+ z_2 = z_1^2, \quad z_3 = z_1^3, \quad z_4 = z_1^4 
+$$ and any other relations (e.g., $z_3^2 = z_1$) are consequences of
+these, along with the fact that $z_i^5 = 1$ for any $i = 1, \dots,
+4$. We are looking for permutations of the four roots that preserve
+these relations. If $\alpha$ is such a permutation, then
+$\alpha(z_2)$, $\alpha(z_3)$, and $\alpha(z_4)$ will be determined by
+$\alpha(z_1)$. Now $\alpha(z_1)$ can be $z_1$, $z_2$, $z_3$, or $z_4$.
+We consider these possibilities separately.
+
+If $\alpha(z_1)=z_1$ then $\alpha(z_2) = \alpha(z_1)^2 = z_2$,
+$\alpha(z_3) = \alpha(z_1)^3 = z_3$, and $\alpha(z_4) = \alpha(z_1)^4
+= z_4$. Thus $\alpha = (1)$ is the identity
+permutation. 
+
+If $\alpha(z_1)=z_2$ then $\alpha(z_2) = \alpha(z_1)^2 = z_2^2 = z_4$,
+$\alpha(z_3) = \alpha(z_1)^3 = z_2^3 = z_1$, and $\alpha(z_4) =
+\alpha(z_1)^4 = z_2^4 = z_3$. Thus $\alpha$ is the 4-cycle
+$(1,2,4,3)$.
+
+If $\alpha(z_1)=z_3$ then $\alpha(z_2) = \alpha(z_1)^2 = z_3^2 = z_1$,
+$\alpha(z_3) = \alpha(z_1)^3 = z_3^3 = z_4$, and $\alpha(z_4) =
+\alpha(z_1)^4 = z_3^4 = z_2$. Thus $\alpha$ is the 4-cycle
+$(1,3,4,2)$.
+
+Finally, if $\alpha(z_1)=z_4$ then $\alpha(z_2) = \alpha(z_1)^2 =
+z_4^2 = z_3$, $\alpha(z_3) = \alpha(z_1)^3 = z_4^3 = z_2$, and
+$\alpha(z_4) = \alpha(z_1)^4 = z_4^4 = z_1$. Thus $\alpha =
+(1,4)(2,3)$.
+
+From these calculations it follows that the symmetry group of the
+polynomial $x^4+x^3+x^2+x+1$ is the cyclic group generated by
+the cycle $(1,2,4,3)$. This Galois group $G$ has order $4$. 
+\end{example}
+
+
+\begin{example} \label{ex:2}
+Now consider the polynomial $p(x) = x^4 -10x^2 + 1$.
+We can factor $p(x)$ as follows:
+\begin{align*}
+p(x) = (x^4 - 2x^2 + 1) - 8x^2 &= (x^2-1)^2 - (x\sqrt{8})^2\\
+&= (x^2-1-2\sqrt{2}x)(x^2-1+2\sqrt{2}x) \\
+&= (x^2-2\sqrt{2}x-1)(x^2+2\sqrt{2}x-1)
+\end{align*}
+and we can find its roots by setting each quadratic factor to zero and
+using the quadratic formula. The roots are $z_1 = \sqrt{2}+\sqrt{3}$,
+$z_2 = -\sqrt{2}+\sqrt{3}$, $z_3 = \sqrt{2}-\sqrt{3}$, $z_4 =
+-\sqrt{2}-\sqrt{3}$. Notice that all the roots are real numbers in
+this case.
+
+The roots satisfy the relations:
+\begin{align*}
+z_1+z_4 &= 0 \\
+z_2+z_3 &= 0 \\
+(z_1+z_2)^2 &= 12 \\
+(z_1+z_3)^2 &= 8 \\
+(z_2+z_4)^2 &= 8 \\
+(z_3+z_4)^2 &= 12 
+\end{align*}
+and again all other relations are consequences of these. We want all
+permutations of the four roots which preserve these relations. You can
+check that the permutations $(1,2)(3,4)$, $(1,3)(2,4)$, $(1,4)(2,3)$,
+and the identity $(1)$ preserve the relations. No other permutation
+does. Thus the symmetry group of the polynomial $p(x) = x^4 -10x^2 +
+1$ is $$G = \{ (1), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) \}.$$ This is a
+group of order four. It turns out that it is isomorphic with the Klein
+four-group.\index{Klein~four~group}
+\end{example}
+
+
+\setcounter{equation}{0} 
+\subsection*{The cubic formula}
+We now consider the cubic formula, the degree three analogue of the quadratic
+formula.  Given a general cubic polynomial equation:
+\begin{equation}\label{eq:cubic}
+  x^3 - bx^2 + cx - d = 0
+\end{equation} 
+with undetermined (i.e., general) coefficients, we denote its complex
+roots by $z_1$, $z_2$, and $z_3$. To solve the equation, we first
+substitute $x=y+b/3$ and obtain (after expanding) the {\em reduced
+  cubic} equation\index{cubic equation}
+\begin{equation}\label{eq:reduced-cubic}
+  y^3 +py - q = 0
+\end{equation}
+where $p = c-b^2/3$ and $q = d - bc/3 + 2b^3/27$. The roots of the
+reduced cubic are given by \emph{Cardano's formula}, first published
+in the year 1545.
+
+\begin{thm*}[Cardano 1545]\index{Cardano's formula}
+The roots of the reduced cubic $y^3 +py - q = 0$ are given by
+\begin{equation}\label{eq:Cardano}
+\begin{aligned}
+y_1 &= \sqrt[3]{\frac{q}{2}+\sqrt{R}} + \sqrt[3]{\frac{q}{2}-\sqrt{R}}\\
+y_2 &= \omega^2 \sqrt[3]{\frac{q}{2}+\sqrt{R}} 
+     + \omega \sqrt[3]{\frac{q}{2}-\sqrt{R}}\\
+y_3 &= \omega \sqrt[3]{\frac{q}{2}+\sqrt{R}} 
+     + \omega^2 \sqrt[3]{\frac{q}{2}-\sqrt{R}}\\
+\end{aligned}
+\end{equation}
+where 
+\[
+  R = \frac{q^2}{4} + \frac{p^3}{27}; \qquad \omega = \frac{-1 + i
+    \sqrt{3}}{2}.
+\]
+\end{thm*}
+
+Note that $\omega = e^{i 2\pi/3}$ and therefore $\omega^3 =
+1$. Moreover, $\omega^2 + \omega + 1 = 0$. The complex number $\omega$
+is called a {\em primitive cube root of unity}.
+
+To find the roots $z_i$ ($i = 1,2,3$) of the original cubic we only
+have to add $b/3$ to the $y_i$.  This solves the original cubic equation,
+and the solution is in terms of certain radicals (square and cube
+roots), namely those that occur in the expressions for the $y_i$. 
+
+
+
+\subsection*{Lagrange's method for solving a cubic}
+\index{Lagrange's~method}%
+In an important paper published in 1770, Lagrange noticed that the
+radicals appearing in the solution to the
+original cubic are expressible as functions of the roots $z_i$
+themselves. This observation was the beginning of the link between
+group theory and polynomial equations.
+
+To see this for the cube roots, we multiply the equations for the
+$y_i$ by 1, $\omega$, $\omega^2$ respectively and add, obtaining
+$$
+3 \sqrt[3]{\frac{q}{2}+\sqrt{R}} = y_1 + \omega y_2 + \omega^2 y_3.
+$$
+Thus if we substitute $y_i = z_i - b/3$ we obtain
+$$
+3 \sqrt[3]{\frac{q}{2}+\sqrt{R}} = z_1 + \omega z_2 + \omega^2 z_3.
+$$
+Denote this value by $\varphi_1$, and set
+$\varphi_3=\omega^2\varphi_1$, $\varphi_5=\omega\varphi_1$, so that we
+have equalities
+\begin{align*}
+\varphi_1 &= 3 \sqrt[3]{\frac{q}{2}+\sqrt{R}} \\
+\varphi_3 &= 3 \omega^2 \sqrt[3]{\frac{q}{2}+\sqrt{R}} \\
+\varphi_5 &= 3 \omega \sqrt[3]{\frac{q}{2}+\sqrt{R}}.
+\end{align*}
+Going back and multiplying the equations for $y_1$, $y_2$, $y_3$ by
+$1$, $\omega^2$, $\omega$ respectively, we obtain after adding them
+and substituting for $y_i = z_i - b/3$ the equality
+$$
+3 \sqrt[3]{\frac{q}{2}-\sqrt{R}} = z_1 + \omega^2 z_2 + \omega z_3.
+$$ 
+Let us denote this value by $\varphi_2$, and set $\varphi_4 =
+\omega \varphi_2$, $\varphi_6 = \omega^2 \varphi_2$. Then we have
+equalities 
+\begin{align*}
+\varphi_2 &= 3 \sqrt[3]{\frac{q}{2}-\sqrt{R}} \\
+\varphi_4 &= 3 \omega \sqrt[3]{\frac{q}{2}-\sqrt{R}} \\
+\varphi_6 &= 3 \omega^2 \sqrt[3]{\frac{q}{2}-\sqrt{R}}.
+\end{align*}
+We can also express $\sqrt{R}$ in terms of the roots $z_i$ by cubing
+the equations for $\varphi_1$ and $\varphi_2$ and subtracting. Doing
+this, we obtain
+$$ 54 \sqrt{R} = (z_1+\omega z_2+\omega^2 z_3)^3 - (z_1+\omega^2
+z_2+\omega z_3)^3
+$$
+and after expanding, simplifying, and factoring we have
+$$
+18\sqrt{R} = 3i (z_1-z_2)(z_1-z_3)(z_2-z_3).
+$$
+Thus all the radicals appearing in the formulas for the roots are
+expressible as nice functions of the roots themselves. 
+
+
+Lagrange noticed that the roots of the general cubic are obtainable
+from the six values $\varphi_i$ ($i = 1, \dots, 6$), because we have
+the system of linear equations 
+\begin{equation}\label{eq:Lagrange-system}
+\begin{aligned}
+\varphi_1 &= z_1 + \omega z_2 + \omega^2 z_3\\
+\varphi_2 &= z_1 + \omega^2 z_2 + \omega z_3\\
+b & = z_1 + z_2 +z_3
+\end{aligned}
+\end{equation}
+which can easily be solved for the roots $z_1$, $z_2$, $z_3$ by first
+adding them as they stand, then adding them after multiplying by
+$\omega^2$, $\omega$, 1, and then adding them again after multiplying
+by $\omega$, $\omega^2$, 1, respectively.
+
+Lagrange also pointed out that we can compute the six values
+$\varphi_i$ as follows. Set $A_1 = q/2 + \sqrt{R}$ and $A_2 = q/2 -
+\sqrt{R}$. Then we have the equations
+$$
+\left(\frac{\varphi_i}{3}\right)^3 = A_1 \qquad (i = 1,3,5)
+$$
+and 
+$$
+\left(\frac{\varphi_i}{3}\right)^3 = A_2 \qquad (i = 2,4,6).
+$$ 
+In other words, the six $\varphi_i$ are obtained by solving the
+equations $X^3 = 27A_1$ and $X^3 = 27A_2$. (Note that if $\varphi$ is one
+root, say the cube root of $A_i$, then the other two roots must be $\omega
+\varphi$ and $\omega^2 \varphi$.)
+
+Examining the expressions defining $A_1$ and $A_2$, we see that we can
+find the $A_i$ by solving the quadratic equation
+\begin{equation}\label{eq:Lagrange-resolvant}
+   A^2 - q A - p^3/27 = 0
+\end{equation}
+for $A$. In this way Lagrange reduced the solution of the cubic to the
+solution of a quadratic. (He called this associated quadratic equation
+the {\em resolvent}.) By first solving the resolvent quadratic and
+then solving the system \eqref{eq:Lagrange-system} you can solve the
+cubic using Lagrange's method.
+
+
+Lagrange also similarly analyzed the general
+quartic\index{quartic~equation} (degree 4) polynomial equation,
+reducing it to a cubic resolvent equation. He must have been quite
+excited at that point, thinking that he had discovered a general
+scheme to solve all polynomial equations inductively by reducing them
+to a resolvent equation of degree one less than the given equation.
+However, when he looked at the very next case, the general quintic
+(degree 5) equation, he found that the resolvent equation had degree
+6. This was a strong indication that the general quintic might be
+unsolvable in terms of radicals, and indeed N.\ H.\ Abel proved that
+very result in 1826.
+
+\begin{thm*}[Abel 1826]\index{Abel's theorem}
+  The general quintic (degree five) polynomial equation cannot be
+  solved in terms of radicals.
+\end{thm*}
+
+Galois further developed group theory and the theory of polynomial
+equations. He was able to give necessary and sufficient conditions on
+the symmetry group of an arbitrary polynomial (of any degree) for it
+to be solvable in terms of radicals. His theorem is a vast
+generalization of Abel's theorem, in that it applies to polynomials of
+any degree. Galois discovered the theorem in 1830 at the age of 18; he
+was shot and killed in a duel at the age of 20. The theorem remained
+unpublished until 1846, and it wasn't until the late 1800s that
+mathematicians generally understood the significance of his results.
+
+
+
+
+
+\section*{Exercises}
+
+\begin{problems}
+
+\item Solve the polynomial equation $p(x)=0$ of \ref{ex:2} by setting
+  $y=x^2$ and solving the resulting quadratic equation, and then
+  finding $x$ by taking square roots of $y$.  Compare your answer with
+  the roots of $p(x)$ given in \ref{ex:2}. Can you explain?
+
+\item One strategy for solving a polynomial equation $p(x)=0$ is to
+  guess a root $z_1$ of the equation. The guess can be checked by
+  substitution in $p(x)$. If $p(z_1)=0$ then $z_1$ is a root. Once you
+  have found a root $z_1$, you can use long division of polynomials to
+  divide $p(x)$ by $x-z_1$. Since roots correspond to linear factors,
+  the fact that $z_1$ is a root means that when you divide you will
+  obtain a quotient polynomial $q(x)$ such that $p(x) = (x-z_1) q(x)$.
+  Now you have reduced the original problem, of solving $p(x)=0$, to
+  the smaller problem of solving $q(x)=0$. By repeating the method,
+  you can eventually factor $p(x)$ completely into linear factors,
+  thus solving the polynomial equation.  The problem with this
+  strategy is that it is not always possible to guess a
+  solution. Thus, the method may never get started, or it may stall
+  somewhere along the way. However, it works in a surprising number of
+  cases. Use this method to solve the following cubic equations, using
+  the given guess:
+  \begin{enumerate}
+  \item $x^3+1 = 0$; guess $z_1 = -1$.
+  \item $x^3-3x^2+3x-1 = 0$; guess $z_1 = 1$.
+  \item $x^3+2x+3 = 0$; find your own guess.
+  \end{enumerate}
+
+\item If a polynomial $p(x)$ with \emph{integer} coefficients has a
+  rational root (a root of the form $\frac{r}{s}$ where $r,s$ are
+  integers), then we can always find it using the \emph{rational roots
+  theorem}.
+  \begin{thm*}
+    Suppose that
+    $p(x) = a_0 x^n + a_1 x^{n-1} + \cdots + a_{n-1} x + a_n$, where
+    $a_0 \ne 0$ and $a_k \in \Z$ for all $k = 0, 1, \dots, n$. If
+    $z_1 = \pm \frac{r}{s}$ is a rational root of $p(x)$ then
+    $s \mid a_0$ ($s$ divides $a_0$) and $r \mid a_n$ ($r$ divides
+    $a_n$).
+  \end{thm*}
+  Use the rational roots theorem to find all rational roots (if any)
+  of the following polynomials:
+  \begin{enumerate}
+  \item $3x^3+4x-7$.
+  \item $x^3+x^2+x+2$.
+  \item $x^3+8$.
+  \end{enumerate}
+
+\item Find all the roots of the polynomials in parts (a), (c) of the
+  previous problem.
+
+\item Show that the symmetry group $G$ of Example \ref{ex:2} is
+  isomorphic with the Klein 4-group. (The Klein 4-group was introduced
+  in Section 7.)
+
+\item Use Cardano's formula or Lagrange resolvents to solve the
+  following cubic equations:
+  \begin{enumerate}
+  \item $x^3 - 3x + 2 = 0$. 
+  \item $x^3 - 9x^2 + 24x - 16 = 0$.
+  \item $x^3 + 3x^2 + 6x + 2 = 0$.
+  \item $x^3 + 3 x - 4 = 0$. 
+  \end{enumerate}
+Show the steps of your calculations. Notice that by inspection $1$ is
+a root of the first and last equations; did your calculations in part
+(d) reveal that fact? Do you think something is wrong?
+
+
+\item Let $\omega = e^{2\pi i/n} = \cos(2\pi/n) + i \sin(2\pi/n)$ be a
+  primitive $n$th root of unity. Prove that the roots of $x^n - 1 = 0$
+  are the complex numbers $z_k = \omega^k$ for $k = 0, 1, \dots,
+  n-1$. (This is a complete list of $n$ distinct roots.) 
+  \begin{enumerate}
+  \item Compute $\omega^n$.
+  \item Why is the set $G$ of roots of the polynomial a group? What type
+    of group is it?
+  \item If you plot the roots in the complex plane, they form the set
+    of vertices of what geometric figure?
+  \end{enumerate}
+
+\end{problems}
+\renewcommand{\thesection}{\arabic{section}}
+\end{document}
+
+
+
+
+
+
+
+\subsection*{Galois group of the general cubic} 
+Let us determine the Galois group of the general cubic. We continue to
+use all the notation introduced in \ref{ss:cubic}. Tabulating all the
+expressions for the $\varphi_i$ we have
+\begin{align*}
+\varphi_1 &= z_1+\omega z_2 + \omega^2 z_3 \\
+\varphi_3 &= z_2+\omega z_3 + \omega^2 z_1 \\
+\varphi_5 &= z_3+\omega z_1 + \omega^2 z_2 \\
+\varphi_2 &= z_1+\omega z_3 + \omega^2 z_2 \\
+\varphi_4 &= z_2+\omega z_1 + \omega^2 z_3 \\
+\varphi_6 &= z_3+\omega z_2 + \omega^2 z_1.
+\end{align*}
+If we examine these expressions, we might notice that all the six
+values $\varphi_i$ are obtained from $\varphi_1$ by permuting in all
+possible ways the symbols $z_1, z_2, z_3$. This observation led
+Lagrange to investigate permutation groups.
+
+The six equations above are (some of) the relations which the roots of
+the general cubic equation must satisfy, and any permutation of the
+roots will preserve them. This suggests that the Galois group of the
+general cubic should be the entire symmetric group $\Sym_3$, and
+indeed that is so (but not so easy to prove). Some other relations
+satisfied by the roots are
+\begin{align*}
+b &= z_1+z_2+z_3\\
+c &= z_1z_2+z_1z_3+z_2z_3\\
+d &= z_1 z_2 z_3.
+\end{align*}
+Clearly these relations are also preserved by all permutations of the
+roots.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% exercises %%%%%%%%%%%%%%%%%%
+\item Prove that $r h r = h$ in $\D_n$ by giving a algebraic argument
+  with matrices. Use a rotation matrix to represent $r$ and use an
+  appropriate matrix to represent $h$ viewed as a reflection across
+  the horizontal coordinate axis. (We can always position the regular
+  $n$-gon so that this reflection is a symmetry, so we lose no
+  generality by this assumption.)
+
+\item We know that the rotation subgroup $\Rot_n$ of $\D_n$ is cyclic for
+  any $n \ge 3$, generated by the basic rotation of $2\pi/n$
+  radians. Let $\Rot_\infty$ be the rotation subgroup of $\D_\infty$. Is
+  $\Rot_\infty$ cyclic, too? Justify your answer.
+
+\item A {\em permutation matrix} is a matrix obtained from the
+  identity matrix by some permutation of its columns. It is a matrix
+  which has just one 1 in each row and column, and all other entries
+  are zero.
+\begin{enumerate}
+\item Prove that $\Sym_n$ is isomorphic with the subgroup of
+  permutation matrices in $\GL_n(F)$ by considering the matrix
+  representation $f\colon \Sym_n \to \GL_n(F)$ given by $f(\alpha) =
+  P_\alpha$, where for $\alpha \in \Sym_n$ we let $P_\alpha$ be the
+  permutation matrix obtained by applying the permutation $\alpha$ to
+  the columns of the identity matrix $I$.
+\item Show that any permutation representation $\delta: G \to \Sym_n$
+gives rise to a corresponding matrix representation $\rho: G \to
+\GL_n(F)$ for any field $F$. (Thus permutation representations are
+subsumed in the theory of matrix representations.)
+\end{enumerate}
+
+\item\label{exer:present-S_n} (Difficult) Find a presentation of
+  $\Sym_n$ by generators and relations. We already know a nice
+  generating set: namely the set of special transpositions
+  $t_1=(1,2)$, $t_2=(2,3)$, $t_3=(3,4)$, $\dots,$ $t_n=(n-1, n)$.
+  These special transpositions swap consecutive elements of the set
+  $\mathbf{n} = \{1, \dots, n\}$. Find a set of relations between
+  these generators $t_1, \dots, t_n$ that determines the symmetric
+  group $\Sym_n$.
+
+\item (Difficult) It has been previously observed that $\Sym_n$ is
+  generated by any transposition along with any $n$-cycle. Put $t =
+  (1,2)$ and $c = (1,2,3,\dots, n)$ in the cycle notation; then
+  $\Sym_n$ is generated by the set $\{t, c\}$. Find a set of relations
+  satisfied by these generators that determines $\Sym_n$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

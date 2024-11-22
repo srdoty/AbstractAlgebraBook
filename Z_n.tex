@@ -1,0 +1,1094 @@
+\documentclass[11pt]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\iff}{\Leftrightarrow}
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{10}
+
+
+\section{Modular arithmetic}\noindent
+Modular arithmetic is a novel finite system of arithmetic used in
+public-key cryptography\index{cryptography} in order to provide
+security for internet transactions. It is also used in algebraic
+coding theory, the mathematical theory underlying the encoding of
+information on DVDs, satellite communications, etc. And it provides
+new examples of groups. We begin with some elementary number theory.
+
+\begin{lem}[division algorithm]\index{division~algorithm}
+Let $n$ be a positive integer.  Let $m$ be any integer.
+There exist unique integers $q$, $r$ such that
+\[
+m = qn + r \quad\text{and}\quad 0 \le r < n. 
+\]
+The integers $q$, $r$ are called the {\em quotient} and {\em
+  remainder}, respectively.
+\end{lem}
+
+\begin{proof}\index{well-ordering principle}
+Recall the \emph{well-ordering principle} of natural numbers, which
+states that any nonempty subset of $\N = \{0,1,2,\dots\}$ must have a
+least element. Let
+\[
+  S = \{ m - kn \mid k \in \Z \text{ and } m - kq \ge 0 \}.
+\]
+By construction, $S$ is a subset of $\N$. We need to show it is
+nonempty. If $m \ge 0$ then $m = m-0\cdot n \in S$. If $m < 0$ then
+$m-mn = m(1-n) \ge 0$ because $1-n \le 0$, hence $m-mn$ is in $S$. In
+either case $S$ is not empty. By the well ordering principle, the set
+$S$ has a least element. Let $r$ be the least element of $S$ and let
+$q$ be the corresponding value of $k$. Then $m - qn = r$, so $m =
+qn+r$. Moreover, $r \ge 0$ since $r \in S$. Finally, $r < n$ since
+otherwise $r-n$ would be in $S$, contradicting the fact that $r$ is
+the least element of $S$.
+\end{proof}
+
+When $m$ is positive, the usual procedure by which we find the
+quotient $q$ and remainder $r$ is called long division, as you
+undoubtedly recall. 
+
+Given a real number $x$, there is a unique integer $k$ such that $k
+\le x < k+1$. The integer $k$ is called the \emph{floor}\index{floor}
+of $x$, written as $\lfloor x \rfloor = k$. The floor function is also
+known as the \emph{greatest integer} function.  Then for a given pair
+of integers $m,n$ we have:
+\[
+  q = \lfloor m/n \rfloor, \quad r = m-qn.
+\]
+Note that when $m<0$ we need to pay attention. For instance, we have
+$20 = 2 \cdot 7 + 6$ for $20 \div 7$, but $-20 = -3 \cdot 7 + 1$ for
+$-20 \div 7$. 
+
+
+
+
+
+\begin{defn}
+  Let $n$ be a positive integer greater than 1. We call $n$ the
+  \emph{modulus}\index{modulus}. The set \index{Z@$\Z_n$}$\Z_n = \{0,
+  1, \dots, n-1 \}$ is called the set of \emph{residues} modulo $n$.
+  This is the set of remainders for long division by $n$, so
+  \emph{residue}\index{residue} is another word for \emph{remainder}.
+\end{defn}
+
+
+\begin{defn} [residue function]
+  Let a modulus $1<n \in \Z$ be given. Given an integer $m$, let $q,r$
+  be the unique integers such that $m = qn + r$ and $0 \le r < n$.
+  Then set $\res_n(m) = r$. The resulting function
+  $\res_n: \Z \to \Z_n$ is a surjection from the set $\Z$ of integers
+  onto the set $\Z_n$ of residues modulo $n$.
+\end{defn}
+
+We should read $\res_n(m)$ as ``the residue of $m$ modulo $n$.'' It is
+just the remainder of dividing $m$ by $n$, so we can always compute it
+by long division.
+
+Now we define addition and multiplication on the set $\Z_n$. 
+
+\begin{defn}
+  Let $n>1$ be a fixed integer modulus. Given residues $a,b \in \Z_n$,
+  we define
+  \[
+  a \oplus b = \res_n(a+b), \qquad a \odot b = \res_n(ab).
+  \]
+  We call the binary operations $\oplus, \odot$ \emph{residue
+    addition} and \emph{residue multiplication}.
+\end{defn}
+
+The residue addition and multiplication rules just defined can be
+remembered as a two-step procedure: first, add or multiply in $\Z$ as
+usual, then take the residue of the result modulo $n$.
+
+\begin{rmk}
+  We use new symbols $\oplus, \odot$ for residue addition and
+  multiplication, in order to distinguish these new and novel
+  operations from the usual ones. Eventually, we will drop the extra
+  circle around the symbol and use the usual addition and
+  multiplication symbols. For now, it is useful to use different
+  notation in order to avoid confusion.
+\end{rmk}
+
+
+\begin{example} 
+The addition and multiplication tables for $\Z_2$ are given below. 
+\[
+\begin{array}{|c|cc|} \hline
+\oplus&0&1\\ \hline 0&0&1\\ 1&1&0\\ \hline
+\end{array}
+\qquad \qquad
+\begin{array}{|c|cc|} \hline
+\odot &0&1\\ \hline
+0&0&0\\
+1&0&1\\
+\hline
+\end{array}
+\]
+We will see later that the above addition table defines a group. This
+group appears in computer science as the table defining the behavior
+of a binary half-adder circuit, which is a basic circuit used in all
+digital computers. 
+\end{example}
+
+
+
+\begin{example} 
+The addition and multiplication tables for $\Z_4$ are compiled below. 
+\[
+\begin{array}{|c|cccc|} \hline
+\oplus&0&1&2&3\\ \hline 
+0&0&1&2&3\\ 1&1&2&3&0\\ 
+2&2&3&0&1\\ 3&3&0&1&2\\ \hline
+\end{array}
+\qquad \qquad
+\begin{array}{|c|cccc|} \hline
+\odot &0&1&2&3\\ \hline
+0&0&0&0&0\\
+1&0&1&2&3\\ 
+2&0&2&0&2\\ 
+3&0&3&2&1\\ \hline
+\end{array}
+\]
+This is more interesting. Notice that the tables are ``closed''
+systems, in which the combination of two elements produces another one
+in the set $\Z_4$. Also notice the novel equation $2 \odot 2 = 0$. In
+residue arithmetic, two nonzero elements can multiply to produce $0$,
+which is somewhat strange at first sight.
+\end{example}
+
+Residue arithmetic is also called \emph{modular arithmetic}. Looking
+at the addition tables (for the operation $\oplus$) in the above
+examples, we suspect that they might be groups, because the tables
+``look'' similar to multiplication tables for other groups we have
+seen, and that is indeed the case, as we will see later. But not so
+for the multiplication tables (for the operation $\odot$). They are
+\emph{never} examples of groups, because there is no inverse of $0$
+in the tables. Nevertheless, there is always at least one group inside
+the multiplication table, if you know how to look for it. We will
+return to this question later, once we have developed a better
+definition of group. For now, the focus is on understanding modular
+arithmetic.
+
+
+It is notable that we can make sense of subtraction in $\Z_n$. Here
+are the appropriate definitions, which follow the same pattern as the
+definitions of negatives and subtraction in the integers.
+
+\begin{defn}
+  The \emph{negative} $\ominus a$ of a residue $a \in \Z_n$ is defined to be
+  \[
+  \ominus a = 
+  \begin{cases}
+    0 & \text{ if } a = 0 \\
+    n-a & \text{ if } a \ne 0.
+  \end{cases}
+  \]
+\end{defn}
+
+Once we have negatives, we can define subtraction in terms of adding
+the negative, which is how subtraction is defined for integers and
+real numbers.
+
+\begin{defn}
+  For any $a,b \in \Z_n$, we define $a \ominus b = a \oplus (\ominus b)$. 
+\end{defn}
+
+Notice that $a \oplus ( \ominus a) = 0$ and $(\ominus a) \oplus a =
+0$, for any $a \in \Z_n$.
+
+
+\begin{thm}\label{thm:ressub}
+   For any $a,b \in \Z_n$, we have $a \ominus b = \res_n(a-b)$. 
+\end{thm}
+
+The proof is a straightforward exercise.
+
+The theorem gives us another way to compute $a \ominus b$. Depending
+on the situation, one way might be more convenient than the other, so
+it can be useful to have both.
+
+\begin{rmk}[notational convention]
+  It soon becomes tedious to always write $\oplus, \odot, \ominus$ for
+  the residue operations. The convention is to replace these symbols
+  by their corresponding uncircled symbols $+, \cdot, -$ from ordinary
+  arithmetic. This convention results in equations such as:
+  \[
+    5+5 = 0,\quad 6+7 = 3,\quad 6 \cdot 7 = 2,\quad 4 \cdot 5 = 0,
+    \quad -6 = 4,\quad 5-6 = 9
+  \]
+  all of which are valid equations in $\Z_{10}$. This is confusing
+  only if you forget that $+$ really means $\oplus$, $\cdot$ means $\odot$,
+  and $-$ means $\ominus$.  
+
+  Furthermore, it is conventional to omit the multiplication symbol
+  $\cdot$ in cases where doing so will not cause confusion. So, if
+  $a,b$ are variables representing values in some residue system
+  $\Z_n$, we usually interpret $ab$ as $a \cdot b$, just as we do in
+  ordinary algebra.
+\end{rmk}
+
+Modular arithmetic\index{modular~arithmetic} is actually similar to
+arithmetic everyone already carries out with clocks. In a standard
+clock, there are 12 numbers arranged in a circle, and we all
+understand that 3 hours after 11 o'clock is 2 o'clock. This is the
+same as the equation $11+3 = 2$ in $\Z_{12}$. The only difference
+between addition in $\Z_{12}$ and clock addition is that in $\Z_{12}$
+we have renamed the modulus $12$ to $0$.
+
+We can visualize modular arithmetic modulo $n$ similarly, by thinking
+of a clock with the residues $0, 1, \dots, n-1$ equally spaced around
+its face. Whenever we reach $n$ hours, the clock resets to $0$. 
+
+
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item The \emph{floor} of a real number $x$ (written $\lfloor x
+  \rfloor$) is the greatest integer $k$ such that $k \le x$.  Given
+  integers $m,n$ with $n > 0$, show that $q = \lfloor m/n \rfloor$ is
+  the integer quotient such that $m = qn+r$ with $0 \le r < n$.
+
+
+\item A pocket calculator (or computer) that produces decimal
+  approximations for quotients can often be used to carry out the
+  division algorithm in the set of integers. Given integers $m,n$ with
+  $n > 0$, to find the integer quotient $q$ such that $m = qn+r$ with
+  $0 \le r < n$, simply calculate $m \div n$ on the device and then
+  take $q$ to be the integer part (the floor) of the result. Once you
+  have found $q$, of course $r = m - qn$. Use this to find the integer
+  quotient $q$ and remainder $r$ for each of the following division
+  problems:
+  \begin{multicols}{2}
+  \begin{enumerate}[topsep=0pt,parsep=0pt]
+  \item $1000 \div 31$.
+  \item $-1000 \div 31$.
+  \item $16075 \div 652$.
+  \item $-16075 \div 652$.
+  \end{enumerate}
+  \end{multicols}
+  This approach is slightly dangerous, because if the numbers $m,n$
+  are big enough, machine calculation can be subject to roundoff
+  error. If you are using a pocket calculator, try to find a case
+  where it produces an incorrect integer quotient.
+
+\item Compute the following in the modular system $\Z_{12}$.
+  \begin{enumerate}
+  \item $7+5$, $5+5$, $11+11$, $-1 + (-1)$.
+  \item $3 \cdot 3$, $7 \cdot 5$, $5 \cdot 5$, $11 \cdot 11$, $(-1)
+    \cdot (-1)$.
+  \item $3-3$, $5-7$, $-2-10$, $5-(-3)$, $5-(-11)$,
+    $-2-(-10)$.
+  \end{enumerate}
+
+\item Make addition and multiplication tables for $\Z_3$.
+
+\item Make addition and multiplication tables for $\Z_5$.
+
+\item Make addition and multiplication tables for $\Z_6$.
+
+\item Make addition and multiplication tables for $\Z_7$.
+
+\item Make addition and multiplication tables for $\Z_8$.
+
+\item Compute the following in the modular system $\Z_{1201}$.
+  \begin{enumerate}
+  \item $75+500$, $800+500$, $-1 + (-1)$.
+  \item $30 \cdot 30$, $800 \cdot 500$, $9^2$, $(-1)
+    \cdot (-1)$, $1200^2$.
+  \item $500-800$, $-500-800$, $-500-(-800)$.
+  \end{enumerate}
+
+\item Prove Theorem \ref{thm:ressub}.
+
+\item \label{exer:python} The open source \texttt{Python} programming
+  language provides built-in commands to compute the integer quotient
+  and remainder for integers of any size. If \texttt{a}, \texttt{n}
+  are integers, then the useful commands and their effects are:
+  \begin{center}
+  \begin{tabular}{cl}
+    \verb$a % n$ & returns $\res_n(a)$\\
+    \texttt{a // n} &  returns the integer quotient of $a \div n$\\
+    \texttt{divmod(a,n)} & returns the pair $(q,r)$ such that $a
+      = qn+r$ and $0 \le r < n$.
+  \end{tabular}
+  \end{center}
+  Note that the \texttt{divmod} command combines the effect of the
+  other two. \texttt{Python} is installed by default on all Mac and
+  Linux computers, but it must be downloaded (from \texttt{python.org})
+  and installed on a Windows computer. Once \texttt{Python} is
+  installed on your computer, open up a command-line terminal and type
+  \texttt{python} to start a \texttt{Python} interpreter session. Then
+  you can type commands in order to do computations, similar to typing
+  commands on a calculator. Hit Enter at the end of each command to
+  get results.
+
+  Use \texttt{Python} to compute the integer quotient $q$ and
+  remainder $r$ for the following problems:
+  \begin{enumerate}
+  \item $1234567890987654321 \div 6090609$.
+  \item $-1234567890987654321 \div 6090609$.
+  \item $12345678909876543211234567890 \div 1234567890987654321$.
+  \end{enumerate}
+
+
+
+\item After reading Exercise \ref{exer:python}, go to a computer and
+  fire up a \texttt{Python} session in order to compute the following:
+  \begin{enumerate}
+  \item $123456789 - 987654321$ in $\Z_{999750750}$.
+  \item $123456789^2$ in $\Z_{999750750}$.
+  \item $123456789^3$ in $\Z_{999750750}$.
+  \end{enumerate}
+  Note: In \texttt{Python}, the symbol \verb$**$ is used instead of
+  \verb$^$ for computing powers; i.e., to compute $a^b$ you must type
+  \verb$a ** b$ instead of \verb$a ^ b$.
+
+\end{problems}
+
+
+
+\newpage\section{Commutative rings}\noindent
+Our main goal in this section is to prove that the modular system
+$\Z_n$ (along with its operations of addition and multiplication)
+forms a commutative ring.\index{ring}
+
+We begin with the definition of commutative ring, which is based on
+the properties of the system $\Z$ of integers.
+
+
+\begin{defn} \label{def:comm-ring}
+A {\em commutative ring} is a set $R$ with two binary
+operations, addition $+$ and multiplication $\cdot$, such that for all
+$a,b,c$ in the set $R$:
+  \begin{enumerate}
+  \item additive associativity: $a + (b+c) = (a+b)+c$.
+  \item additive commutativity: $a+b = b+a$. 
+  \item additive identity: There is some element $0 \in R$ such that
+    $a+0 = a = 0+a$.
+  \item additive inverse: for every $a\in R$, there exists $-a \in R$
+    such that $a + (-a) = 0 = (-a)+a$.
+  
+  \item multiplicative associativity: $a \cdot (b\cdot c) = (a\cdot
+    b)\cdot c$.
+  \item multiplicative commutativity: $a\cdot b = b\cdot a$. 
+  \item multiplicative identity: There is an element $1 \in R$ such
+    that $a\cdot 1 = a = 1\cdot a$.
+ 
+  \item distributivity: $a\cdot (b+c) = a\cdot b + a \cdot c$ and
+    $(b+c)\cdot a = b\cdot a + c \cdot a$.
+  \end{enumerate}
+The element $0$ is called the \emph{additive identity}, while $1$ is
+the \emph{multiplicative identity}. The element $-a$ is the
+\emph{additive inverse} of $a$, or the \emph{negative} of $a$.
+\end{defn}
+
+If we remove axiom (f) from the definition then we get the definition
+of a \emph{ring}. In general, multiplication in a ring is not required
+to be commutative. For now, all of our rings will be commutative.
+
+The set of integers $\Z$ is a commutative ring under ordinary addition
+and multiplication.  So are the sets of rational numbers $\Q$, real
+numbers $\R$, and complex numbers $\C$.  Indeed, the ring axioms are
+modeled on the fundamental properties of the ordinary number systems.
+
+\begin{rmk}
+  We can subtract in any ring, because additive inverses exist, so we
+  can define $a-b = a+(-b)$. Thus, we can view a commutative ring as a
+  set of elements along with a way to add, subtract, and multiply
+  them, subject to the familiar properties of number systems. But note
+  that division may not always be possible in a ring. In $\Z$, we
+  cannot divide $1$ by $2$, as the fraction $1/2$ is not an integer.
+\end{rmk}
+
+
+The set $\N$ of natural numbers under ordinary addition and
+multiplication is \emph{not} a ring, because most elements of $\N$ do
+not have an additive inverse; i.e., axiom 1(d) fails. In other words,
+the set $\N$ is not a ring because subtraction doesn't make sense in
+$\N$.
+
+Here are some formal consequences of the definition of ring. These
+properties hold in all rings, commutative or not.
+
+\begin{thm} \label{thm:ring-basics} 
+Let $R$ be a ring. For any $a,b,c \in R$ we have:
+\begin{enumerate}
+\item $a \cdot 0  = 0 = 0 \cdot a$.
+
+\item $a(-b) = -(ab) = (-a)b$.
+
+\item $(-a)(-b) = ab$.
+
+\item $a(b-c) = ab - ac$.
+
+\item $(-1)a = -a$.
+\end{enumerate}
+\end{thm}
+
+Notice that we have omitted the symbol $\cdot$ in the products in
+parts (b)--(e) above. It is standard to omit the multiplication symbol
+in situations where it leads to no confusion.
+
+The proof of these basic facts is an exercise. For instance, to prove
+(a) one would begin with the equality $0 + 0 = 0$, which comes from
+axiom (h) of Definition \ref{def:comm-ring} by taking $a=0$ there,
+then multiply both sides by $a$, and so on.
+
+
+
+
+Theorem \ref{thm:Z_n-is-a-ring} below says that the set $\Z_n$ is a
+commutative ring. So modular arithmetic provides examples of finite
+commutative rings. The main goal of this section is to prove this
+important result. 
+
+To accomplish our goal we need to study another, more sophisticated,
+construction of $\Z_n$ in terms of equivalence classes. This approach
+gives more powerful information about the properties of $\Z_n$. 
+
+We start by saying a bit more about equivalence classes.  The
+following important definition from set theory will be used again in
+the future.
+
+\begin{defn*}\index{equivalence relation}
+Let $A$ be a set. An \emph{equivalence relation} on $A$ is a relation
+$\sim$ on $A$ which is reflexive ($a \sim a$, for all $a \in A$),
+symmetric ($a \sim b$ implies $b \sim a$, for all $a,b \in A$), and
+transitive ($a \sim b$ and $b \sim c$ implies $a \sim c$, for all
+$a,b,c \in A$).
+\end{defn*}
+
+It is a general fact in set theory that an equivalence relation $\sim$
+on a set $A$ always induces a partition of the set into disjoint
+equivalence classes:
+\[
+  A = \bigcup_{a \in A} [a]
+\]
+where $\overline{a} = [a] = \{b\in A \mid a \sim b \}$ is the
+equivalence class of $a$. (We write $\overline{a}$, or $[a]$, for the
+equivalence class containing $a$. That class is the set of all
+elements that are equivalent to $a$.)
+Another general fact is that
+\[
+  [a] = [b] \iff a \sim b.
+\]
+Thus, there can be many different ways to write the same equivalence
+class. The element used to write a class is called a
+\emph{representative}\index{representative} of the class.
+
+
+We need the following general concept, which will be used again later.
+
+\begin{defn*}[quotient set]\index{quotient}
+  Let $\sim$ be an equivalence relation on a set $A$, and write $[a]$
+  (or $\overline{a}$) for the equivalence class containing $a$. The
+  set $A/\!\!\sim \ = \{ [a] : a \in A \}$, the set of all equivalence
+  classes, is called the \emph{quotient} of $A$ by $\sim$.
+\end{defn*}
+
+
+
+
+
+Now we return to the task of proving that $\Z_n$ is a ring. We need to
+recall some basic properties about the set $\Z$ of integers.
+
+Recall that if $a,b$ are integers then $a$ \emph{divides} $b$ (written
+as $a \mid b$) if and only if there is some $k \in \Z$ such that $b =
+ak$.  If $a$ divides $b$ we also say that $b$ \emph{is divisible by}
+$a$.
+
+\begin{defn}[Gauss]\index{congruence}
+  Let $n$ be a fixed positive integer, and $a,b \in \Z$.  We say that
+  $a$ is \emph{congruent} to $b$ modulo $n$ if and only if $n \mid
+  (a-b)$. We write $a \equiv b \pmod{n}$ to mean that $a$ is congruent
+  to $b$ modulo $n$.
+\end{defn}
+
+Here are the basic properties of congruences, all of which are routine
+to prove.
+
+\begin{thm} \label{thm:cong-prop-1}
+Let $n$ be a fixed positive integer. Let $a, b, c$ be integers. Then:
+\begin{enumerate}
+  \item $a \equiv a \pmod{n}$.
+
+  \item $a \equiv b \pmod{n}$ implies $b \equiv a \pmod{n}$.
+
+  \item $a \equiv b \pmod{n}$ and $b \equiv c \pmod{n}$ implies $a
+    \equiv c \pmod{n}$.
+\end{enumerate}
+\end{thm}
+
+
+Theorem \ref{thm:cong-prop-1} says that congruence modulo $n$ is an
+equivalence relation on the set $\Z$. More precisely, suppose we fix
+$n$ and write $a \sim b$ if and only if $a \equiv b \pmod{n}$. Then
+$\sim$ is an equivalence relation on the set $\Z$.
+
+The equivalence relation $\sim$ on the set $\Z$ of integers induces a
+partition of $\Z$ into disjoint equivalence classes:
+\[
+  \Z = \bigcup_{a \in \{0,1,\dots, n-1\}} [a]
+\] 
+where the equivalence class $[a]$ is defined by 
+\[
+   [a] = \{ b \in \Z \mid a \sim b \} = \{b \in \Z \mid a \equiv b
+   \pmod{n} \}.
+\]
+The equivalence class $[a]$ of $a$ is the collection of all integers
+which are congruent mod $n$ to $a$. We say that $a$ is a
+\emph{representative} of its equivalence class $[a]$. Note that a
+given equivalence class has infinitely many representatives, because
+\[
+  [a] = [b] \iff a \sim b.
+\]
+For example, if $n=12$ then $[2] = [14] = [-10]$ because $2 \equiv 14
+\equiv -10$ (mod $12$); i.e., $2 \sim 14 \sim -10$. 
+
+\begin{defn}
+  Equivalence classes for the equivalence relation $\sim$ defined by
+  congruence modulo $n$ are called \emph{congruence classes}.
+\end{defn}
+
+
+The following gives a nice characterization of the numbers in a
+congruence class. The proof is an exercise.
+
+\begin{thm}\label{thm:cong-form}
+  Let $a \in \Z$ and let $r = \res_n(a)$. Then the congruence class
+  $[a]$ is the collection of all integers of the form $kn+r$ where
+  $k \in \Z$.
+\end{thm}
+
+\begin{defn}
+We define addition and multiplication of congruence classes (for some
+fixed modulus $n$) by the rules:
+\[
+  [a]+[b] = [a+b], \qquad [a]\cdot[b] = [a b].
+\]
+\end{defn}
+
+
+The following easy to prove result means that the definition makes
+sense; i.e., addition and multiplication of congruence classes are
+well-defined.
+
+
+\begin{thm}\label{thm:cong-prop-2} 
+Let $a,b,c,d \in \Z$. Suppose that $a \equiv b \pmod{n}$ and $c \equiv
+d \pmod{n}$; i.e., $a \sim b$ and $c \sim d$ Then:
+
+(a) $a+c \equiv b+d \pmod{n}$; i.e., $a+c \sim b+d$.
+
+(b) $ac \equiv bd \pmod{n}$; i.e., $ac \sim bd$.
+\end{thm}
+
+
+
+Applying the quotient construction to the set $\Z$ of integers with the
+equivalence relation $\sim$ defined by congruence modulo $n$, we
+obtain:
+\[
+  \Z/\!\!\sim \ = \{ [a] : a \in \Z \} = \{ [a] : a = 0, 1, \dots, n-1
+  \}.
+\]
+Note that the distinct classes in $\Z/\!\!\sim$ are those listed in
+the rightmost set above, because of the aforementioned fact that $[a]
+= [b] \iff a \sim b$.
+
+Thus there is a bijection from the set $\Z_n = \{0, 1, \dots, n-1 \}$
+onto the set $\Z/\!\!\sim$, defined by $a \mapsto [a]$. Furthermore,
+it can be shown that this bijection preserves addition and
+multiplication, in the sense that:
+\[
+  a \oplus b \mapsto [a]+[b]; \qquad a \odot b \mapsto [a]\cdot [b]
+\]
+for all $a,b$. (Here we have momentarily reverted to the circle
+notation, in order to avoid confusion.) This proves that
+\[
+  \Z_n \cong \Z/\!\!\sim
+\]
+i.e., the structure $\Z_n$ is isomorphic to the quotient
+$\Z/\!\!\sim$, where $\sim$ is the equivalence relation defined by
+congruence modulo $n$.
+
+
+
+The quotient construction makes it easier to prove the following
+result.
+
+\begin{thm}\label{thm:Z_n-is-a-ring}
+  Fix some integer $n > 1$, and let $\sim$ be the equivalence relation
+  defined by congruence modulo $n$.  Arithmetic in the quotient set
+  $$\Z/\!\!\sim \ = \{[a]: a = 0, 1, \dots, n-1 \}$$ satisfies the
+  following properties, holding for all $a, b, c \in \Z$:
+  \begin{enumerate}
+  \item  $[a] + ([b+[c]]) = ([a]+[b])+[c]$.
+  \item  $[a]+[b] = [b]+[a]$. 
+  \item  $[a]+[0] = [a] = [0]+[a]$.
+  \item  $[a] + [-a] = [0] = [-a]+[a]$. 
+
+  \item  $[a] \cdot ([b\cdot[c]]) = ([a]\cdot[b])\cdot[c]$.
+  \item  $[a]\cdot[b] = [b]\cdot[a]$. 
+  \item  $[a]\cdot[1] = [a] = [1]\cdot[a]$.
+
+  \item $[a]\cdot ([b]+[c]) = [a]\cdot[b] + [a] \cdot [c]$ and
+  $([b]+[c])\cdot [a] = [b]\cdot[a] + [c] \cdot [a]$.
+  \end{enumerate}
+  In other words, $\Z/\!\!\sim$ is a commutative ring (and so is its
+  isomorphic cousin $\Z_n$).
+\end{thm}
+
+
+\begin{proof}
+The proof uses the fact that all of these properties correspond to
+similar properties of ordinary integers. For instance, to prove (b)
+just use the fact that addition in $\Z$ is commutative. Then
+\[
+  [a] + [b] = [a+b] = [b+a] = [b]+[a]
+\]
+where the middle equality comes from the fact that $a+b=b+a$ for
+integers $a,b$.  This proves (b). All the other properties are proved
+similarly.
+\end{proof}
+
+
+
+\begin{rmks}
+1. The easy proof of the above theorem is a direct consequence of the
+power of equivalence classes. Working with equivalence classes takes
+some getting used to, but the effort pays dividends, in that it makes
+proofs easier.
+
+2. In the construction of $\Z_n$, the elements are the residues
+$0,1,\dots, n-1$ and the operations $\oplus, \odot$ are defined in a
+special way. In the construction of $\Z/\!\!\sim$, the elements are
+the congruence classes $[0],[1],\dots, [n-1]$ and the operations
+$+, \cdot$ are defined in terms of the usual addition and
+multiplication of integers. The two constructions turn out to be
+equivalent, thus providing two perspectives on $\Z_n$.
+
+3. In both constructions of $\Z_n$, we have chosen the set
+$\{ 0, 1, \dots, n-1 \}$ of residues modulo $n$ as a complete set of
+representatives of the quotient set. But it is often useful to work
+instead with a different complete set of representatives:
+\[
+  \Z_n =
+  \begin{cases}
+    \{0, \pm 1, \dots, \pm(N-1), N \}, &\text{ if } n=2N \\
+    \{0, \pm 1, \dots, \pm N\}, &\text{ if } n=2N+1
+  \end{cases}
+\]
+where $N$ is an integer.  For example, we can write
+$\Z_7 = \{ 0, \pm1, \pm 2, \pm 3\}$.
+\end{rmks}
+
+\section*{Exercises}
+\begin{problems}
+
+\item Prove that $a \equiv b \pmod{n}$ if and only if $a$ and $b$ have
+  the same integer residue (remainder) when divided by $n$.
+
+\item Prove Theorem \ref{thm:ring-basics}. 
+
+\item Define a relation $\approx$ on the set $P$ of all living people
+  by $a \approx b$ if the age of $a$ (in years) is equal to the age of
+  $b$. 
+  \begin{enumerate}
+  \item Prove that $\approx$ is an equivalence relation on $P$.
+  \item If Sally is age 18 years, then describe the class [Sally] in words.
+  \item Describe the quotient set $P/\!\!\approx$ in words.
+  \item Is $P/\!\!\approx$ finite or infinite?
+  \end{enumerate}
+
+\item Let $A = \{a, b, c, \dots, x, y, z \}$ be the usual English
+  alphabet. For the purpose of this problem, we define a \emph{word}
+  over $A$ to be any string of one or more letters from the
+  alphabet. For example, $bab$, $abba$, and $dogfrog$ are words
+  according to our definition. Define a relation $\approx$ on the set
+  $W$ of words by $\alpha \approx \beta$ if and only if the first
+  letter of $\alpha$ equals the first letter of $\beta$ (where
+  $\alpha, \beta \in W$).
+  \begin{enumerate}
+  \item Prove that $\approx$ is an equivalence relation on $W$.
+  \item Describe the quotient set $W/\!\!\approx$ in words. Find a
+    nice set of representatives of the classes in $W/\!\!\approx$.
+  \item Compute $|W/\!\!\approx|$. 
+  \end{enumerate}
+
+
+
+
+\item Define a relation $\approx$ on the set $\R$ of real numbers by
+  $a \approx b \iff a - b \in \Z$. 
+  \begin{enumerate}
+  \item Prove that $\approx$ is an equivalence relation on $\R$.
+  \item Compute the class $[1/2]$ of $1/2$. What is its cardinality?
+  \item Compute the class $[3/2]$ of $3/2$. How is $[3/2]$ related to
+    $[1/2]$?
+  \item Describe the quotient set $\R/\!\!\approx$ and find a complete
+    set of representatives for the quotient set elements.
+  \item Is $\R/\!\!\approx$ finite or infinite?
+  \end{enumerate}
+
+\item Prove Theorem \ref{thm:cong-prop-1}.
+
+\item Prove Theorem \ref{thm:cong-form}.
+
+\item Prove Theorem \ref{thm:cong-prop-2}.
+
+\item Prove parts (a), (h) of Theorem \ref{thm:Z_n-is-a-ring}.
+
+
+\end{problems}
+
+
+
+
+\newpage\section{Fields}\noindent
+The main goal of this section is to show that the ring $\Z_n$ is a
+field\index{field} if and only if the modulus $n$ is a prime number.
+
+\begin{defn}
+  A \emph{multiplicative inverse}\index{inverse} of $a$ is an element
+  $a^{-1}$ such that $a a^{-1} = 1 = a^{-1} a$.  An element $a$ in a
+  ring $R$ is said to be a \emph{unit}\index{unit} (or
+  \emph{invertible element}) if there is a multiplicative inverse of
+  $a$ in the ring.
+\end{defn}
+
+If a multiplicative inverse exists in a ring then it is unique.  Every
+nonzero element is a unit in the rings $\Q, \R$, and $\C$. The only
+units in the ring $\Z$ are $\pm 1$.
+
+\begin{defn}
+  A \emph{field} is a commutative ring in which $1 \ne 0$ and every
+  nonzero element is a unit.
+\end{defn}
+
+Thus, $\Q, \R, \C$ are fields. But $\Z$ is \emph{not} a field. 
+
+In a field, the existence of multiplicative inverse means that we can
+define division, by:
+\[
+  b/a = b \cdot a^{-1} \quad (a \ne 0).
+\]
+So we can think of a field as a system in which the usual operations
+of addition, multiplication, subtraction, and division makes sense
+and obey the usual laws of algebra.
+
+
+
+The central question for this section is: for which values of $n$ is
+the ring $\Z_n$ a field? To study this question, we look at a more
+general question: what is the set of units in $\Z_n$?
+
+\begin{defn}
+  The set of all units in a ring $R$ will be denoted by
+  $R^\times$\index{R@$R^\times$} (or $R^*$). This is called the
+  \emph{multiplicative group of
+    units}\index{multiplicative~group~of~units} in the ring.
+\end{defn}
+ 
+The set $R^\times$ provides another example of a group. 
+In terms of this notation, the definition of a field can be rephrased
+as: a commutative ring $R$ is a field if and only if $R^\times =
+R-\{0\}$.
+
+Recall that the notation $\gcd(a,b)$ stands for the \emph{greatest
+  common divisor}\index{gcd} of integers $a,b$. Furthermore, recall
+that $\gcd(a,b)$ can be calculated using the \emph{Euclidean
+  algorithm}.\index{Euclidean~algorithm} Finally, recall that the
+\emph{extended} Euclidean algorithm produces integers $x,y$ such that
+\[
+   ax+by = \gcd(a,b).
+\]
+It is often said that this equation expresses the gcd as a
+\emph{linear combination} of $a,b$. Using these properties of the gcd,
+we can prove the following important result.
+
+
+\begin{thm}\label{thm:gcd}
+  Let $n$ be a positive integer. A congruence class $[a] \in \Z_n$ is
+  a unit if and only if $\gcd(a,n) = 1$. Hence, the set $\Z_n^\times$
+  of units in $\Z_n$ is equal to $\{ [a] \in \Z_n : \gcd(a,n) = 1 \}$.
+\end{thm}
+
+\begin{proof}
+Suppose that $\gcd(a,n)=1$. Use the Euclidean algorithm to find
+integers $x,y$ such that $ax+ny = 1$. This can be done because
+$\gcd(a,n)=1$ by hypothesis. Then $ax-1 = ny$, so $n \mid (ax-1)$ and
+thus $ax \equiv 1 \pmod{n}$. This means that $[a] \cdot [x] = [1]$ in
+$\Z_n$. So $[x] = [a]^{-1}$ and $[a]$ is a unit.
+
+On the other hand, if $\gcd(a,n) = g > 1$, then I claim that $[a]$ is
+not a unit. To see this, assume it is a unit. Then $[a]^{-1}$ exists
+in $\Z_n$ and $[a]\cdot [a]^{-1} = [1]$. But the condition $\gcd(a,n)
+= g > 1$ means that $g \mid a$ and $g \mid n$, so $a = a_1 g$ and $n =
+n_1 g$ for some integers $a_1, n_1$. Now
+\[
+  [a]\cdot [n_1] = [an_1] = [a_1gn_1] = [a_1n] = [0].
+\]
+If we multiply the equation $[a]\cdot [n_1] = [0]$ by $[a]^{-1}$ we
+obtain $[a]^{-1} \cdot [a] \cdot [n_1] = [0]$, i.e., $[n_1] = [0]$.
+But this is a contradiction, since the equation $n = n_1 g$ implies
+that $0 < n_1 < n$. Thus our assumption must be incorrect, and $[a]$
+is not a unit.
+\end{proof}
+
+
+\begin{cor}
+  Let $n$ be a positive integer. Then $\Z_n$ is a field if and only if
+  $n$ is a prime number.
+\end{cor}
+
+\begin{proof}
+Suppose that $n$ is prime. Then for all $[a] \ne [0]$ we have
+$\gcd(a,n) = 1$. Each such $[a]$ is a unit in $\Z_n$ by the
+theorem. So $\Z_n$ is a field.
+
+Suppose that $n$ is not prime. Then $n = ab$ for some integers $1 <
+a,b < n$. Then $\gcd(a,n) = a$, so $[a]$ is not a unit in $\Z_n$. This
+is a nonzero element of $\Z_n$ which is not a unit, so $\Z_n$ is not a
+field.
+\end{proof}
+
+
+\begin{defn}[notation]
+  From now on, we write $\F_p = \Z_p$\index{F@$\F_p$} for the field of
+  $p$ elements, when $p$ is a prime number. An alternative notation
+  for $\F_p$ is $\text{GF}(p)$\index{GF@$\text{GF}(p)$}. In this
+  context, GF stands for \emph{Galois field}.  The finite fields
+  $\F_p$ of $p$ elements are called Galois fields\index{Galois~field}.
+\end{defn}
+
+It should be noted that there are other finite fields besides the ones
+we have constructed. We leave that for later.
+
+\begin{examples}
+ $\Z_4^\times = \{[1], [3] \}$,
+ $\Z_7^\times = \{[1],[2],[3],[4],[5],[6] \}$, and
+\\
+ $\Z_{15}^\times = \{[1], [2], [4], [7], [8], [11], [13], [14] \}$.
+\end{examples}
+
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item Prove that a commutative ring $R$ is a field if and only if
+  $R^\times = R-\{0\}$.
+
+\item There is one and only one pair $(a,b)$ of integers for which
+  $\gcd(a,b)$ is not defined. What pair is it?
+
+
+\item Compute the set $\Z_n^\times$ of units for the following cases:
+  \begin{multicols}{3}
+  \begin{enumerate}[topsep=0pt,parsep=0pt]
+  \item $n=2$.
+  \item $n=3$.
+  \item $n=5$.
+  \item $n=6$.
+  \item $n=8$.
+  \item $n=9$.
+  \end{enumerate}
+  \end{multicols}
+
+\item Use guess-and-check (trial and error) to solve the equation
+  $3x=4$ in $\Z_{10}$, if possible. (When the modulus is small, there
+  are not many cases to try.)
+
+\item Use guess-and-check (trial and error) to solve the equation
+  $4x=5$ in $\Z_{10}$, if possible.
+
+\item For which of the following values of $n$ is the ring $\Z_n$ a
+  field:
+  \begin{multicols}{3}
+  \begin{enumerate}[topsep=0pt,parsep=0pt]
+  \item $n=2$.
+  \item $n=3$.
+  \item $n=5$.
+  \item $n=6$.
+  \item $n=8$.
+  \item $n=9$.
+  \end{enumerate}
+  \end{multicols}
+
+\item Use guess-and-check (trial and error) to calculate the following
+  inverses:
+  \begin{multicols}{3}
+  \begin{enumerate}[topsep=0pt,parsep=0pt]
+  \item $[2]^{-1}$ in $\Z_{9}$.
+  \item $[3]^{-1}$ in $\Z_{10}$.
+  \item $[4]^{-1}$ in $\Z_{15}$.
+  \end{enumerate}
+  \end{multicols}
+
+
+
+\item Prove that the equation $ax=b$ is solvable in $\Z_n$ whenever
+    $a \in \Z_n$ is a unit. Explain exactly \emph{how} to solve the
+    equation. 
+
+
+
+\item The Euclidean algorithm\index{Euclidean~algorithm}, which was
+  described in the last book of Euclid's \emph{Elements}, works as
+  follows, for any given pair of integers $a,b$ such that not both are
+  zero:
+  \begin{enumerate}[label=\arabic*),ref=\arabic*]\sf
+  \item If $b < 0$ replace $b$ by $|b|$. Do the same for $a$.
+  \item\label{here} If $b=0$ then the gcd\index{gcd} is $a$, so return
+    $a$ and stop.
+  \item If $b \ne 0$, compute the unique integers $q,r$ such that
+    $a = qb+r$ and $0 \le r < b$. Then replace the pair $(a,b)$ by the
+    pair $(b,r)$. Go to Step \ref{here}.
+  \end{enumerate}
+  Use the Euclidean algorithm to compute the following:
+  \begin{multicols}{2}
+  \begin{enumerate}[topsep=0pt,parsep=0pt]
+  \item $\gcd(87031, 4750)$.
+  \item $\gcd(48157656,541541)$.
+  \end{enumerate}
+  \end{multicols}
+
+\item Refer to the previous problem for a description of the Euclidean
+  algorithm. 
+  \begin{enumerate}
+  \item Prove that whenever the pair $(a,b)$ of integers is not
+    $(0,0)$ then the Euclidean algorithm must stop after finitely many
+    steps.
+  \item Explain what happens in the first stage of the algorithm if
+    $0<a<b$. What are the next values of $(a,b)$?
+  \end{enumerate}
+
+
+\item The extended Euclidean algorithm returns a triple
+  $\text{xgcd}(a,b) = (g,x,y)$ of integers such that $g = \gcd(a,b)$
+  and $g = ax+by$. We assume that both $a,b$ are given positive
+  integers. Then the algorithm works as follows:
+  \begin{enumerate}[label=\arabic*),ref=\arabic*]\sf
+  \item Set $(x_0, y_0) = (1,0)$. Set $(x,y) = (0,1)$. 
+  \item\label{step2} If $b = 0$, return $(a,x_0, y_0)$.
+  \item If $b>0$, let $q,r$ be the unique integers such that $a=qb+r$
+    and $0 \le r < b$. Replace $(a,b)$ by $(b,r)$.
+  \item Replace $(x,y)$ by $(x_0-qx, y_0-qy)$. Replace $(x_0,y_0)$ by
+    $(x,y)$. Go to Step \ref{step2}. 
+  \end{enumerate}
+  Use the extended Euclidean algorithm to compute the following:
+  \begin{multicols}{3}
+  \begin{enumerate}[topsep=0pt,parsep=0pt]
+  \item $\text{xgcd}(23,301)$.
+  \item $\text{xgcd}(87031, 4750)$.
+  \item $\text{xgcd}(48157656,541541)$.
+  \end{enumerate}
+  \end{multicols}
+
+
+\item Use the results of the previous problem to calculate the
+  following inverses:
+  \begin{multicols}{2}
+  \begin{enumerate}[topsep=0pt,parsep=0pt]
+  \item $[23]^{-1}$ in $\Z_{301}$.
+  \item $[4750]^{-1}$ in $\Z_{87031}$. 
+  \item $[541541]^{-1}$ in $\Z_{48157656}$. 
+  \end{enumerate}
+  \end{multicols}
+
+
+\end{problems}
+
+\end{document}

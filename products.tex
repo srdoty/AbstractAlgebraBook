@@ -1,0 +1,398 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\im}{\operatorname{im}}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{23}
+
+\section{Direct products of groups}\noindent
+Recall the Cartesian product of two sets in set theory, which is used
+to construct the euclidean plane $\R^2 = \R \times \R$ as the set of
+all ordered pairs of real numbers.  For any sets $A$, $B$ we can
+similarly form the Cartesian product set 
+\[
+  A \times B = \{ (x,y) \mid x \in A, y \in B\}.  
+\]
+Given two groups one can make their Cartesian product into a
+group in a very natural way. This makes it possible to construct many
+new examples of groups by taking products of ones we already know. 
+
+As usual, we use multiplicative notation in this section, leaving it
+to the reader to make the necessary notational adjustments in other
+cases.
+
+\begin{defn}\index{direct~product}\index{product~of~groups}\label{prod} 
+  The \emph{direct product} of given groups $G$, $H$ is the group $G
+  \times H = \{ (x,y) \mid x\in G, y\in H \}$ of ordered pairs, with
+  binary operation
+  \[
+    (x,y) \cdot (u,v) = (xu,yv), \text{ for all $x,u\in G$, $y,v\in
+    H$.}
+  \]
+  The identity element of $G \times H$ is the pair $(1_G, 1_{H})$.
+  The inverse of a pair $(x,y)$ is the pair $(x^{-1},y^{-1})$; that
+  is: $(x,y)^{-1} = (x^{-1},y^{-1})$.
+\end{defn}
+
+It must be checked that this actually works; that is, we must verify
+that the above multiplication rule on $G \times H$ makes $G \times
+H$ a group. This is left for you as an exercise.
+
+If $G$, $H$ have finite order then we have $|G \times H| =
+|G|\cdot|H|$; i.e., the order of the direct product $G \times H$ is
+the product of the orders of $G$ and $H$. If one of the groups $G, H$
+is infinite then so is their direct product.
+
+
+\begin{examples} 
+1. The group $\Z_2 \times \Z_2$ is a group of order 4.  It is not hard
+to see that it is isomorphic with the Klein 4-group.
+
+2. If $m,n$ are relatively prime then $\Z_m \times \Z_n$ is isomorphic
+to $\Z_{mn}$.  In particular, if $p$, $q$ are distinct primes then
+$\Z_p \times \Z_q \cong \Z_{pq}$.
+\end{examples}
+
+
+
+Recall that if $H$, $K$ are subsets of a group $G$ then $HK = \{ hk: h
+\in H, k \in K \}$. 
+
+
+
+\begin{thm}[Internal direct products]
+Let $G$ be a group and suppose that $H,K$ are normal subgroups of
+$G$. If $H K = G$ and $H \cap K = \{1\}$ then $G \cong H \times K$ and
+every element of $G$ is uniquely expressible as a product of an
+element of $H$ by an element of $K$.
+\end{thm}
+
+\begin{proof}
+We define a map $f$ from $H \times K$ to $G$ by the rule $f((x,y)) =
+xy$, for any $x\in H$, $y \in K$.  Since $HK=G$ the map $f$ is
+surjective.  
+
+Next we claim that {\em elements of $H$ must commute with elements of
+  $K$}. For any $x \in H$, $y \in K$ consider the product
+$(xyx^{-1})y^{-1} = x(yx^{-1} y^{-1})$. Since $K$ is normal, the left
+hand side is an element of $K$. Since $H$ is normal, the right hand
+side is an element of $H$. Thus the product under consideration lies
+in the intersection $H \cap K$, so $xyx^{-1}y^{-1} = 1$, so $xy =
+yx$. This proves the claim.
+
+We can now verify that $f$ is actually a homomorphism:
+$f(\,(x,y)(x',y')\,) = f( (xx',yy')) = xx'yy' = xyx'y' = f((x,y))
+f((x',y'))$.  Finally, we check that $f$ is injective. Let $(x,y)$
+($x\in H$, $y\in K$) be an element of the kernel. Then $xy = 1$, so $y
+= x^{-1}$ must belong to $H$, thus to $H \cap K$, and thus $y =
+1$. Thus $x=1$ as well, and $(x,y) = (1,1)$. This shows that the
+kernel of $f$ must be the trivial subgroup of $H \times K$, so $f$ is
+injective, as desired.  We have shown that $f$ is a bijective
+homomorphism. Thus $f$ is an isomorphism from $H \times K$ to $G$, so
+$H \times K \cong G$.
+
+It remains to show that every element $g \in G$ is uniquely
+expressible in the form $hk$, for some $h \in H$, $k \in K$. That $g$
+has such an expression is clear from the hypothesis $G=HK$, so we only
+need to prove uniqueness. Suppose that $g = h_1k_1 = h_2k_2$ where
+$h_1, h_2 \in H$, $k_1, k_2 \in K$. Then by left multiplying by
+$h_2^{-1}$ and right multiplying by $k_1^{-1}$ we obtain $h_2^{-1} h_1
+= k_2 k_1^{-1}$. In this equation, the left hand side is an element of
+$H$ while the right hand side is an element of $K$. So both sides of
+the equation belong to $H \cap K$. But $H \cap K = \{1\}$, so
+$h_2^{-1} h_1 = 1$ and $k_2 k_1^{-1} = 1$; i.e., $h_1 = h_2$ and $k_1
+= k_2$. This proves the uniqueness statement.
+\end{proof}
+
+The point of the previous theorem is to ``factor'' the group $G$ as a
+direct product of two of its subgroups. This is a group-theoretic
+analogue of factoring integers. 
+
+\begin{defn}
+  Whenever a group $G$ is isomorphic to the direct product of normal
+  subgroups $H, K$ then we say it is the \emph{internal direct
+    product} of those subgroups, and we write $G = H \times K$.
+\end{defn}
+
+According to the theorem, we can factor $G$ as the internal direct
+product of normal subgroups $H,K$ if and only if $HK = G$ and $H \cap
+K = \{1\}$.
+
+\begin{examples}
+1. If $m,n$ are relatively prime then $\Z_{mn}$ has a unique subgroup
+$H$ of order $m$, and a unique subgroup $K$ of order $n$. In fact, $H
+= \gen{[n]}$ and $K = \gen{[m]}$ as you can easily check. Then $H+K =
+\Z_n$ and $H \cap K = \{[0]\}$, so $\Z_{mn}$ is the internal direct
+product of $H, K$. Of course $H \cong \Z_m$ and $K \cong \Z_n$ since
+all subgroups of a cyclic group are cyclic. Note that we write $ H+K$
+instead of $HK$ here because the groups are additive groups.
+
+2. The group $\Sym_3$ has subgroups $H = \gen{(1,2)}$, $K =
+\gen{(1,2,3)}$ of order 2 and 3, respectively. It is clear that $HK =
+\Sym_3$ and $H \cap K = \{(1)\}$. Furthermore, $K$ is a normal
+subgroup of $\Sym_3$ since it is a subgroup of index 2.  Alas, the
+subgroup $H$ is \emph{not} normal. So $\Sym_3$ is not equal to the
+direct product of these two subgroups. (In fact, it is impossible to
+express $\Sym_3$ as the internal direct product of any two of its
+subgroups.)
+\end{examples}
+
+The discussion extends to products of more than two groups. 
+
+\begin{defn}\label{def:gen-prod} 
+  The \emph{direct product} of given groups $G_1, G_2, \dots, G_n$ is
+  the group $G_1 \times G_2 \times \cdots \times G_n = \{ (x_1, x_2,
+  \dots, x_n) \mid x_k \in G_k \text{ for all } k = 1, \dots, n \}$,
+  with binary operation
+  \[
+    (x_1, x_2, \dots, x_n) \cdot (y_1, y_2, \dots, y_n) = (x_1y_1,
+  x_2y_2, \dots, x_ny_n).
+  \]
+  The identity element is the tuple $(1, \dots, 1)$.  The inverse of
+  $(x_1, \dots, x_n)$ is the tuple $(x_1^{-1}, \dots, x_n^{-1})$ of
+  inverses; i.e.\ $(x_1, \dots, x_n)^{-1} = (x_1^{-1}, \dots,
+  x_n^{-1})$.
+\end{defn}
+
+Again, it must be verified that this really is a group. The
+verification is no more difficult than for the case of products of two
+groups, and thus left to the reader. 
+
+
+If $H_1, H_2, \dots, H_n$ are subsets of a group $G$ then we extend
+the product notation in the obvious way: $H_1H_2 \cdots H_n = \{
+h_1h_2 \cdots h_n: h_k \in H_k, \text{ for all } k = 1, 2, \dots, n
+\}$.
+
+
+
+\begin{thm}[Internal direct products]
+Let $G$ be a group and suppose that $H_1, H_2, \dots, H_n$ are normal
+subgroups of a group $G$. If $H_1H_2 \cdots H_n = G$ and
+\[
+  H_k \cap (H_1 \cdots H_{k-1} H_{k+1} \cdots H_n) = \{1\}, \text{ for
+    all $k = 1, \dots, n$ }
+\] 
+then $G \cong H_1 \times H_2 \times \cdots \times H_n$ and every
+element of $G$ is uniquely expressible as a product of the form $h_1
+h_2 \cdots h_n$, where $h_k \in H_k$ for all $k$.
+\end{thm}
+
+The proof is omitted.  
+
+\begin{defn}
+  Whenever normal subgroups $H_1, H_2, \dots, H_n$ of a group $G$ can
+  be found such that $G \cong H_1 \times H_2 \times \cdots \times H_n$
+  then we say that $G$ is the \emph{internal direct product} of the
+  subgroups, and write $G = H_1 \times H_2 \times \cdots \times H_n$.
+\end{defn}
+
+For this to hold, it is necessary that the subgroups are normal
+subgroups and that they satisfy the conditions of the theorem.
+
+Since internal and external direct products are isomorphic, people
+usually do not bother to make a distinction between them.
+
+For finite subgroups of a group, the following simple counting
+proposition can be useful. 
+
+\begin{prop}\label{prop:counting-HK}
+  Let $H,K$ be finite subgroups of a group $G$ such that $H \cap K =
+  \{1\}$.  Then $|HK| = |H| \cdot |K|$.
+\end{prop}
+
+\begin{proof}
+By definition, $HK = \{xy \mid x \in H, y \in K\}$. The number of
+elements is $|H| \cdot |K|$ precisely when all the listed products are
+distinct, so that's what needs to be shown. So suppose that $x_1y_1 =
+x_2 y_2$ where $x_1,x_2 \in H$, $y_1, y_2 \in K$. Left multiply the
+equation $x_1y_1 = x_2 y_2$ by $x_1^{-1}$ and right multiply by
+$y_2^{-1}$ to get $y_1y_2^{-1} = x_1^{-1}x_2$. Since $H,K$ are
+subgroups of $G$, the left hand side $y_1y_2^{-1} \in K$ and the right
+hand side $x_1^{-1}x_2 \in H$. Since they are equal, both elements are
+in $H \cap K$. Since $H \cap K = \{1\}$, it follows that $y_1y_2^{-1}
+= 1$ and $x_1^{-1}x_2 =1$; i.e., $y_1 = y_2$ and $x_1 = x_2$.
+\end{proof}
+
+
+
+
+\section*{Exercises}
+\begin{problems}
+\item Verify that if $G,H$ are groups then $G \times H$ is a group.
+
+
+\item If $G, H$ are abelian groups, show that their direct product $G
+  \times H$ is abelian.
+
+\item Show that $G \times \{1\} \cong G$.
+
+\item Is the dihedral group $\D_n$ ever isomorphic to $\Z_n \times
+  \Z_2$? Prove your answer.
+
+\item Show that if $m,n$ are relatively prime then $C_{mn} \cong C_m
+  \times C_n$. (Here, $C_n$ means the cyclic group of order $n$.)
+
+\item Show that if $m,n$ are relatively prime then $\Z_{mn} \cong \Z_m
+  \times \Z_n$.
+
+\item Prove that $G \times H \cong H \times G$.
+
+\item Prove that if $G \times H \cong G \times K$ then $H \cong
+  K$. (This can be called a \emph{cancellation property} for direct
+  products.)
+
+
+\item The symmetric group $\Sym_3$ has composition factors isomorphic
+  to the cyclic groups $C_2, C_3$ of order 2 and 3. Show that $\Sym_3
+  \not\cong C_2 \times C_3$. (This shows that not all groups are
+  isomorphic to the product of their composition factors.)
+
+\item If $|G| = mn$ where $m,n$ are relatively prime and $G$ has
+  normal subgroups $H,K$ of order $m,n$ respectively, then show that
+  $G = H \times K$.
+
+\item Show that if $H,K$ are normal subgroups of a group $G$, $HK =
+  G$, and every $g \in G$ is \emph{uniquely} expressible in the form
+  $g = hk$ for some $h \in H$, $k \in K$ then $H \cap K = \{1\}$ and
+  hence $G = H \times K$.
+
+\item If $H_1, H_2, \dots, H_n$ are normal subgroups of a
+  group $G$, $H_1H_2 \cdots H_n = G$, and every $g \in G$ is
+  \emph{uniquely} expressible as a product of the form $g =h_1 h_2
+  \cdots h_n$, where $h_k \in H_k$ for all $k$, then show that
+  \[
+  H_k \cap (H_1 \cdots H_{k-1} H_{k+1} \cdots H_n) = \{1\}, \text{ for
+    all $k = 1, \dots, n$ }
+  \] 
+  and thus $G = H_1 \times H_2 \times \cdots \times H_n$.
+
+\item Show that if $G = H_1 \times H_2 \times \cdots \times H_n$ is
+  the internal direct product of normal subgroups $H_1, H_2, \dots,
+  H_n$ then for any $i \ne j$ we have:
+  \begin{enumerate}
+  \item $H_i \cap H_j = \{1\}$.
+  \item $ab = ba$ for all $a \in H_i$, $b \in H_j$.  [Hint: Argue that
+    $aba^{-1}b^{-1}$ is in both $H_i$ and $H_j$.]
+  \end{enumerate}
+
+
+
+\item 
+  \begin{enumerate}
+  \item Show that the map $x \mapsto (x,1)$ is an injective
+    homomorphism from $G$ into $G \times H$.
+  \item Show that the image of this homomorphism is a normal subgroup 
+    of $G \times H$ isomorphic to $G$.
+  \end{enumerate}
+
+
+\item\index{projection} Show that the rule $(x,y) \mapsto x$ defines a
+  surjective homomorphism $p_1$ mapping $G \times H$ onto
+  $G$. Similarly, the rule $(x,y) \mapsto y$ defines a surjective
+  homomorphism $p_2$ mapping $G\times H$ onto $H$. These maps are
+  called \emph{projections}. Describe their kernels and images.
+
+\item If $G = H \times K$ is the direct product of two normal
+  subgroups $H,K$ then prove that $G/H \cong K$ and $G/K \cong H$.
+
+\item\index{diagonal~subgroup} Let $G$ be a group and consider the
+  direct product $G \times G$.  Show that the set
+  $S = \{ (x,x) \mid x\in G \}$ is a subgroup of $G \times G$. Then
+  show it is isomorphic to $G$. (It is known as the \emph{diagonal}
+  subgroup of $G \times G$.)
+
+
+
+\end{problems}
+
+\end{document}

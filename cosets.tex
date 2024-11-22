@@ -1,0 +1,520 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\im}{\operatorname{im}}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{19}
+
+\section{Cosets}\noindent
+We now introduce cosets, which will be used to prove Lagrange's
+theorem and to construct quotient groups. Cosets are a fundamental
+concept in group theory.  
+
+
+\begin{defn}\index{coset}\label{def:cosets} 
+If $H$ is a subgroup of a group $(G,*)$ and $a \in G$ then we write
+$a*H = \{a*x : x \in H\}$ and $H*a = \{x*a : x \in H\}$.  These sets
+are called \emph{left} and \emph{right cosets} of $H$ in $G$,
+respectively.
+
+If $(G, \cdot)$ is a multiplicative group then we write $aH$ and $Ha$
+for the left and right cosets of $H$, whereas if $(G, +)$ is a
+additive group then we write them as $a+H$ and $H+a$ instead.
+\end{defn}
+
+
+\begin{examples}
+1. Let $H = \{ 1, r, \cdots, r^{n-1} \}$ be the rotation subgroup of
+the dihedral group $\D_n$. Then $dH = \{d, dr, \dots, dr^{n-1} \}$,
+where $d \in \D_n$ is any reflection, and $Hd = \{d, rd, \dots,
+r^{n-1}d \}$. So $dH = Hd$. Furthermore, if $a \in H$ is any rotation,
+then $aH = H$ and $Ha = H$.
+
+2. Let $H = 2\Z = \{ 2k : k \in \Z\}$ be the subgroup of even integers
+in the additive group $(\Z,+)$. Then $1+H = 1+2\Z = \{ 2k+1 : k \in \Z
+\} = H+1$ is the set of all odd integers. Furthermore, $m + H = 1+H$
+for any odd integer $m$, and $m+H = 0+H = H$ for any even integer $m$.
+
+3. Let $H = n\Z = \{ nk : k \in \Z \}$ be the subgroup of multiples of
+$n$ in the additive group $(\Z,+)$. Then $a+H = a + n\Z = a + \{a+nk :
+k \in \Z \}$ is the set of all integers which are congruent to $a$
+modulo $n$. Note that $a+H = b+H$ if and only if $a \equiv b
+\pmod{n}$.
+
+4. Let $H = \{[0], [2], [4]\}$ in the additive group $G=\Z_6$. It is
+easy to check that $H$ is a subgroup of $G$. Then $H = [0]+H = [2]+H =
+[4]+H$. Also, $[1]+H = [3]+H = [5]+H = \{[1],[3], [5] \}$.
+
+5. Consider $G=\Z_9^\times = \{[1], [2], [4], [5], [7], [8] \}$, the
+multiplicative group of units in the ring $\Z_9$. Let $H =
+\{[1],[8]\}$ in Then $H$ is a subgroup of $G$, and $H = [1]H = [8]H$,
+$[2]H = [7[H] = \{[2],[7]\}$, and $[4]H = [5]H = \{[4],[5]\}$. These
+  are all the left cosets.
+\end{examples}
+
+It is annoying to always have to distinguish between the
+multiplicative and additive notation, so from now on we adopt the
+convention that all groups will be multiplicative groups, unless
+stated otherwise. We leave it to reader to make the necessary
+adjustments in notation for additive groups.
+
+
+\begin{defn}[equivalence relations induced by a subgroup]
+\label{def:H-equiv-rels}
+Let $H$ be a subgroup of a given group $G$. Define a relation $\sim_L$
+on $G$ by: $a \sim_L b$ whenever $a^{-1}b \in H$.  Define another
+relation $\sim_R$ on $G$ by: $a \sim_R b$ whenever $ba^{-1} \in H$.
+The relations $\sim_L, \sim_R$ are called \emph{left and right
+  equivalence}.
+\end{defn}
+
+Note that the relations $\sim_L$ and $\sim_R$ depend on both the
+group $G$ and the chosen subgroup $H$.
+
+\begin{lem}
+Both relations $\sim_L$ and $\sim_R$ are equivalence relations on $G$.
+The equivalence classes for $\sim_L$ are the left cosets of $H$ and
+the equivalence classes for $\sim_R$ are the right cosets of $H$.
+\end{lem}
+
+\begin{proof}
+The proof that $\sim_L$ and $\sim_R$ are equivalence relations is an
+easy exercise. 
+
+We prove the claim about left cosets.  Let $a,b \in G$. We have $a
+\sim_L b$ if and only if $a^{-1}b \in H$ if and only if $b \in
+aH$. Thus $[a] = \{b \in G: a \sim_L b \} = aH$. This proves that the
+equivalence class of $a$ is equal to the left coset $aH$.  The proof
+of the claim about right cosets is similar.
+\end{proof}
+
+
+In general cosets (left or right) are just subsets of the group $G$,
+and are not necessarily subgroups.  From now on we choose to work only
+with \emph{left} cosets for the sake of having a definite choice, but
+it should be understood that everything we prove about left cosets
+applies equally well to right cosets.
+
+
+\begin{lem}[properties of left cosets] \label{cosetlemma} 
+Let $G$ be a group and $H$ a subgroup of $G$. Let $a,b \in G$. Then:
+\begin{enumerate}
+\item $a \in aH$.
+\item $aH=H$ if and only if $a\in H$.
+\item $aH=bH$ if and only if $a \sim_L b$.
+\item $aH=bH$ if and only if $b=ax$ for some $x\in H$.
+\item Any pair of left cosets of $H$ are either disjoint or
+  coincide.
+\end{enumerate}
+\end{lem}
+
+\begin{proof} 
+  Exercise.
+\end{proof}
+
+\begin{defn}\index{quotient~set}
+Let $G$ be a group and $H$ any subgroup of $G$. We write $G/H = \{ aH
+\mid a \in G \}$ for the quotient set $G/\!\!\sim_L$ of all left
+cosets of $H$. This is called the \emph{quotient} of $G$ by $H$. We
+read the notation $G/H$ as ``$G$ mod $H$.''
+\end{defn}
+
+By definition, $G/H$ is a set of sets. The elements of $G/H$ are the
+left cosets of $H$, which by definition are certain subsets of $G$.
+Since $\sim_L$ is an equivalence relation on the set $G$, it follows
+from the fundamental theorem of equivalence relations that $G$
+\emph{can be expressed as the disjoint union of its distinct left
+  cosets}. Those distinct left cosets are the elements of the quotient
+set $G/H$.
+
+
+\begin{defn}\index{index}\index{GH@$[G:H]$}
+The number of distinct elements of the set $G/H$ (i.e., its
+cardinality as a set), which is the same as the number of distinct
+left cosets, is denoted by either $|G/H|$ or $[G:H]$, and is called
+the {\em index} of $H$ in $G$. It can be infinite, but it must be a
+finite number if $G$ is a finite group.
+\end{defn}
+
+Note that as $a$ varies over $G$, there will in general be a lot of
+repetition in the left cosets $aH$. When computing the index, you
+count just the distinct cosets. 
+
+
+\begin{examples}
+1. Let $G = \Sym_n$ and let $H = \Alt_n$. Then there are just two left
+cosets: $G/H = \Sym_n/\Alt_n = \{ \Alt_n, \alpha \Alt_n \}$, where
+$\alpha$ is any odd permutation. This is just the splitting of all
+permutations into the even ones ($\Alt_n$) and the odd ones ($\alpha
+\Alt_n$). So $[\Sym_n : \Alt_n] = 2$.
+
+2. Take $G = \Z$ (under addition) and $H = n\Z = \{nk: k \in \Z
+\}$. The left cosets have the form $a + H = a+n\Z = \{ a+nk : k\in \Z
+\}$ for various $a\in \Z$. Moreover, $a+H=b+H$ if and only if $-a+b
+\in H$, i.e., if and only if $a \equiv b \pmod{n}$. The distinct
+cosets are the $a+H$ where $0\le a \le n-1$. Note that $a+n\Z = [a]$,
+the congruence class determined by $a$. So the set $G/H$ of left
+cosets is 
+\[
+  G/H = \Z/n\Z = \{n\Z, 1+n\Z, \dots, n-1 +n\Z \} = \{ 
+  [0], [1], \dots, [n-1] \} = \Z_n.
+\]
+So the index is $[\Z: n\Z] = n$.  Note that we have reconstructed
+$\Z_n$ in terms of cosets. To say it another way, the coset
+construction is a vast generalization of the construction of $\Z_n$
+given previously.
+
+3. Let $G=\O(n)$ for $n \ge 2$ and let $H = \SO(n)$.  Recall that the
+determinant of any orthogonal matrix is $\pm 1$. By definition,
+elements of $\SO(n)$ are proper orthogonal matrices (of determinant
+1).  So we have $G/H = \O(n)/\SO(n) = \{ \SO(n), A\cdot \SO(n) \}$,
+where $A$ is any improper orthogonal matrix.  This reflects the fact
+that the improper orthogonal matrices are those of determinant $-1$.
+So the index is $[\O(n):\SO(n)]=2$.
+
+4. Consider $G=\Z_9^\times = \{[1], [2], [4], [5], [7], [8] \}$, the
+multiplicative group of units in the ring $\Z_9$. Then $H =
+\{[1],[8]\}$ is a subgroup of $G$. The left cosets of $H$ in $G$ are
+$H = [1]H$, $[2]H = \{[2],[7]\}$, and $[4]H = \{[4],[5]\}$. So the
+index is $[G:H] = 3$. Notice that in this case $|G|/|H| = 6/2 = 3$.
+\end{examples}
+
+
+
+The next result is a fundamental result about finite groups, with
+numerous applications. In particular, it is heavily used in the design
+of public-key cryptosystems.
+
+\begin{thm}[Lagrange's Theorem]\index{Lagrange's~theorem} 
+\label{thm:Lagrange}%
+Let $G$ be a finite group and $H$ a subgroup of $G$. Then $|G| = [G:H]
+\cdot |H|$. In words, the order of $G$ is the order of the subgroup
+$H$ times its index in $G$.
+\end{thm}
+
+\begin{proof}
+Since $G$ is a finite set the left cosets must be finite sets as
+well. Moreover, {\em all the left cosets must have the same
+  cardinality}. This is because $H$ is in bijective correspondence
+with $aH$, for any $a \in G$. The correspondence is given by the map
+$x \mapsto ax$ ($x\in H$). So all the left cosets have the same
+cardinality as the subgroup $H$ and therefore the same cardinality as
+one another. (Note that $H = 1H$ is also a left coset.)  There are
+precisely $[G:H]$ distinct left cosets. And $G$ is the disjoint union
+of the left cosets, since cosets are equivalence classes. So if $m =
+[G:H]$ then we have the disjoint union
+\[
+  G = a_1H \cup a_2H \cup \cdots \cup a_mH 
+\]
+where these are the {\em distinct} left cosets. Thus $|G| = m
+|H|$, as required.
+\end{proof}
+
+If $a$ is an element of a group $G$, recall that its order $|a|$ is
+the least positive integer $k$ such that $a^k = 1$. Infinite groups
+can have elements of infinite order, but if $G$ is a finite group then
+every element has finite order. Lagrange's theorem tells us for
+example that if $G$ is finite then the order of all its subgroups and
+all its elements must divide the group order $|G|$.
+
+\begin{cor}
+Suppose $G$ is a finite group. 
+\begin{enumerate}
+\item[(a)] If $H$ is a subgroup of $G$ then $|H|$ must divide $|G|$.
+\item[(b)] If $a\in G$ then its order $|a|$ must divide $|G|$.
+\item[(c)] Any group of order $p$, where $p$ is prime, must be cyclic.
+\item[(d)] If $H$ is a subgroup of $G$ then $[G:H]=|G|/|H|$. 
+\end{enumerate}
+\end{cor}
+
+\begin{proof} (a) and (d) are obvious consequences of Lagrange's Theorem. 
+
+(b) Let $H = \gen{a}$. Then $|H|=|a|$ (the cardinality of $H$ is equal
+  to the order of $a$).  The statement in part (b) now follows from
+  part (a).
+
+(c) Let $G$ be a group of order $p$, where $p$ is prime. Since $p>1$
+we know that $G$ must contain at least one element $x$ which is
+different from the identity. Then $|x|$ must divide $p$ by part (b).
+Moreover, $|x|>1$ since the only element of order $1$ in $G$ is the
+identity element. The only divisors of $p$ are $p$ and $1$, so it
+follows that $|x| = p$. Hence $G = \gen{x}$ and $G$ is cyclic.
+\end{proof}
+
+Lagrange's theorem can also be applied to number theory, to give easy
+proofs of both Euler's theorem and Fermat's little theorem. That both
+of these famous number theoretic results follow so easily from
+Lagrange's theorem illustrates the power of the abstract approach.
+
+Recall that Euler's phi-function\index{Euler's~phi-function}
+$\varphi(n)$ is defined to be the number of integers $a$ such that
+$1 \le a \le n-1$ and $\gcd(a,n) = 1$. Thus the multiplicative group
+$\Z_n^\times$ of units has order $\varphi(n)$. Recall also that the
+ring $\Z_n = \{ [a] : a \in \Z \} = \{ [0], [1], \dots, [n-1] \}$,
+where $[a]$ is the congruence class of $a$, given by
+$[a] = \{ b \in \Z : a \equiv b \pmod{n} \}$.
+
+\begin{cor}\index{Euler's~theorem}
+  Let $a$ be any integer.
+  \begin{enumerate}
+  \item (Euler's theorem) For any positive integer $n$ such that $a,
+    n$ are relatively prime, we have $a^{\varphi(n)} \equiv 1
+    \pmod{n}$.
+  \item\index{Fermat's~little~theorem} (Fermat's little theorem) For
+    any prime $p$ such that $p$ does not divide $a$, we have
+    $a^{p-1} \equiv 1 \pmod{p}.$
+  \end{enumerate}
+\end{cor}
+
+\begin{proof}
+(a) Let $G = \Z_n^\times$ be the multiplicative group of units in the
+  finite ring $\Z_n$. We have $|G| = \varphi(n)$, by definition of
+  $\varphi(n)$. If $a, n$ are relatively prime then $\gcd(a,n)=1$ and
+  thus $[a] \in \Z_n^\times$. By the first corollary to Lagrange's
+  theorem, the order $|[a]|$ must divide $|G|=\varphi(n)$. Suppose
+  $|[a]|=k$. Then $[a]^k = [1]$ holds in $G=\Z_n^\times$, where $k$
+  divides $\varphi(n)$. There is some $m \in \Z$ such that $\varphi(n)
+  = km$. Now the equality $[a]^k = [1]$ implies $([a]^k)^m = [1]^m =
+  [1]$. In other words, $[a]^{km} = [a]^{\varphi(n)} = [1]$ holds in
+  $G = \Z_n^\times$. This implies (by definition of congruence class
+  multiplication) that the equality $[a^{\varphi(n)}] = [1]$ holds in
+  $G = \Z_n^\times$.  To finish, recall that this equality in $\Z_n$
+  is equivalent to the desired congruence, so the proof is complete.
+
+(b) We can repeat the argument with $p$ in place of $n$, noting that
+  $\varphi(p) = p-1$. Note that $p$ does not divide $a$ if and only if
+  $\gcd(a,p) = 1$. Alternatively, we can just note that the result in
+  (b) is just a special case of that in (a).
+\end{proof}
+
+\begin{defn}\index{coset~representatives}
+Let $G$ be a group and $H$ a subgroup of $G$. Any set $S$ of elements
+of $G$ such that:
+\begin{enumerate}
+\item $G/H = \{ aH : a \in S \}$, 
+\item for all $a,b \in S$, $a \ne b$ implies $aH \ne bH$
+\end{enumerate}
+is called a set of left coset \emph{representatives} of the quotient
+set $G/H$.
+\end{defn}
+
+
+Picking a set of coset representatives is the same as choosing an
+element from each distinct coset. If $S$ is such a set, then we can
+write $G$ as a \emph{disjoint} union: $G = \bigsqcup_{a \in S} aH$.
+If the index $[G:H] = n$ is finite, then we can write this disjoint
+union as: $G = a_1H \sqcup a_2H \sqcup \cdots \sqcup a_nH$, where $S =
+\{a_1, a_2, \dots, a_n \}$.
+
+One of the left cosets (say $a_1H$) is always the same as the subgroup
+$H$ itself, and we may choose the identity element $1$ as its coset
+representative. If we have made that choice, then the above becomes $G
+= H \sqcup a_2H \sqcup \cdots \sqcup a_mH$, where $S = \{1, a_2,
+\dots, a_n \}$. 
+
+In general coset representatives are far from unique. Thus, whenever
+we define functions in terms of a set of coset representatives, then
+we must pause to verify that our function is well-defined (independent
+of the choice of coset representatives). We will see examples later.
+
+
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item Prove that the relation $\sim_L$ defined by a subgroup $H$ (see
+  \ref{def:cosets}) is an equivalence relation on the group $G$.
+
+\item Prove Lemma \ref{cosetlemma}. 
+
+\item Let $G$ be the additive group $\Z_{2n}$. Let $H = \{ [2k] \in
+  \Z_{2n} \colon 0 \le k < n \}$. Show that $H < G$, and compute the
+  index $[G \colon H]$.
+
+\item Compute the index $[G:H]$ for the following cases:
+  \begin{enumerate}
+  \item $H = \{[0],[3]\}$ in $G=(\Z_6,+)$. 
+  \item $H = \{[0], [10]\}$ in $G = (\Z_{90},+)$.
+  \item $H = \{[1],[4],[13],[16]\}$ in $G = (\Z_{17}^\times, \cdot)$.
+  \item $H = \{[1],[7]\}$ in $G = (\Z_{48}^\times, \cdot)$.
+  \end{enumerate}
+
+\item List the left cosets in $G/H$ in part (a) and (c) of the
+  preceding problem.
+
+\item Let $G=C_n = \{1, x, x^2, \dots, x^{n-1} \}$ be the abstract
+  cyclic group\index{cyclic~group} of order $n$, generated by an
+  element $x$ of order $n$. Suppose that $k$ divides $n$ and let
+  $H = \gen{x^k}$ be the subgroup generated by $x^k$. Describe the
+  left cosets in $G/H$ and compute the index $[G:H]$.
+
+\item Describe the distinct left cosets of the additive subgroup
+  $(\Z,+)$ in the additive group $(\R,+)$. In other words, describe
+  the quotient set $\R/\Z$.
+
+\item Describe the distinct left cosets of the additive subgroup
+  $(\R,+)$ in the additive group $(\C,+)$. In other words, describe
+  the quotient set $\C/\R$. What is $[\C: \R]$?
+
+\item Let $\R^+$ be the set of positive real numbers.  Describe the
+  distinct left cosets of the multiplicative subgroup $(\R^+,\cdot)$
+  in the multiplicative group $(\R^\times,\cdot)$. In other words,
+  describe the quotient set $\R^\times/\R^+$. What is $[\R^\times:
+    \R^+]$?
+
+\item Describe the distinct left cosets of $\SL(2)$ in $\GL(2)$.
+
+\item If $p$ is a prime, describe the distinct left cosets of
+  $\SL_2(\F_p)$ in $\GL_2(\F_p)$, and compute the index $[\GL_2(\F_p):
+  \SL_2(\F_p)]$.
+
+\item Suppose that $H$ is a subgroup of a group $G$. Show that if $aH
+  = Ha$ and $bH=Hb$ then $abH = Hab$.
+
+\item Suppose that $H$ is a subgroup of a group $G$. Show that if $aH
+  = Ha$ then $a^{-1} H = H a^{-1} $.
+
+\item Explain why a group $G$ of order 20 has no subgroups or elements
+  of order 3, 7, or 9.
+
+\item Show that if $G$ is a group of order $n$ then $x^n = 1$ for
+  every $x \in G$. 
+  
+
+\item Prove that a group of prime order has no subgroups other than
+  itself and the trivial subgroup.
+
+\item Prove that every element except the identity has order $p$ in a
+  group of prime order $p$.
+
+
+\item In the multiplicative group $\F_{11}^\times$ we have $[2]^2 =
+  [4]$, $[2]^4=[4]^2 =[5]$, and $[2]^5 = [2]^4 \cdot [2] = [5] \cdot
+  [2] = [10]$. Use one of the corollaries to Lagrange's theorem to
+  explain why this immediately implies that $[2]$ must have order 10
+  in the group.
+
+\item Suppose that $H$, $K$ are finite subgroups of a group $G$, and
+  let $m = |H|$, $n = |K|$.
+  \begin{enumerate}
+  \item Show that the order $|H \cap K|$ of $H \cap K$ must be a
+    common divisor of $m,n$.
+  \item Show that if $m,n$ are relatively prime then $H \cap K =
+    \{1\}$ is the trivial subgroup.
+  \end{enumerate}
+  
+\item Suppose that $G$ is a group of order $pq$ where $p,q$ are
+  distinct primes. Show that if $G$ is not cyclic then every element
+  in $G$ except the identity must have order $p$ or $q$.
+
+\end{problems}
+\end{document}
+
+
+\item Show that the multiplicative group $\F_7^\times$ is a cyclic
+  group, by finding a generator. Then do the same for
+  $\F_{13}^\times$. 
+
+\item Show that the additive group $\Z/m\Z$ is cyclic, by finding a
+generator.
+
+\item Is the additive group $\Z$ cyclic? Why or why not?
+
+\item Prove that if $G$ is a group and if $a$ is an element of $G$ of
+  order $r$ then $(a^k)^{-1} = a^{r-k}$ for all $0\le k < r$.
+
+\item Prove that $(\Z_n,+)$ is generated by the congruence class $[a]$
+  if and only if $\gcd(a,n) = 1$.
+
+\item Compute the index $[\GL_n(\F_p): \SL_n(\F_p)]$.  Justify your
+  answer.

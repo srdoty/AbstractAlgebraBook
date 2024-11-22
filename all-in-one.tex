@@ -1,0 +1,238 @@
+\documentclass[11pt,oneside]{book}
+\usepackage{standalone}
+\usepackage{chngcntr}\counterwithout{section}{chapter} % disable chap.sec
+\usepackage[titles]{tocloft}
+%\renewcommand*\cftchapnumwidth{2.4em}
+%\usepackage[margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag,amscd,epic} 
+\usepackage{graphicx} 
+\usepackage[all]{xy}
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\usepackage{makeidx}
+\makeindex
+\usepackage[nottoc]{tocbibind} % nottoc will exclude the toc
+
+%\usepackage[copyright,scale=2.0]{ccicons}
+%\usepackage[scale=1.8]{ccicons}
+%\usepackage[hidelinks]{hyperref}  %add hyperlinks (hidden)
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks   = true, %Colours links instead of ugly boxes
+  urlcolor     = blue, %Colour for external hyperlinks
+  linkcolor    = blue, %Colour of internal links
+  citecolor   = red %Colour of citations
+}
+
+
+\pagestyle{plain}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=1.1cm,%
+ label={\thesection.\arabic*.}, ref=\thesection.\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+\newtheorem{prob*}{Problems}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\Orth}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\ptn}{\mathfrak{p}}
+\newcommand{\normal}{\triangleleft\,}%better than \lhd
+\newcommand{\morenormal}{\triangleright}
+
+\numberwithin{equation}{section}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+\title{\bf\Huge Lecture Notes on\\Abstract Algebra}
+\author{\Large S.R.~Doty}
+\date{\large 21 November 2024}
+
+
+
+\begin{document}\maketitle
+
+%%%%%%%%%%%%% copyrightpage %%%%%%%%%%%%%%
+\thispagestyle{empty}
+\begingroup
+%\footnotesize
+\parindent 0pt
+\parskip \baselineskip
+
+\vskip 1in
+
+\begin{center}
+\textcopyright{} \textbf{2024 Stephen Richard Doty}\\
+\ \\  
+Published under a Creative Commons 
+Attribution license\\
+(CC BY), version 4.0.\\
+{\ } \\ 
+%\includegraphics{by.png}\\   
+License information:\\
+\url{https://creativecommons.org/licenses/by/4.0}\\
+\end{center}
+
+\vfill
+
+This book is published under a CC BY license, which means that you can
+distribute, remix, adapt, and build upon the material for any purpose,
+even commercially, as long as you give appropriate credit, provide a
+link to the license, and indicate if changes were made.
+
+This book is open source: the \LaTeX\ source code is freely available.
+See the author's home page for a link to the source files.
+
+
+
+\vfill
+
+
+Doty, Stephen Richard\\
+Department of Mathematics and Statistics \\
+Loyola University Chicago \\
+Chicago, Illinois 60660 U.S.A.\\
+\url{https://doty.math.luc.edu}\\
+%%\href{mailto:doty@math.luc.edu}{doty@math.luc.edu} 
+
+%%%%{\LARGE\plogo}
+%\vspace*{3\baselineskip}
+
+\endgroup
+\clearpage
+
+
+
+\frontmatter
+
+\tableofcontents
+
+\newpage
+\chapter{Preface}
+\input{preface}
+
+
+\newpage
+\mainmatter
+
+%\renewcommand{\thechapter}{\Roman{chapter}}
+\setcounter{chapter}{-1}
+\chapter{Preliminaries}
+\input{sets}
+
+\chapter{Permutation Groups}
+\input{perm-gps}
+
+\chapter{Symmetry Groups}
+\input{symmetry}
+\newpage
+\input{appen-polys}
+
+\chapter{Modular Arithmetic}
+\input{Z_n}
+
+\chapter{Linear Groups}
+\input{linear-gps}
+
+\chapter{Abstract Groups}
+\input{abstract-gps}
+\newpage
+\input{cyclic-gps}
+\chapter{Quotients and Homomorphisms}
+\input{cosets}
+\newpage
+\input{quotient-gps}
+
+\chapter{Simple Groups and Direct Products}
+\input{simple-gps}
+\newpage
+\input{products}
+
+\chapter{Group Actions}
+\input{actions}
+
+\chapter{Further Topics}
+\input{Sylow}
+\newpage
+\input{abelian}
+\newpage
+\input{present}
+
+\backmatter
+\printindex
+\end{document}

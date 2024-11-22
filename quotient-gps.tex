@@ -1,0 +1,749 @@
+\documentclass[11pt]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+\usepackage[all]{xy}
+
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\PSL}{\mathrm{PSL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\normal}{\triangleleft\,}%better than \lhd
+\newcommand{\morenormal}{\triangleright}
+\newcommand{\im}{\operatorname{im}}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{20}
+
+
+
+\section{Quotient groups}\noindent
+From now on we use multiplicative notation unless indicated
+otherwise. The results apply equally well to additive groups, but the
+notation needs to be translated accordingly.
+
+
+If $H$ is a subgroup of a group $G$, recall that $G/H =\{aH : a \in G
+\}$ is the set of all left cosets of $H$ in $G$. The key question for
+this section is: when is the set $G/H$ of left cosets a group?  Recall
+that we have previously defined the product of two subsets $S,T$ in a
+group by $ST = \{xy \mid x \in S, y \in T \}$. In particular, this
+means that $aH = \{ax \mid x \in H \}$, $Ha = \{ xa \mid x \in H \}$,
+and $(aH)(bH) = \{ axby \mid x,y \in H\}$.  We want the product
+$(aH)(bH)$ of two left cosets to always equal another left coset.
+
+\begin{thm}\label{thm:coset-mult}[coset multiplication]
+  Suppose that $H$ is a subgroup of a group $G$. Then the following
+  are equivalent: 
+  \begin{enumerate}
+  \item For any $a,b \in G$, there is some $c \in G$ such that
+    $(aH)(bH) = cH$.
+  \item For any $a,b \in G$, $(aH)(bH)=(ab)H$. 
+  \item $Hb = bH$, for all $b \in G$.
+  \end{enumerate}
+\end{thm}\index{coset~multiplication}
+
+\begin{proof}
+(a) $\implies$ (b): Since $ab = a1b1 \in (aH)(bH)$, it follows from
+  the given equality $(aH)(bH) = cH$ that $ab \in cH$. Hence $(ab)H =
+  cH$.
+
+(b) $\implies$ (c): Let $b \in G$. Then $(bH)(b^{-1}H) = (bb^{-1})H =
+  1H = H$; i.e., $bHb^{-1}H = H$. This implies that $b H b^{-1} =
+  bHb^{-1} 1 \subset H$, so $bH \subset Hb$. Similarly, $(b^{-1}H)(bH)
+  = (b^{-1}b)H = H$ implies that $b^{-1}Hb \subset H$, so $Hb \subset
+  bH$. We have shown that $bH \subset Hb$ and $Hb \subset bH$, so $Hb
+  = bH$.
+
+(c) $\implies$ (a): Suppose that $Hb = bH$. Then by associativity we
+  have $(aH)(bH) = a(Hb)H = a(bH)H = (ab)(HH) = (ab)H$.
+\end{proof}
+
+So multiplication of left cosets always produces another left coset
+precisely when condition (c) of the previous theorem holds. This leads
+to the next definition.
+
+\begin{defn}\index{normal~subgroup}
+Let $G$ be a group and $H$ a subgroup of $G$. We say that $H$ is a
+{\em normal subgroup} of $G$ if $Ha = aH$ for every $a\in G$. We will
+write $H \normal G$ (or $G \morenormal H$) to indicate that $H$ is a
+normal subgroup of $G$.
+\end{defn}
+
+The trivial subgroup $\{1\}$ and the entire group $G$ are always
+normal subgroups of a group $G$.  The definition says that $H$ is a
+normal subgroup if and only if every left coset is also a right coset.
+Thus, \emph{every} subgroup of an abelian group is normal.
+
+%The next result provides several equivalent ways to verify that a
+%given subgroup is normal.
+
+\begin{thm}\label{thm:normality-conds} 
+Suppose that $H$ is a subgroup of a group $G$. The following are
+equivalent:
+\begin{enumerate}
+\item $H \normal G$.
+\item $aHa^{-1} = H$, for all $a\in G$.
+\item $aHa^{-1} \subset H$, for all $a\in G$.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+(a) $\implies$ (b): If $H$ is normal in $G$ then by definition $aH=Ha$
+for all $a\in G$. Multiplying this equality by $a^{-1}$ on the right 
+gives the equality $aHa^{-1} = Haa^{-1}$.  But $Haa^{-1}=H 1 = H$.
+
+(b) $\implies$ (c): This is clear.
+
+(c) $\implies$ (a): Suppose $aHa^{-1} \subset H$, for all $a\in G$.
+Right multiply by $a$ to get $aH \subset Ha$. Replacing $a$ by its
+inverse in the inclusion $aHa^{-1} \subset H$, we get $a^{-1}Ha
+\subset H$, so by left multiplication by $a$ we get $Ha \subset aH$.
+We have shown that both $aH \subset Ha$ and $Ha \subset aH$, so $aH =
+Ha$. This proves (a). 
+\end{proof}
+
+\begin{rmks}
+  1. Note that if $H$ is a subgroup of a group $G$ then $aHa^{-1}$ is
+  also a subgroup of $G$, for any $a \in G$. This is called a
+  \emph{conjugate} subgroup of $H$. Note also that $|H| = |aHa^{-1}|$,
+  since the map $x \mapsto axa^{-1}$ defines a bijection from $H$ onto
+  $aHa^{-1}$. In general, the conjugate subgroup $aHa^{-1}$ can be
+  different from $H$. Then $H \normal G$ if and only if all the
+  conjugate subgroups of $H$ are equal to $H$. (We can say that $H$ is
+  \emph{stable under conjugation} when $H \normal G$.)
+
+  2. The relation $\normal$ is not transitive. That is, if $H \normal
+  K$ and $K \normal G$ then it is not always true that $H \normal G$.
+
+  3. By replacing $a$ by $a^{-1}$ in parts (b), (c) of the preceding
+  theorem, we see that $H \normal G$ is also equivalent to:
+  \begin{enumerate}
+  \item [(b')]  $a^{-1}Ha = H$, for all $a\in G$.
+  \item [(c')]  $a^{-1}Ha \subset H$, for all $a\in G$.
+  \end{enumerate}
+  Condition (c) in the theorem is a closure condition. It says that a
+  subgroup $H$ is normal if and only if it is closed under
+  conjugation. Elements of the form $axa^{-1}$ are called
+  \emph{conjugates} of $x$.
+\end{rmks}
+
+The following simple observation can often be used to find a normal
+subgroup of a finite group whose order is an even number. It can also
+be applied more generally to infinite groups.
+
+\begin{prop}\index{index~2~implies~normal}
+  If $H$ is a subgroup of a group $G$ of index $2$ then $H$ must be a
+  normal subgroup of $G$. (In other words, $[G:H]=2$ implies $H
+  \normal G$).
+\end{prop}
+
+\begin{proof}
+Let $a\in G$. Either $a \in H$ or $a \notin H$, and we consider the
+two cases separately. Case 1: If $a\in H$ then $aH=H$ and $Ha=H$ by
+the fact that $H$ is closed under products, so $aH=Ha$. Case 2: If
+$a\notin H$ then $aH = G - H = \{ g \in G \mid g \notin H \}$ since
+there are just two left cosets, and they are disjoint.  Similarly, $Ha
+= G - H$ for exactly the same reason. Thus $aH=Ha$. Cases 1 and 2
+taken together show that $aH=Ha$ for all $a \in G$, so $H \normal G$.
+\end{proof}
+ 
+
+\begin{examples}
+1. Since $[\Sym_n : \Alt_n] = 2$, it follows that the alternating
+group $\Alt_n$ is a normal subgroup of the symmetric group $\Sym_n$,
+for any $n$.
+
+2. Since $[\O(2) : \SO(2)] = 2$, it follows that $\SO(2) \normal
+\O(2)$.
+\end{examples}
+
+The following is a fundamental result in group theory.  It turns out
+that when $N \normal G$, coset multiplication makes $G/N$ into a
+group.
+
+\begin{thm}\index{quotient~group}[quotient group]
+  Let $N$ be a normal subgroup of a group $G$. Then the coset
+  multiplication rule $(aN)(bN) = (ab)N$ (for any $a,b \in G$) is a
+  well-defined binary operation on the set $G/N$ of left cosets. With
+  respect to this multiplication, $G/N$ is a group, with identity
+  element $1N = N$. The inverse of $aN$ is $a^{-1}N$.
+\end{thm}
+
+\begin{proof}
+To show that coset multiplication is well-defined we must show that if
+$aN=cN$ and $bN=dN$ then $(ab)N = (cd)N$. Clearly $(aN)(bN) =
+(cN)(dN)$, and by Theorem \ref{thm:coset-mult}, it follows that $(ab)N
+= (cd)N$. So coset multiplication is well-defined.
+
+Since $(aN bN)cN = (ab)N cN = (ab)c N = a(bc) N = aN (bc)N =
+aN(bNcN)$, the associative law (G1) holds. Since $(1N)(aN) = aN =
+(aN)(1N)$ it follows that (G2) holds with $N=1N$ serving as the
+identity. Finally, $(aN)(a^{-1}N) = 1N = (a^{-1}N)(aN)$ shows that
+(G3) holds and $(aN)^{-1} = a^{-1}N$.
+\end{proof}
+
+\begin{defn}
+  When $N \normal G$, the group $G/N$ is called the {\em quotient
+    group} of $G$ by $N$. Quotient groups are also called \emph{factor
+    groups}.
+\end{defn}
+
+
+\begin{rmk}
+If $G$ is a finite group then by Lagrange's theorem $|G/N| = |G|/|N|$
+(the order of the quotient group $G/N$ equals the cardinality of $G$
+divided by the cardinality of $N$). Of course, by the definition of
+the index $[G\colon N]$ we also have $|G/N| = [G \colon N]$.
+\end{rmk}
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item Show that the trivial subgroup is always a normal subgroup of
+  any group $G$. Also, show that $G \normal G$. 
+
+\item Show that \emph{every} subgroup of a group $G$ is normal if:
+  \begin{enumerate}
+  \item $G$ is abelian.
+  \item $G$ is cyclic.
+  \end{enumerate}
+
+\item Prove that the center\index{center} $Z(G)$ of a group $G$ is a
+  normal subgroup of $G$.
+
+\item Show that if $H$ is a subgroup of order $n$ in a group $G$ and
+  $H$ is the only subgroup of order $n$, then $H \normal G$.
+
+\item Show that a subgroup $H$ of a group $G$ is normal if and only if
+  it satisfies the condition: $ab \in H \iff ba \in H$, for all $a,b
+  \in G$.
+
+\item Prove that the intersection of any number of normal subgroups of
+  a group $G$ is a normal subgroup of $G$.
+
+\item Let $\D_4$ be the symmetry group of the square, and let $r$ be
+  the basic rotation. Is the subgroup $H = \{ 1, r^2 \}$ a normal
+  subgroup of $\mathrm{D}_4$?  Prove your answer.
+
+\item Let $\D_n$ be the dihedral group\index{dihedral~group} on $n$
+  vertices and let $R$ be its rotation subgroup. Prove that
+  $R \normal \mathrm{D}_n$.
+
+\item Let $\D_n$ be the dihedral group on $n$ vertices and let $d \in
+  \D_n$ be a reflection. Then $H = \gen{d} = \{1, d\}$ is a cyclic
+  subgroup of $\D_n$. Find necessary and sufficient conditions for
+  this subgroup to be normal in $\D_n$, and prove your answer.
+
+\item Prove that $\Alt_n$\index{alternating~group} is a subgroup of
+  $\Sym_n$ of index 2 by first proving that there is a bijection from
+  $\Alt_n$ onto $\alpha \Alt_n$, where $\alpha$ is any odd
+  permutation.
+
+\item Find all normal subgroups of the quaternion
+  group\index{quaternion~group} $Q$. Justify your answer.
+
+\item Show that if $H$ is a subgroup of index 2 in a group $G$ then
+  $G/H$ is isomorphic to the additive group $(\Z_2,+)$.
+
+\item Show that $\SO(n) \normal \O(n)$ and identify a group that is
+  isomorphic to $\O(n)/\SO(n)$.
+
+\item Show that $\SL(n) \normal \GL(n)$ and $\GL(n)/\SL(n)$ is
+  isomorphic to the multiplicative group $\R^\times$ of the field of
+  real numbers.
+
+\item Show that the set $G$ of all real $2 \times 2$ matrices of the
+  form $\left(
+  \begin{matrix}
+    a&b\\0&c
+  \end{matrix}
+  \right)$ is a subgroup of $\GL(2)$. Let $N$ be the set of all
+  matrices of the form  $\left(
+  \begin{matrix}
+    1&b\\0&1
+  \end{matrix}
+  \right)$. Prove that $N \normal G$. (Note that you need to show it
+  is a subgroup as well as prove that it is normal.)
+
+\item Show that $n\Z = \{nk \mid k \in \Z\}$ is a normal subgroup of
+  the additive group $\Z$ of integers, and that $\Z/n\Z \cong \Z_n$.
+
+\item Prove that if $H,K$ are subgroups of $G$ and one of them is
+  normal in $G$, then their product $HK$ is a normal subgroup of $G$.
+
+\item Show that if $H, K$ are subgroups of a group $G$ such that $K
+  \normal G$ then $H \cap K \normal H$. 
+
+\item\index{normality~is~not~transitive} Give an example to show that
+  there are groups $K < H < G$ such that $K \normal H$ and
+  $H \normal G$ but $K$ is not a normal subgroup of $G$. In other
+  words, normality is not transitive.
+
+\item Is it possible to find a group $G$ in which every subgroup is
+  normal but $G$ is not abelian? If so, exhibit one, otherwise prove
+  that such a group is abelian.
+\end{problems}
+
+
+
+
+
+
+
+
+\newpage
+\section{Homomorphisms}\noindent
+This is a central concept in group theory that ties everything
+together. To define it, we momentarily revert to generic notation.
+
+\begin{defn}\index{homomorphism}
+  Suppose that $(G,*)$ and $(H,\#)$ are groups. A \emph{homomorphism}
+  of groups is a function $f: G \to H$ such that $f(a*b) = f(a)\#
+  f(b)$ for all $a,b \in G$.
+\end{defn}
+
+In particular, group isomorphisms \index{isomorphism} are bijections
+with this property, so every isomorphism is a homomorphism. But not
+conversely, because we do not require that a homomorphism be a
+bijection.
+
+\begin{rmk}
+If $G$ and $H$ are additive groups then $f: G \to H$ is a homomorphism
+if and only if $f(a+b) = f(a)+f(b)$, for all $a,b \in G$. If $G$ is
+additive and $H$ is multiplicative then $f: G \to H$ is a homomorphism
+if and only if $f(a+b) = f(a) \cdot f(b)$, for all $a,b \in G$. If $G$
+is multiplicative and $H$ is additive then $f: G \to H$ is a
+homomorphism if and only if $f(a\cdot b) = f(a) + f(b)$, for all $a,b
+\in G$. Finally, if both $G$ and $H$ are multiplicative then $f: G \to
+H$ is a homomorphism if and only if $f(a \cdot b) = f(a) \cdot f(b)$,
+for all $a,b \in G$.
+\end{rmk}
+
+The first two parts of the next result states that a group
+homomorphism must match up the identity and inverses in the two
+groups.
+
+\begin{thm}[properties of homomorphisms]\label{homprop}
+  Let $f:G \to H$ be a homomorphism from a group $(G,*)$ to a group
+  $(H,\#)$. Then:
+\begin{enumerate}
+\item $f(e_G) = e_H$; i.e., $f$ maps the identity of $G$ onto
+  the identity of $H$.
+
+\item The inverse of $f(a)$ in $H$ is the image of the inverse of $a$;
+  i.e., if $a'$ is the inverse of $a$ in $G$ then the inverse of
+  $f(a)$ in $H$ is $f(a)' = f(a')$.
+
+\item[(c)] If $f$ is a bijection, then $f^{-1}: H \to G$ must also be a
+  homomorphism.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+(a) Let $y = f(e_G)$ be the image of the identity of $G$. We must show
+that $y=e_H$, the identity of $H$. We have $e_H\#f(x) = f(x) =
+f(e_G*x) = f(e_G)\#f(x) = y\#f(x)$. Thus $e_H\# f(x) = y \#f(x)$ and
+by right cancellation we conclude that $e_H = y$.
+
+(b) Let $y = f(b)$ where $b$ is the inverse of $a$ in $G$. Let $z$ be
+the inverse of $f(a)$ in $H$. We must show that $y=z$. But $f(a)\#z =
+e_H$ by definition of inverse, and $f(a)\#y = f(a)\#f(b) = f(a*b) =
+f(e_G) = e_H$, by part (a) and the defining property of
+homomorphism. Thus $f(a)\#z = f(a)\#y$. By left cancellation, this
+implies $z=y$.
+
+(c) If $f$ matches up products and is a bijective correspondence, then
+its inverse must match up products as well.
+\end{proof}
+
+
+
+\begin{rmk}
+By part (a) of the preceding result, a homomorphism between additive
+groups must take $0$ to $0$, while a homomorphism between
+multiplicative groups must take $1$ to $1$. A homomorphism from an
+additive group to a multiplicative group must send $0$ to $1$, while a
+homomorphism from an multiplicative group to an additive group must
+send $1$ to $0$,
+
+Similarly for inverses in part (b). If $f$ is a homomorphism between
+additive groups then $-f(a) = f(-a)$, whereas if $f$ is a homomorphism
+between multiplicative groups then $f(a)^{-1} = f(a^{-1})$. If $f$ is
+a homomorphism from an additive group to a multiplicative group then
+$f(a)^{-1} = f(-a)$. Finally, if $f$ is a homomorphism from an
+multiplicative group to an additive group then $-f(a) = f(a^{-1})$.
+\end{rmk}
+
+
+It quickly becomes tiresome to distinguish between these
+possibilities. From now on in the general theory, we will always use
+multiplicative notation for both groups connected by a homomorphism,
+unless stated otherwise, trusting the reader to make the necessary
+adjustments in other situations.
+
+
+\begin{defn}
+  Let $f: G \to G'$ be a group homomorphism from a group $G$ into a
+  group $G'$. The \emph{kernel} of $f$ (written as $\ker f$) is the
+  subset of the domain group $G$ defined by $\ker f = \{x \in G \mid
+  f(x) = 1 \}$. 
+\end{defn}
+
+Note that if $G'$ is an additive group, then $\ker f = \{ x \in G \mid
+f(x) = 0 \}$.
+
+\begin{thm}[kernels are normal subgroups]\index{kernel}\label{KAN} 
+The kernel of a homomorphism $f: G \to G'$ of groups is a normal
+subgroup of the domain group $G$.
+\end{thm}
+
+The proof is an easy exercise.
+
+\begin{defn}\index{canonical~homomorphism}\label{canhom}
+Let $G$ be a group and $K$ a normal subgroup of $G$. Then we have a
+homomorphism $\pi: G \to G/K$ defined by the rule $\pi(a) = aK$. It is
+surjective. This particular homomorphism is called the {\em canonical
+  homomorphism} or the \emph{canonical quotient map}.
+\end{defn}
+
+One can check (exercise) that the canonical homomorphism actually is a
+homomorphism.
+
+\begin{thm}[first isomorphism theorem] \label{thm:first-iso}
+\index{first~isomorphism~theorem}\index{isomorphism~theorem!first}
+  Let $G$, $G'$ be groups and $f:G \to G'$ a group homomorphism. Set
+  $K=\ker f$ and $I=\im f = f(G)$.  Then
+  $f = \iota \compose \overline{f} \compose \pi$, where
+  $\iota: I \to G'$ is the inclusion map (coming from the inclusion
+  $I \subset G'$), $\pi: G \to G/K$ is the canonical homomorphism, and
+  $\overline{f}: G/K \to I$ is an isomorphism, given by the rule
+  $\overline{f}(aK) = f(a)$ for $a\in G$.  (In particular,
+  $G/K \cong I$.)
+\end{thm}
+
+This theorem is also known as the {\em fundamental theorem of
+  homomorphisms}\index{fundamental~theorem!of~homomorphisms}. The
+factorization of the homomorphism $f$ in the theorem may be pictured
+by the following commutative diagram:
+\[
+\xymatrix{ 
+G \ar[rr]^f \ar[d]_\pi &&  G'  \\
+G/K \ar[rr]^{\overline{f}} && I \ar[u]_\iota 
+}
+\] 
+and the diagram is a very convenient way to remember the theorem.  In
+the diagram, there are two routes from $G$ to $G'$. The theorem says
+these two routes are the same: $f = \iota \compose \overline{f}
+\compose \pi$, and that the induced map $\overline{f}$ is an
+isomorphism. (The latter fact is most often used in practice.)
+
+\begin{proof}
+The map $\iota: I \to G'$ is defined by the rule $\iota(y)=y$ for any
+$y\in I$. The map $\pi$ has previously been defined, and the
+definition of $\overline{f}$ is given in the statement of the theorem.
+We must show that  $f = \iota \compose \overline{f} \compose \pi$; in
+other words, we must show that 
+$$ f(x) = (\iota \compose \overline{f} \compose \pi)(x) =
+  \iota(\overline{f}(\pi(x)))
+$$
+for all $x$ in $G$. Well, let $x\in G$. Then by the definitions of the
+maps we have $\iota(\overline{f}(\pi(x))) = \iota(\overline{f}(xK)) =
+\iota(f(x)) = f(x)$. This proves the desired equality. 
+
+Let us check that the map $\overline{f}$ is a {\em well-defined}
+function; i.e., the value $\overline{f}(aK)$ does not depend on the
+choice of coset representative. Suppose that $aK=bK$ for two elements
+$a,b$ of $G$.  We have to show that $\overline{f}(aK) =
+\overline{f}(bK)$. Well, by definition of the map $\overline{f}$ we
+have $\overline{f}(aK) = f(a)$ and $\overline{f}(bK) = f(b)$, so we
+have to prove that $f(a)=f(b)$. This follows from the equality $aK =
+bK$, which implies that $a^{-1}b \in K$, so there exists some $x \in
+K$ such that $a^{-1}b = x$, so $b=ax$, so $f(b) = f(ax) = f(a)f(x) =
+f(a) 1 = f(a)$ as desired. This proves that the map $\overline{f}$ is
+well-defined.
+
+It remains to prove that the induced map $\overline{f}: G/K \to I$ is
+an isomorphism. First, note that $\overline{f}$ is a homomorphism,
+since $\overline{f}(aK\cdot bK) = \overline{f}(abK) = f(ab) = f(a)f(b)
+= \overline{f}(aK) \overline{f}(bK)$, for any $a,b \in G$. It is
+injective since if $aK$ lies in the kernel of $\overline{f}$, then
+$\overline{f}(aK) = f(a)$ is the identity element of $G'$, so $a \in
+K$, so $aK=K$. This proves that the kernel of $\overline{f}$ is just
+the identity coset $K$ of $G/K$, so $\overline{f}$ is injective as
+claimed.  Finally, $\overline{f}$ is surjective onto $I$ by its
+definition.  We have shown that $\overline{f}$ is a bijective
+homomorphism. Thus it is an isomorphism. The proof is complete.
+\end{proof}
+
+
+\begin{examples}\label{examples:iso-1}
+1. For $n \ge 2$, there is a homomorphism from the symmetric group
+$\Sym_n$ to the multiplicative group $\{1,-1\} = \Z^\times$ given by
+the rule: $\alpha \mapsto \sgn(\alpha)$. This homomorphism is
+surjective (i.e., the image is $\{1,-1\}$). Its kernel is the set
+$\Alt_n$ of even permutations, since we know that $\sgn(\alpha) = 1$
+if and only if $\alpha$ is even. By the theorem, it follows that
+$\Sym_n/\Alt_n \cong \Z^\times$ is cyclic of order 2. 
+
+2. Let $n$ be a positive integer. Recall that we write $\Z_n$ for the
+additive group of integer residues modulo $n$. Consider the
+homomorphism (of additive groups) $\Z \to \Z_n$ given by $a \to
+\overline{a}$, where $\overline{a}$ is the residue of $a$ mod
+$n$. This is a homomorphism since $\overline{a+c} = \overline{a} +
+\overline{c}$ for all $a,c \in \Z$. The kernel of this homomorphism is
+the subgroup $n\Z$ of all multiples of $n$.  It is clear that the
+homomorphism is surjective onto $\Z_n$. Thus we have a group
+isomorphism $\Z/(n\Z) \cong \Z_n$. This shows that the additive group
+$\Z_n$ is, in fact, a quotient group. (Note: To be sure, $\Z$ and
+$\Z_n$ are actually rings when we consider the two operations of
+addition and multiplication together, but in the isomorphism above we
+are for the moment ignoring the multiplication and just paying
+attention to the additive group structure.)
+\end{examples}
+
+
+
+The next result states that every normal subgroup arises as the kernel
+of some homomorphism.
+
+
+\begin{thm}[normal subgroups are kernels] \label{thm:NAK} 
+If $K$ is a given normal subgroup of a group $G$, then there exists a
+homomorphism $f: G \to G'$ (for some group $G'$) such that $K= \ker
+f$.
+\end{thm}
+
+\begin{proof}
+We set $G' = G/K$ and we let $f$ be the canonical homomorphism. Then
+its kernel is $K$, so the proof is complete. 
+\end{proof}
+
+The following two results are known as the second and third
+isomorphism theorems for groups. Along with the first isomorphism
+theorem (Theorem \ref{thm:first-iso}) these results describe 
+fundamental properties of quotient groups and homomorphisms.
+
+
+\begin{thm}[second isomorphism theorem]\label{thm:iso2}
+\index{second~isomorphism~theorem}\index{isomorphism~theorem!second}%
+  If $K \normal G$ and $H < G$ then:
+\begin{enumerate}
+  \item $H \cap K \normal H$.
+  \item The product set $HK = \{xy \colon x \in H, y \in K\}$ is a
+    subgroup of $G$.
+  \item $H/(H \cap K) \cong HK/K$.
+\end{enumerate}
+\end{thm}
+
+This follows from the first isomorphism theorem. The proof is an
+exercise.
+
+\begin{thm}[third isomorphism theorem]\label{thm:iso3}% 
+\index{third~isomorphism~theorem}\index{isomorphism~theorem!third}%
+If $H \normal G$, $K \normal G$, and $H \subset K$ then:
+\begin{enumerate}
+  \item  $(K/H) \normal (G/H)$.
+  \item $(G/H)/(K/H) \cong G/K$.
+\end{enumerate}
+\end{thm}
+
+This also follows from the first isomorphism theorem. The proof is an
+exercise.
+
+
+We finish our discussion of quotients with an easy application of the
+first isomorphism theorem, to classify all cyclic groups.
+
+\begin{thm}[classification of cyclic groups]
+\index{classification!of~cyclic~groups}
+Let $G$ be a cyclic group. Then either $G$ is isomorphic to the
+additive group $\Z$ of integers or $G$ is isomorphic to the additive
+group $\Z_n$ of residues modulo $n$, for some $n$.
+\end{thm}
+
+\begin{proof}
+Let $G = \gen{a}$.  The integers $\Z$ form a group under addition, and
+the (surjective) map $f:\Z \to G$ defined by the rule $k \to a^k$ is a
+group homomorphism. 
+
+If the order of $a$ is infinite, then the kernel of $f$ is the trivial
+subgroup $\{0\}$, and so $f$ is injective and hence an isomorphism. So
+$\Z \cong G$ in case $|a|$ is infinite.
+
+If the order of $a$ is finite, say the order is $n$, then the kernel
+of $f$ is the set $n\Z$ of all multiples of $n$, and by the first
+isomorphism theorem, $\Z/n\Z \cong G$. But $\Z/n\Z$ is $\Z_n$, by
+definition. So in this case we have $\Z_n \cong G$. 
+\end{proof}
+
+
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item Prove that kernels are normal subgroups (see \ref{KAN}).
+
+\item Prove that an isomorphism is a bijective homomorphism. 
+
+\item\index{injectivity~test} (Injectivity test for homomorphisms)
+  Prove that if $f: G \to H$ is a group homomorphism with kernel $K$
+  then $f$ is injective if and only if $K$ is the trivial subgroup.
+
+\item Prove that the canonical homomorphism (see \ref{canhom}) is
+  really a homomorphism; i.e., show that $\pi(ab) = \pi(a)\pi(b)$ for
+  all $a,b$ in $G$.
+
+\item Prove that if $f: G \to H$ and $g: H \to K$ are group
+  homomorphisms then their composite $g \circ f$ is a group
+  homomorphism.
+
+\item (Homomorphic images of subgroups are subgroups) Show that if $f:
+  G \to G'$ is a group homomorphism and $H < G$ then $f(H) < G'$,
+  where $f(H) = \{f(x) \mid x \in H\}$.
+
+\item (Homomorphic preimages of subgroups are subgroups) Show that if
+  $f: G \to G'$ is a group homomorphism and $H' < G'$ then $f^{-1}(H')
+  < G$, where $f^{-1}(H') = \{x \in G \mid f(x) \in H'
+  \}$. Furthermore, show that $\ker f < f^{-1}(H')$.
+
+
+\item Define a map $f \colon \R \to \C^\times$ by $f(x) = e^{2\pi i
+  x}$ for any $x \in \R$. (Here $\R$ is the additive group of real
+  numbers.)
+  \begin{enumerate}
+  \item Prove that $f$ is a group homomorphism and compute its kernel.
+  \item Use the first isomorphism theorem to show that the quotient
+    group $\R/\Z$ is isomorphic to the circle group $\{e^{2\pi i x}
+    \mid x \in \R  \}$.
+  \end{enumerate}
+  
+\item Prove that $\R/\Z$ in the previous problem is isomorphic to the
+  group $\SO(2)$ of rotations of the plane.
+
+\item Let $G$ be an abelian group. Let $H = \{ x^2 \mid x \in G \}$ be
+  the set of squares in $G$, and let $K = \{ x \in G \mid x^2 = 1 \}$
+  be the set of elements of order one or two. Prove that:
+  \begin{enumerate}
+  \item The function $f: G \to G$ defined by $f(x) = x^2$ is a
+    homomorphism. 
+  \item Identify the kernel of $f$ and justify your answer.
+  \item Show that $G/K \cong H$.
+  \end{enumerate}
+
+\item Prove that $\SL(n) \normal \GL(n)$ and $\GL(n)/\SL(n) \cong
+  \R^\times$ by applying the first isomorphism theorem.
+
+\item Prove that $\SO(n) \normal \O(n)$ and $\O(n)/\SO(n) \cong
+  \Z^\times$ by applying the first isomorphism theorem.
+
+\item Prove the {\em second isomorphism theorem}: If $K \normal G$ and
+  $H < G$ then $H \cap K \normal H$, $HK$ is a subgroup of $G$, and
+  $H/(H\cap K) \cong HK/K$. (See \ref{thm:iso2}.)
+
+\item Prove the {\em third isomorphism theorem}: If $H \normal G$, $K
+  \normal G$, and $H \subset K$ then $(K/H) \normal (G/H)$ and
+  $(G/H)/(K/H) \cong G/K$.  (See \ref{thm:iso3}.)
+
+\item If $G$ is a group, show that the function $f: G \to G$ defined
+  by $f(x) = x^2$ is a homomorphism if and only if $G$ is abelian.
+
+
+\item Use the third isomorphism theorem (see \ref{thm:iso3}) to prove
+  that if $m = nk$ for positive integers $m,n,k$ then the additive
+  group $\Z_m$ has a subgroup $\Z'_n$ isomorphic to $\Z_n$, and
+  $\Z_m/\Z'_n \cong \Z_k$. [Hint: Start by setting $G = \Z$, $H =
+    m\Z$, and $K=k\Z$.]
+
+\item Show directly that any quotient group of a cyclic group is
+  cyclic. Why does this give a different proof of the result in the
+  preceding problem?
+
+\end{problems}
+\end{document}

@@ -1,0 +1,922 @@
+\documentclass[11pt]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm} 
+\usepackage{enumitem}
+\setlist{topsep=1pt,itemsep=0pt,parsep=1pt,leftmargin=1.0cm}
+\setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\compose}{\circ} % functional composition
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\iff}{\Leftrightarrow}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+
+%\noindent
+%We collect here some standard basic facts, notation, and terminology
+%for later reference. 
+
+
+\section{Logic}\noindent
+We start by discussing some basic terminology from mathematical
+logic. These definitions and notation are used throughout mathematics.
+
+\begin{defn}
+  In mathematics, a \emph{statement} is an assertion which is either
+  true or false.
+\end{defn}
+
+\begin{defn}
+  A \emph{conditional} statement is any statement of the form ``if $P$
+  then $Q$'' where $P$ and $Q$ are statements. Conditional statements
+  are also called \emph{implications}.\index{implication} The
+  implication ``if $P$ then $Q$'' is also commonly written as ``$P$
+  implies $Q$'' or ``$P \implies Q$.''
+\end{defn}
+
+To prove an implication $P \implies Q$, we assume $P$ is given (the
+hypothesis) and show by logical deduction that one can derive $Q$ (the
+conclusion) from the given hypothesis. Such an approach is called a
+direct proof of the implication.
+
+\begin{defn}
+A statement of the form ``$P$ if and only if $Q$'' is called a {\em
+  biconditional} or
+\emph{equivalence}.\index{equivalence}\index{biconditional} It is
+commonly written as ``$P$ iff\footnote{Thus, \emph{iff} is an
+  abbreviation for the phrase ``if and only if.''} $Q$'' or ``$P \iff
+Q$.'' By definition, $P \iff Q$ means that both $P \implies Q$ and $Q
+\implies P$.
+\end{defn}
+
+Thus, to show that ``$P$ if and only if $Q$'' is true you must prove
+two conditionals: that $P \implies Q$ and that $Q \Rightarrow P$.  The
+implication $Q \implies P$ is called the
+\emph{converse}\index{converse} of $P \implies Q$. So proving the
+equivalence $P \iff Q$ amounts to proving both the implication $P
+\implies Q$ and its converse $Q \implies P$.
+
+Be careful about converses. It is a fallacy to assume that if $P
+\implies Q$ then also $Q \implies P$. This is often false. For
+instance, the implication ``all dogs are mammals'' is true, but its
+converse ``all mammals are dogs'' is plainly false.
+
+\begin{rmk}\label{rmk:defs}
+  By standard convention, {\em all definitions in mathematics are
+    considered to be biconditionals}, even if not stated as
+  such. Thus, in a definition, the word \emph{if} should always be
+  interpreted as \emph{if and only if}.
+\end{rmk}
+
+\begin{defn}
+  The {\em contrapositive}\index{contrapositive} of $P \implies Q$ is
+  $(\neg Q) \implies (\neg P)$. Here, the symbol $\neg$ means ``not.''
+  I.e., $\neg P$ means ``not $P$.''
+\end{defn}
+
+It is a well known that {\em every implication is logically equivalent
+  to its contrapositive}, and mathematicians routinely use that fact
+without comment. 
+
+\begin{example}
+  To prove the implication: ($n^2$ is odd) $\implies$ ($n$ is odd), it
+  suffices to show the contrapositive statement: ($n$ is even)
+  $\implies$ ($n^2$ is even). The contrapositive is easy to see by a
+  direct proof, as follows. If $n$ is an even integer then $n=2k$ for
+  some integer $k$, and hence $n^2 = 4k^2 = 2(2k^2) = 2m$ is even,
+  because $m = 2k^2$ is an integer.
+\end{example}
+
+
+\begin{defn}[quantifiers]
+  The symbol $\forall$ is the \emph{universal
+    quantifier}.\index{quantifier} It means ``for all.''  The symbol
+  $\exists$ is the \emph{existential quantifier}. It means ``there
+  exists.''
+\end{defn}
+
+A \emph{universal statement}\index{universal statement} is one which
+is universally quantified. For example, anything of the form $\forall
+x, P(x)$.  By definition, this is true whenever $P(x)$ is true for all
+possible values of $x$ (in some domain).
+
+An \emph{existential statement}\index{existential statement} is one
+which is existentially quantified. For example, anything of the form
+$\exists x, P(x)$. By definition, this is true whenever $P(x)$ is true
+for at least one value of $x$.
+
+\section*{Exercises}
+\begin{problems}
+
+\item Prove that if $n^2$ is odd then $n$ must be odd.
+
+\item Prove that if $n^3$ is odd then $n$ must be odd.
+
+\item Prove that $n$ is even if and only if $n^2$ is even.
+
+\item Prove that $n$ is odd if and only if $n^2$ is odd.
+
+\item Prove that for all real numbers $x$, $x^2 \ge 0$. 
+
+\item Prove that there exists a complex number whose square is $-2$.
+
+\end{problems}
+
+
+\newpage\section{Sets}\noindent
+Next we discuss the basic notions of set theory, which are used
+throughout mathematics. We take the naive approach, in which the
+notion of a set is left somewhat imprecise.  
+
+\begin{defn}
+  The naive concept is that a set\index{set} is a collection of
+  \emph{elements}, which is determined by its elements, in the
+  following sense: two sets are considered to be {\em equal}
+  if\,\footnote{We follow the convention of \ref{rmk:defs} here. Since
+    we are making a definition, the word ``if'' means ``if and only
+    if'' in this context.} they have precisely the same
+  elements. Order of the elements doesn't matter, and in a set
+  duplicates are not allowed.
+\end{defn}
+
+
+In computer science the concept of a \emph{list} is quite important,
+and one might get the impression that lists are the same thing as
+sets. This is erroneous, however, since a list can have repetitions
+and order matters, while a set cannot have repetitions and order
+doesn't matter.
+
+\begin{rmk}
+  There are inherent difficulties with this naive concept of set; see
+  the discussion of Russell's paradox\index{Russell's paradox}
+  below. Rather than allowing a set to be any collection of elements,
+  in order to avoid paradoxes we should only allow collections which
+  are not ``too big'' in a certain sense. Fortunately, most of the
+  sets we deal with in basic mathematics are not too big, so in
+  practice we don't worry very much about this issue.
+\end{rmk}
+
+
+\begin{defn}
+  If $A$ is a set and $a$ is one of its elements then we write $a\in
+  A$ (i.e., $\in$ means ``is in'').  If $b$ is not an element in the
+  set $A$ then we write $b\notin A$ (i.e., $\notin$ means ``is not
+  in'').
+\end{defn}
+
+\begin{defn}
+  A set is called {\em finite} if it has finitely many elements.  The
+  number of distinct elements is called the {\em
+    cardinality}\index{cardinality} of the set.  Usually we write
+  $|A|$ for the cardinality of a set $A$.
+\end{defn}
+
+A set is {\em infinite} if it is not finite, and in that case we can
+write $|A|=\infty$.\footnote{There is a whole theory of infinite
+  cardinals (due to Georg Cantor), but for our purposes it is usually
+  not necessary to distinguish between different orders of infinity.}
+
+\begin{defn}
+  The {\em empty set}\index{empty set} or {\em null set} is the set
+  $\varnothing$ with no elements.  Of course the cardinality of the
+  empty set is zero: $|\varnothing| = 0$.  The empty set may also be
+  written as $\{\ \}$.
+\end{defn}
+
+
+Often we write a set by listing its elements. Thus $A=\{ 2, 5, 1, 9
+\}$ is the set consisting of the elements $1,2,5,9$. We could also
+correctly write $A = \{1,2,5,9\}$ since only the elements, and not
+their order, is important. So for this set $A$ it is correct to write
+$2\in A$, $3\notin A$.
+
+For infinite sets we sometimes use the $\dots$ notation, to indicate
+that the displayed pattern continues as indicated. For example, the
+set written $\{1,3,5,7,9,\dots\}$ stands for the set of all odd
+natural numbers and the set $\{0, \pm2, \pm4, \pm6, \dots \}$ is the
+set of all even integers.
+
+
+\begin{defn}[set builder notation]
+Often we define sets by listing some \emph{condition} for membership
+in the set. This is sometimes called \emph{set builder notation}. If
+$P(x)$ is some condition on $x$ then the set
+\[
+  \{x \mid P(x) \} = \{x : P(x) \}
+\]
+should be read as ``the set of all $x$ such that $P(x)$ is true.''  In
+particular, the equivalent symbols $|$ and $:$ usually mean ``such
+that'' when they appear inside sets.
+\end{defn}
+
+
+\begin{defn}[some standard sets of numbers]
+  The following notations have become the standard for various common
+  sets of numbers used in much of mathematics:
+  \index{N@$\N$}\index{Z@$\Z$}\index{Q@$\Q$}\index{R@$\R$}\index{C@$\C$}%
+  \begin{align*}
+  \N &= \{0,1,2,3,4,\dots\}\quad \text{natural numbers}\\
+  \Z &= \{\dots,-3,-2,-1,0,1,2,3,\dots\}\quad\text{integers}\\
+  \Q &= \{ \tfrac{m}{n} \mid m,n \in \Z, n\ne 0 \}\quad\text{rational numbers}\\
+  \R &= \text{real numbers}\\
+  \C &= \{a+bi \mid a,b \in \R\}\quad \text{complex numbers}
+  \end{align*}
+  where it is understood that $i^2 = -1$. (The number $i$ is called
+  the {\em imaginary unit}.)
+\end{defn}
+
+\begin{examples}
+  (a) $\{x \in \R \mid 1 < x \le 3 \}$ defines the interval $(1,3]$.  
+
+  (b) $\{2k+1 \mid k \in \N \}$ is the set of all odd natural numbers.
+
+  (c) $\{x \in \R : x^2 - 4 = 0 \}$ is the set of all real numbers
+  $x$ satisfying the equality $x^2 - 4 = 0$. As we know, this is just
+  the set $\{ 2, -2 \}$.
+\end{examples}
+
+
+\textbf{Russell's paradox.}\index{Russell's paradox}
+Bertrand Russell pointed out the problem in trying to define the
+following set:
+\[
+X = \{ A \mid A\notin A\}.
+\]
+The set $X$ is the set consisting of all sets which are not elements
+of themselves. There are lots of such sets, so $X$ is really big.
+Then Russell asked the question: Is $X\in X$? 
+
+It turns out that this question has no answer, since it contradicts
+itself!  If we assume $X\in X$, then $X\notin X$ and we have a
+contradiction. On the other hand, if we assume $X\notin X$ then $X \in
+X$ and we again have a contradiction. Since either $X\in X$ or
+$X\notin X$ we cannot avoid a contradiction if $X$ exists as a set.
+
+Because of this paradox, and others like it, it has been found
+necessary to exclude certain ``large'' sets from the realm of set
+theory. It turns out that to give a precise definition of the notion
+of a set, which avoids such paradoxes and contradictions, is indeed a
+very difficult problem. This problem was solved by Russell and
+Whitehead in their tome {\em Principia Mathematica}. To find out more
+on such matters, see a decent modern text on set theory.
+
+The sets that we use in ordinary mathematical discourse are almost
+always small enough to be free of such difficulties, so in practice we
+usually don't need to worry very much about this problem. In general,
+so long as a given set can be realized as a subset of some existing
+set, things are okay.
+
+
+\section*{Exercises}
+
+\begin{problems}
+\item Is it true that $\{0,10,0,1,10,8,1,10\} = \{0, 1, 8, 10\}$?
+  Explain.
+
+\item Is it true that $\{1,2,3,4\} = \{4,3,2,1\}$? Explain.
+
+\item Is it true that $\{ \{1,2,3\}, \{3,2,1\}, \{1\}, \{2\}, \{3\} \}
+  = \{1,2,3\}$? Explain and justify.
+
+\item Find the cardinality of the following sets:
+
+   (a) $\{0,10,0,1,10,8,1,10\}$.
+
+   (b) $\{1,2,3,4\}$.
+
+   (c) $\{ \{1,2,3\}, \{3,2,1\}, \{1\}, \{2\}, \{3\} \}$.
+
+   (d) $\Z$. 
+
+\item (a) Is $1 \in \{ \{1,2,3\}, \{3,2,1\}, \{1\}, \{2\}, \{3\} \}$?
+  Explain. 
+
+  (b) Is $ \{1\} \in \{ \{1,2,3\}, \{3,2,1\}, \{1\}, \{2\}, \{3\} \}$?
+  Explain.
+
+\item (a) Is $1 \in \{1\}$? Explain.
+  
+  (b) Is $1 \in \{\{1\}\}$? Explain.
+
+  (c) Is $\emptyset \in \{1\}$? Explain.
+
+
+\item Let $A = \{ 1, 2, 3, 4, 5, 6\}$. Compute $B=\{ 4n-1 \mid n \in
+  A\}$. What is $|A|$ and $|B|$?
+
+\item Is $\{3n \mid n \in \Z \} = \{0, \pm 3, \pm 6, \pm 9, \dots \}$?
+  Explain.
+
+
+\end{problems}
+
+
+\newpage\section{Set operations}\noindent
+We now consider the basic relations among sets as well as some
+fundamental operations on sets.
+
+\begin{defn}[subset]
+  We say that $A$ \emph{is a subset of} $B$\index{subset} (written $A
+  \subset B$ or equivalently $A \subseteq B$) if $x \in A \implies x
+  \in B$.
+\end{defn}
+
+We also sometimes say ``$A$ \emph{is contained in} $B$'' as a synonym
+for ``$A$ is a subset of $B$.''
+
+Note that the statements $A\subset B$ and $A\in B$ do \emph{not} have
+the same meaning.  Note also that by definition $A\subset A$: every
+set is a subset of itself.  Also, $\varnothing \subset A$; i.e., the
+empty set is a subset of every set.
+
+\begin{rmk} 
+  By definition, $B \supset A \iff A \subset B$. Thus, the symbol
+  $\supset$ means ``contains.''
+\end{rmk}
+
+\begin{defn}[proper inclusions]
+  If $A \subset B$ but $A \ne B$ then we will write $A \varsubsetneqq
+  B$. In this case we say that $A$ is a {\em proper} subset of $B$, or
+  that $A$ is {\em strictly} contained within $B$.
+\end{defn}
+
+
+\begin{thm}[set equality]\index{set equality}
+  Let $A, B$ be sets. Then $A=B$ if and only if both
+  $A \subset B$ and $B \subset A$.
+\end{thm}
+
+This theorem is often used in proofs to show equality of two sets. In
+other words, to prove that $A = B$, you have to prove two things: that
+$A \subset B$ and $B \subset A$.
+
+
+We allow sets whose elements are themselves sets. Let $A$ be a set.
+We distinguish between the set $A$ and $\{A\}$, which is the set with
+one element, $A$. The latter object is the set consisting of the set
+$A$, and that is different from $A$ itself.  
+
+Thus if $A$ is a set, we can form the set $\{A, \{A\} \}$, the set
+whose elements are $A$ and $\{A\}$.  As another example along these
+lines, consider the set $X=\{1, \{1\}, \{1,2\} \}$.  Then $X$ has 3
+elements. It is true that $1\in X$, but the statement $2\in X$ is
+false: 2 is part of the third element, but it is not an element. These
+structural distinctions may seem pedantic but they are quite
+important.
+
+\begin{defn}[union of sets]\index{union of sets}
+  The {\em union} or {\em join} of a collection
+  of sets is the set whose elements are obtained by joining together
+  all the elements in the collection. The union of two sets $A, B$ is
+  written as $A \cup B$. Formally, we can write
+  \[
+  A \cup B = \{ x \mid x\in A \text{ or } x\in B\}
+  \]
+  using the set-builder notation.  More generally, if $A_1, A_2,
+  \dots, A_n$ are sets then
+  \[
+  \bigcup_{i=1}^n A_i = A_1 \cup A_2 \cup \cdots \cup A_n = \{x \mid
+  x\in A_i, \text{ for some } i\}.  
+  \]
+  Even more generally, if we have a family $A_i$ of sets, where $i$
+  varies over all the elements of some given set $I$, then we can
+  write
+  \[
+  \bigcup_{i\in I} A_i = \{x \mid x\in A_i, \text{ for some } i \in I\}.
+  \]
+  In this context, the set $I$ is called an {\em indexing} set.
+\end{defn}
+
+\begin{defn}[intersection of sets]\index{intersection of sets}
+The {\em intersection} or {\em meet} of a collection of sets is the
+set of elements common to all sets in the collection. The intersection
+of two sets is written as $A \cap B$.  Formally,
+$$
+A \cap B = \{ x \mid x\in A \text{ and } x\in B \}.
+$$
+More generally, if $A_1, A_2, \dots, A_n$ are sets then 
+$$
+\bigcap_{i=1}^n A_i = A_1 \cap A_2 \cap \cdots \cap A_n = \{x \mid
+x\in A_i, \text{ for all } i=1, \dots, n\}.  
+$$ 
+More generally still, if we have a family $A_i$ of sets, where $i$
+varies over all the elements of some given indexing set $I$, then we
+write
+$$
+\bigcap_{i\in I} A_i = \{x \mid x\in A_i, \text{ for all } i \in I\}.
+$$
+\end{defn}
+
+Two sets $A,B$ are said to be \emph{disjoint} if their intersection is
+the empty set.
+
+
+\begin{defn}[complements of sets]\index{complement}
+  If $A$ and $B$ are given sets the {\em complement} of $B$ in $A$ is
+  the set
+  \[
+  A-B = A \setminus B = \{ x\in A \mid x\notin B \}.
+  \]
+  In words, it is the set of all elements of $A$ which are not
+  elements of $B$.
+\end{defn} 
+
+
+\begin{defn}[products of sets]\index{product of sets}
+  Let $A$, $B$ be sets. Then their {\em Cartesian product} is the set
+  \[
+  A \times B = \{ (x,y) : x\in A \text{ and }y\in B \}.
+  \]
+  Elements of $A \times B$ are called \emph{ordered pairs} since order
+  is important: $(x,y)$ is usually different from $(y,x)$.
+\end{defn}
+
+In case the two sets are the same set, we often write $A^2$ in place
+of $A \times A$.
+
+This construction should look familiar. For instance, the set $\R^2$
+is the set of points in the standard Euclidean plane.
+
+\begin{defn}[products of sets]
+More generally, if $A_1, A_2, \dots, A_n$ are sets then we can form
+their cross product, the elements of which are called ordered
+$n$-tuples. Formally,
+$$
+A_1 \times \cdots \times A_n = \{ (x_1, x_2, \dots, x_n) \mid x_i \in
+A_i \text{ for all }  i = 1, \dots, n\}.
+$$
+\end{defn}
+
+Note that in an ordered $n$-tuple the {\em order is
+  important}. Elements of cross products are \emph{not} sets, they are
+ordered tuples. 
+
+The special case $A \times A \times \cdots \times A$ in which all the
+$A_i$ are the same set $A$ is often written $A^n$, where $n$ is the
+number of sets in the cross product. Thus, for example, we have $\R^3
+= \R \times \R \times \R = \{ (x,y,z) \mid x,y,z \in \R \}$ (this is
+Euclidean $3$-space).
+
+
+\section*{Exercises}
+
+\begin{problems}
+
+\item Let $A = \{1,3,5,7\}$, $B = \{2, 4, 6, 8\}$, $C = \{ 1,2,3,4,
+  3,2,1\}$. Find:
+
+  (a) $A \cap C$ and $A \cup C$.
+
+  (b) $A - C$ and $C - A$.
+
+  (c) $A - B$ and $B - A$.
+
+  (d) $A \cap B \cap C$ and $A \cup B \cup C$.
+
+  (e) $(A \cup B) - C$ and $C - (A \cup B)$.
+
+\item (a) Is it true that $\{1,2,3\} \subset \{ \{1,2,3\}, \{3,2,1\},
+  \{1\}, \{2\}, \{3\} \}$? Explain.
+
+  (b) Is it true that $\{\{1\}\} \subset \{ \{1,2,3\}, \{3,2,1\},
+  \{1\}, \{2\}, \{3\} \}$? Explain.
+
+  (c) Is it true that $\{\{1\}, \{1,3,2\}\} \subset \{ \{1,2,3\},
+  \{3,2,1\}, \{1\}, \{2\}, \{3\} \}$? Explain.
+
+
+\item Explain why $\Z \subset \Q \subset \R \subset \C$. 
+
+\item (a) Show that $\{ 4n+1 \mid n \in \Z\} = \{ 4m-3 \mid m \in
+  \Z\}$.
+
+  (b)  Show that $\{ 4n+1 \mid n \in \Z\} = \{ 4m+9 \mid m \in
+  \Z\}$.
+
+\item Show that $\{ 2n \mid n \in \Z \} \cap \{ 3n+7 \mid n \in \Z \}
+  = \{ 6k+4 \mid k \in \Z \}$.
+
+\item Suppose that $A,B$ are subsets of some bigger set $X$. Write
+  $A^c$ for the complement of $A$ in $X$ (so $A^c = X-A$). Prove that
+  $B-A = B \cap A^c$.
+
+\item Suppose that $A,B,C$ are subsets of some bigger set $X$. Write
+  $A^c$ for the complement of $A$ in $X$ (so $A^c = X-A$). Prove that:
+
+  (a) $(A \cap B)^c = A^c \cup B^c$.
+
+  (b) $(A \cup B)^c = A^c \cap B^c$.
+
+  (c) $(A \cap B \cap C)^c = A^c \cup B^c \cup C^c$.
+
+  (d) $(A \cup B \cup C)^c = A^c \cap B^c \cap C^c$.
+
+\item (a) Show by example that it is not always true that $A \times B = B
+  \times A$ for sets $A,B$. 
+
+  (b) Is it ever true that $A \times B = B \times A$? Justify your
+  answer with proof.
+
+\end{problems}
+
+
+
+\newpage\section{Relations}\noindent
+Relations appear all over mathematics, and are also important in
+computer science. For instance, \emph{relational databases} are based
+on the mathematical idea of relations.
+
+
+\begin{defn}
+  Let $A$ be a given set.  A {\em relation}\index{relations} on $A$ is
+  a subset $R$ of $A \times A$.  Often when $R$ is a relation on $A$
+  we write $xRy$ instead of $(x,y) \in R$ in order to suggest the idea
+  that $x$ is related to $y$ (by the relation $R$).
+\end{defn}
+
+Thus a relation is nothing but a set of ordered pairs. But that is not
+usually how we think about it. Usually we prefer to visualize the idea
+behind the ordered pairs instead of the set of ordered pairs.
+
+\begin{example}
+  On the usual set $\R$ of real numbers, we have the usual inequality
+  relations: $<$, $\le$, $>$, $\ge$. We could define $<$ as $\{ (x,y)
+  \mid y-x \text{ is positive}\}$, and so on.
+\end{example}
+
+One can also widen the definition of relation to cover two sets. Thus,
+a subset $R$ of $A \times B$ could also be called a relation from $A$
+to $B$ by some authors.
+
+
+
+\begin{defn}\index{equivalence relation}
+Let $R$ be a relation on a set $A$. We say that $R$ is an {\em
+  equivalence relation} if the relation $R$ satisfies
+\begin{quote}
+ {\em reflexivity}: $xRx$, \\ {\em symmetry}: $xRy$ implies $yRx$, for
+ all $x,y \in A$\\ {\em transitivity}: $xRy$ and $yRz$ implies $xRz$,
+ for all $x,y,z \in A$. 
+\end{quote}
+The \emph{equivalence class} $[x]$ of $x \in A$ is defined by
+$[x] = \{ y \in A \mid xRy\}$.
+\end{defn}
+
+If $R$ is an equivalence relation, one can show that $[x] =
+[y] \iff xRy$. Thus, two equivalence classes either coincide
+or are disjoint.
+
+\begin{defn}\index{set~partition}
+A \emph{partition} of a set $A$ is a collection of subsets $\{P_i\}_{i
+  \in I}$ of $A$ such that: 
+  \par (a) the subsets are pairwise
+  disjoint: $i \ne j$ implies $P_i \cap P_j = \varnothing$.
+  \par (b) the union is all of $A$: $\bigcup_{i \in I} P_i = A$.
+\end{defn}
+
+
+
+
+\begin{thm}[fundamental theorem of equivalence relations]
+\index{fundamental~theorem!of~equivalence~relations}%
+  Any equivalence relation on a set $A$ induces a partition of $A$
+  into equivalence classes. Conversely, any given partition of $A$
+  determines an equivalence relation for which the given partition is
+  the induced one.
+\end{thm}
+
+
+
+\begin{example}
+Consider the set $P$ of all living people on earth. Define a relation
+$R$ on the set $P$ by declaring that $x R y$ if and only if $x,y$ have
+the same age (in years).  It is easy to check that $R$ is an
+equivalence relation of the set $P$. The equivalence classes are just
+a way of grouping people by their age: all 4-year olds would be one
+such equivalence class. The 18-year olds form another class. Obviously
+different classes are disjoint, and the union of all the classes is
+$P$.
+
+Such ``classifications'' are what equivalence relations describe. 
+\end{example}
+
+
+\section*{Exercises}
+
+\begin{problems}
+
+\item Let $<$ be the usual ``less than'' on the set $\R$ of real
+  numbers. That is, for real numbers $x,y$ we write $x<y$ if and only
+  if $x$ is less than $y$. 
+
+  (a) Is $<$ reflexive? Explain.
+
+  (b) Is $<$ symmetric? Explain.
+
+  (c) Is $<$ transitive? Explain.
+
+  (d) Is $<$ an equivalence relation on $\R$? Explain.
+
+\item Same as the previous questions, except for $\le$ in place of $<$.
+
+
+\item Define a relation $R$ on the set $\Z$ by declaring that $a R b$
+  if and only if $a-b$ is even.
+
+  (a) Prove that $R$ is an equivalence relation on the set $\Z$.  
+
+  (b) Describe the equivalence classes. How many equivalence classes
+  are there?
+
+
+\item Define a relation $R$ on the set $\Z \times (\Z-\{0\})$ by
+  declaring that $(a,b) R (c,d)$ if and only if $ad=bc$.  
+
+  (a) Prove that $R$ is an equivalence relation on the set $\Z \times
+  (\Z-\{0\})$.  
+
+  (b) Describe the equivalence classes. [Hint: Think about
+    representing rational numbers by fractions.]
+
+
+
+\item Let $S$ be the set of all infinite sequences
+  $(a_n)=(a_n)_{n=1}^\infty$ of real numbers. Define a relation $\sim$
+  on $S$ by declaring that $(a_n) \sim (b_n)$ if and only if there
+  exists some $N$ such that $a_n = b_n$ for all $n\ge N$.  Show that
+  $\sim$ is an equivalence relation on the set $S$.
+
+\end{problems}
+
+
+
+
+\newpage\section{Functions}\noindent 
+Functions\index{function} are special types of relations in which
+images are unique.  Functions between sets are used throughout
+mathematics, so it is important to know the precise definitions
+collected here.
+
+\begin{defn}
+Let $A$, $B$ be two given sets. A {\em function} $f$ from $A$ to $B$
+is a rule which assigns to each element $x\in A$ a unique element
+$f(x) \in B$. The element $y=f(x)$ is called the {\em image} of $x$.
+
+If $f$ is a function from a set $A$ to a set $B$ then $A$ is called
+the {\em domain}\index{domain} of the function and $B$ is called the
+{\em co-domain}\index{co-domain}. People write $f: A \to B$ to
+indicate that $f$ is a function mapping $A$ to $B$.
+\end{defn}
+
+The word {\em mapping}\index{mapping} is a synonym for
+function. Sometimes it is shortened to \emph{map}.
+
+The uniqueness part of the above definition is crucial. If $f(x)$ is
+not necessarily uniquely determined by the rule then we say that $f$
+is not {\em well-defined}. For example, consider the rule $f$ which
+defines $y=f(x)$ to be the solution $y$ to the equation $y^2=x$, for
+every real number $x$. This is not well-defined as a function from
+$\R$ into $\R$, because when $x>0$ the equation $y^2=x$ always has two
+solutions.
+
+I emphasize that the definition of function just given says {\em
+nothing at all} about equations or formulas. While we can, and very
+often do, define functions in terms of some formula, formulas are NOT
+the same thing as functions. The concept of function is much more
+general.
+
+For instance, the equation $y = f(x) = x^2 - 1$ defines a function
+from $\R$ to $\R$. This function is given by a formula. However,
+consider the function $D$ such that $D(t)$ is the temperature at time
+$t$ at a certain chosen location in Chicago. Can you write down an
+explicit formula for this function? How about the function
+$\text{DOW}(t)$ which gives the closing value of the Dow--Jones
+industrial average, day-by-day?
+
+
+
+\begin{defn}[image and preimage]\index{image}\index{preimage}
+Suppose $f: A \to B$. 
+
+(a) \emph{Image of a subset of $A$.} If $S \subset A$ then 
+$$
+f(S) = \{f(x) \mid x \in S\};
+$$ is called the {\em image} of $S$ (under the mapping $f$). By
+definition, $f(S) \subset B$.  
+
+(b) \emph{Preimage of a subset of $B$.} Given $T \subset B$, we have 
+$$
+f^{-1}(T) = \{ x \in A \mid f(x) \in T \};
+$$
+this set is called the {\em preimage} or {\em inverse-image} of $T$.
+\end{defn}
+
+The set $f(A)$, which is the set of all outputs of the function $f$,
+is called the {\em image} or \emph{range} of $f$, sometimes denoted by
+$\operatorname{im} f$ or $\operatorname{Im} f$.
+
+
+
+\begin{defn}[surjection]\index{surjection}\index{onto function}
+Let $f: A \to B$ be a mapping from $A$ to $B$. We say that $f$ is {\em
+  surjective} if the image equals the co-domain; in
+other words if $f(A) = B$. We also say that $f$ maps $A$ {\em onto}
+$B$, or that $f$ is \emph{onto}, in that case.
+\end{defn}
+
+For example, the rule $f(x) = x^2$ defines a mapping from $\R$ to $\R$
+which is \emph{not} surjective since $f$ maps $\R$ {\em into} $\R$ but not
+{\em onto} $\R$, since obviously you can't get any negative real
+numbers by squaring real numbers.
+
+However, the rule $f(x) = 7x-23$ defines a surjective mapping $\R \to \R$,
+since every real number $y$ is obtainable as the image of some real $x$. 
+
+If the mapping $f$ is surjective then we also say that $f$ is a {\em
+surjection}.
+
+\begin{defn}[injection]\index{injection}\index{one-to-one}
+We say that $f: A \to B$ is {\em injective} if the preimage of every
+point in the image consists of a single point in the domain. To say it
+another way: $f$ is injective if $x_1 \ne x_2$ implies that $f(x_1)
+\ne f(x_2)$. Injective functions are also called {\em one-to-one}.
+\end{defn} 
+
+For example, the rule $f(x) = x^2$ defines a mapping from $\R$ to $\R$
+which is NOT injective since it is a two-to-one mapping: every $y$
+except $0$ has \emph{two} elements in its preimage.
+
+
+Injective mappings are also called {\em injections}.
+
+
+\begin{defn}[bijection]\index{bijection}
+Let $f: A \to B$ be a mapping. We say that $f$ is {\em bijective} if
+it is both surjective and injective. Bijections always set up a
+one-to-one correspondence between the domain and co-domain.
+\end{defn}
+
+
+
+\begin{defn}[composition of functions]\index{composition of functions}
+Let $f:A \to B$ and $g:B \to C$ be functions. Then we can define a new
+function $h: A \to C$ by the rule: $h(x) = g(f(x))$. The function $h$
+so defined is called the {\em composite} of $g$ and $f$, and we write
+$h = g \compose f$.  Sometimes, by abuse of notation, we will simply
+write $h = gf$ for the composite function.
+\end{defn}
+
+Note the functional composition is not commutative: $f \compose g \ne
+g \compose f$. It is associative, however: $h \compose (g \compose f)
+= (h \compose g) \compose f$ for any functions $f,g,h$ such that the
+various composites are defined.
+
+
+\begin{defn}[identity function]\index{identity function}
+Let $A$ be a given set. The {\em identity} function on $A$ is the
+function $id$ such that $id(x)=x$ for all $x \in A$. If we must
+specify the underlying set $A$ then we write $id_A$ or sometimes
+$1_A$.
+\end{defn}
+
+\begin{defn}[invertible functions]\index{invertible function}
+Let $f: A \to B$ be a function mapping $A$ to $B$. We say that $f$ is
+{\em invertible} if there exists another function $g: B \to A$ such
+that $f \compose g = id_B$ and $g \compose f = id_A$. When this holds,
+the function $g$ is called the {\em inverse} of the function
+$f$, and is written as $f^{-1}$.
+\end{defn}
+
+Note that $f \circ g = id_B$ if and only if $f(g(y))= y$ for all $y
+\in B$. Similarly, $g \circ f = id_A$ if and only if $g(f(x))=x$ for
+all $x \in A$.
+
+\begin{example}
+  The function $f: \R \to \R$ defined by the rule $f(x) = 2x-7$ is
+  invertible. What is its inverse?
+\end{example}
+
+
+\begin{thm}[fundamental theorem of invertible functions]
+\index{fundamental~theorem!of~invertible~functions}%
+  A function is invertible if and only if it is bijective.
+\end{thm}
+
+\begin{defn}
+If $f: A \to B$ is a function with image $I$ then we can always regard
+$f$ as a mapping from $A$ into $T$ where $T$ is any set such that $I
+\subset T \subset B$.  This is called {\em restricting the
+  co-domain}. We can always shrink the co-domain to any such $T$.
+\end{defn}
+
+Strictly speaking, we get a new function when we do this,
+but people often use the same symbol $f$ for this new function, by
+abuse of notation.
+
+Note that every function always gives us (by restriction) a surjection
+onto its image. More precisely, if $f: A \to B$ is a function from $A$
+to $B$ and if $I = f(A)$ is its image, then the restriction $f:A \to
+I$ is a surjection.
+
+\begin{defn}\index{restriction of functions}
+Suppose that $f: A \to B$ is a function.  Given any subset $S \subset
+A$ we can define a new mapping $f_{|S}: S \to B$ by the same rule as
+for $f$: $f_{|S}(x) = f(x)$ for all $x \in S$. This is called {\em
+  restricting the domain}. 
+\end{defn}
+
+We usually need to use a different notation for such a function, in
+order to avoid confusion.
+
+A familiar example of the use of domain restriction in basic calculus
+is when you restrict the domain of the sine or cosine function in
+order to make them invertible. Without restriction of the domain, the
+inverse sine and cosine functions would not exist.
+
+
+
+
+%\newpage
+\section*{Exercises}
+\begin{problems}
+
+\item Let $f: \N \to \N$ be given by the rule $f(x)=x^2$. Compute both
+the image and preimage of the set $\{1,2,3,4\}$.
+
+\item Show that a mapping $f: A \to B$ is injective if and only if
+$f(x_1)=f(x_2) \Rightarrow x_1 = x_2$.
+
+\item (a) Show that a mapping $f: A \to B$ is injective if and only if
+there exists a mapping $g: B \to A$ such that $g\circ f = id_A$.
+\par\noindent(b) Show that a mapping $f: A \to B$ is surjective if and
+only if there exists a mapping $g: B \to A$ such that $f\circ g =
+id_B$.
+
+\item Give an example of mappings $f: \Z \to \Z$, $g: \Z \to \Z$ such that
+$g \circ f = id_\Z$ but $f$ is not invertible.
+
+\item Let $f: A \to B$ be a function and let $S,T$ be subsets of $A$.
+Show that $f(S \cup T) = f(S) \cup f(T)$ and that $f(S \cap T) \subset
+f(S)\cap f(T)$. Give an example to show that $f(S \cap T)$ need not
+coincide with $f(S)\cap f(T)$.
+
+\item Let $f: A \to B$ be a function and let $U,V$ be subsets of $B$.
+Show that $f^{-1}(U \cup V) = f^{-1}(U) \cup f^{-1}(V)$ and that
+$f^{-1}(U \cap V) = f^{-1}(U)\cap f^{-1}(V)$.
+
+
+\end{problems}
+\end{document}
+

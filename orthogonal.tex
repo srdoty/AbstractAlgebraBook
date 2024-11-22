@@ -1,0 +1,240 @@
+\documentclass[12pt,oneside]{amsart}
+\usepackage{amsthm,amssymb,amscd}
+\usepackage[all]{xy}
+\usepackage[margin=4cm]{geometry}
+\usepackage{graphicx}  
+
+\swapnumbers %to put numbers in the front of proclamations
+\newtheorem{thm}[subsection]{Theorem}
+\newtheorem{lem}[subsection]{Lemma}
+\newtheorem{prop}[subsection]{Proposition}
+\newtheorem{cor}[subsection]{Corollary}
+\theoremstyle{definition}
+\newtheorem{defn}[subsection]{Definition}
+\newtheorem*{defn*}{Definition}
+\newtheorem{example}[subsection]{Example}
+\newtheorem*{example*}{Example}
+\newtheorem{examples}[subsection]{Examples}
+\newtheorem{exer}[subsection]{Exercise}
+\theoremstyle{remark}
+\newtheorem{rmk}[subsection]{Remark}
+%\numberwithin{equation}{section}
+
+%\allowdisplaybreaks
+
+
+
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ}
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+
+
+\parskip=2pt
+\renewcommand{\thesection}{\Alph{section}}
+
+%\section*{}
+
+
+\begin{document}
+\title{Notes on Orthogonal Groups}
+\author{} \maketitle
+
+\noindent
+Let $V$ be a vector space over an arbitrary field $F$.  The orthogonal
+group $\O(V)$ is the group of isometries of $V$, where by
+\emph{isometry} we mean a linear automorphism of $V$ preserving a
+given quadratic form.
+
+This pleasing uniform definition works in all characteristics, so long
+as one adopts the following nonstandard definition of quadratic form.
+
+\begin{defn*}
+  A \emph{quadratic form} on $V$ is a scalar-valued function $q \colon
+  V \to F$ satisfying the condition
+  \[
+    q( a u + b v ) = a^2 q(u) + ab\inner{u}{v} + b^2 q(v),
+    \quad\text{for all } u,v \in V,\ a,b \in F
+  \]
+  where the function $(u,v) \mapsto \inner{u}{v}$ is a bilinear form
+  on $V$. This bilinear form is sometimes called the polar bilinear
+  form of $q$.
+\end{defn*}
+
+This version of the definition typically appears in the literature
+only in case $F$ has characteristic $2$, although in the other cases
+it is equivalent to the usual, slightly simpler, definition
+\cite{Artin, Carter, Grove}.  By taking $b = 0$ in the definition we
+obtain the property
+\[ \tag{1}
+  q(au) = a^2 q(u), \quad \text{all } a \in F, u \in V.
+\]
+We note that the bilinear form is uniquely determined by the quadratic
+form $q$, since by taking $a=b=1$ in the definition we obtain
+\[ \tag{2}
+  \inner{u}{v} = q(u+v) - q(u) - q(v), \quad\text{all } u,v \in V.
+\]
+Hence the bilinear form is necessarily symmetric: $\inner{u}{v} =
+\inner{v}{u}$ for all $u,v \in V$.  It follows from (2) that if
+$\alpha$ is an isometry of $V$ then $\alpha$ must preserve the
+bilinear form: $\inner{\alpha(u)}{\alpha(v)} = \inner{u}{v}$ for all
+$u,v \in V$. The converse, however, fails in characteristic 2.
+
+
+In characteristic different from 2, the quadratic form is uniquely
+determined by its associated bilinear form; in fact, from (1) and (2)
+it follows immediately that $q(u) = \frac{1}{2}\inner{u}{u}$. Thus, in
+characteristic different from 2, preserving the quadratic form is
+equivalent to preserving the bilinear form. By taking coordinates with
+respect to a given (finite) basis, we can represent the bilinear form
+by a matrix $Q$ as usual, and thereby obtain the usual isomorphism
+$\O(V) \simeq \O_n(F) = \{ A \in \GL_n(F) \colon A^\transpose Q A = Q
+\}$. 
+
+In characteristic 2 this equivalence falls apart.  In fact, in this
+case it follows from (1) and (2) that we have $\inner{u}{u} = 0$ for
+all $u \in V$. This suggests that it is not always possible to recover
+$q$ from its bilinear form in characteristic 2.
+
+\begin{example*}
+For an instructive example, take $V = F^n$ to be the space of
+$n$-dimensional vectors over $F$ where $F$ has characteristic 2, and
+take the quadratic form given by $q(x_1, \dots, x_n) = \sum
+x_j^2$. Let us compute the values of the associated bilinear form on
+pairs of standard basis elements. We denote the standard basis of
+$F^n$ by $\{ e_1, \dots, e_n\}$. From the preceding paragraph we have
+$\inner{e_i}{e_i} = 0$ for all $i = 1, \dots, n$. Furthermore, for any
+$i \ne j$ we have from (2) that $\inner{e_i}{e_j} = 0$. So the
+associated bilinear form is the zero form in this case. Clearly it is
+not possible to recover the quadratic form from the bilinear form, and
+preserving one has quite a different meaning than preserving the
+other. In fact the group of linear automorphisms preserving the
+bilinear form is just $\GL(V)$.  The orthogonal group $\O(V)$ is quite
+different from $\GL(V)$ except in the case $n=2$, $F=\F_2$. We claim
+that in fact 
+\[
+  \O(V) = \{ A \in \GL_n(F) \colon q(A_j) = 1, \text{ all } j =1,
+  \dots, n \},
+\]
+where $A_j$ is the $j$th column of $A$. This is proved by a simple
+calculation.
+\end{example*}
+
+Most authors impose the additional assumption of nondegeneracy of the
+quadratic form. Again, it is possible to do this uniformly in all
+characteristics, provided that one adopts the following as the
+definition of nondegeneracy.
+
+\begin{defn*}
+  A quadratic form $q$ on $V$ is \emph{nondegenerate} provided that $u
+  \in V_0$ and $q(u)=0$ implies $u=0$. Here $V_0$ is the radical of
+  the polar bilinear form $\inner{\ }{\ }$ associated to $q$.
+\end{defn*}
+
+Again, this version of the definition typically appears in the
+literature only in characteristic 2. In characteristic different from
+2, it is easy to check that $q$ is nondegenerate in the above sense if
+and only if $V_0=0$, so our definition is equivalent to the usual one
+in all characteristics different from 2. 
+
+Assume from now on that the given quadratic form $q$ is
+nondegenerate. In characteristic different from 2, $\O(V)$ contains a
+unique subgroup of index 2 which is denoted by $\SO(V)$; this is equal
+to $\SL(V) \cap \O(V)$. However, this definition of $\SO(V)$ will not
+serve in characteristic 2, since in that case $\O(V) \subseteq
+\SL(V)$; i.e., all elements of $\O(V)$ have determinant 1. So in
+characteristic 2 an invariant finer than the determinant is needed to
+distinguish the special orthogonal group; usually the Dickson
+invariant is used and $\SO(V)$ is defined as the set of elements of
+Dickson psuedodeterminant zero. However, according to \cite{Dye}, the
+subgroup $\SO(V)$ may also be defined in all characteristics as the
+subgroup of all elements $\alpha$ of $\O(V)$ satisfying the condition:
+$\text{rank }(\alpha - id)$ is even. But Dye considers only the
+even dimensional case. (In case $\dim V$ is odd, we have $\SO(V) =
+O(V)$ and it is unclear whether Dye's criterion produces this.)
+
+
+
+We note that, since $\inner{u}{u}=0$ for all $u \in V$ the bilinear
+form $\inner{\ }{\ }$ is alternating as well as symmetric in
+characteristic 2, so by \cite[Theorem 2.10]{Grove} the space $V$ has
+an orthogonal decomposition of the form
+\[
+  V = H_1 \oplus \cdots \oplus H_l \oplus V_0
+\]
+where each $H_j$ ($j = 1, \dots, l$) is a hyperbolic plane and $V_0$
+is the radical of $\inner{\ }{\ }$.  Set $d = \dim V_0 = \dim V - 2l$;
+this is the \emph{defect} of $q$. If the defect is zero then the
+bilinear form is nondegenerate in the usual sense, although it is
+customary for authors to use the word ``nondefective'' in this case
+instead.  Now, when restricted to the radical $V_0$, we have 
+\[
+  q(au + bv) = a^2 q(u) + b^2 q(v) .
+\]
+We note that the orthogonal decomposition of $V$ implies that $V$ has
+a basis with respect to which the matrix $Q$ of $\inner{\ }{\ }$ is a
+block matrix of the form
+\[
+  Q = 
+  \begin{bmatrix}
+    M \\
+    & M \\
+    & & \ddots \\
+    & & & M \\
+    & & & & 0
+  \end{bmatrix}
+\quad \text{ where } M = 
+\begin{bmatrix}
+  0&1\\
+  1&0
+\end{bmatrix}
+\]
+and there are $l$ copies of the $2 \times 2$ matrix $M$ along the
+diagonal of $Q$ and a $d \times d$ zero matrix in the lower right hand
+corner of $Q$. (So if the defect $d = 0$ then the entry in the lower
+right hand corner of the matrix $Q$ displayed above should be
+omitted.)
+
+In characteristic 2, an easy exercise \cite[p.~114]{Grove} shows that
+if $q$ is nondegenerate and the field $F$ is perfect then $\dim V_0 =
+0$ or $1$, depending on whether the dimension of $V$ is even or odd.
+
+
+
+
+
+\begin{thebibliography}{99}\frenchspacing\raggedright\scriptsize
+\bibitem[Artin 1957]{Artin} E. Artin, \emph{Geometric Algebra},
+  Interscience Publishers, Inc. 1957.
+
+\bibitem[Carter 1972]{Carter} R. Carter, \emph{Simple Groups of Lie
+    Type}, Pure and Applied Mathematics, Vol. 28, John Wiley \& Sons
+  1972.
+
+\bibitem[Dye 1977]{Dye} R.H. Dye, A geometric characterization of the
+  special orthogonal group and the Dickson invariant, \emph{J. London
+    Math. Soc.} (2) 15 (1977), 472--476.
+
+\bibitem[Grove 2002]{Grove} L. Grove, \emph{Classical Groups and
+    Geometric Algebra}, Graduate Studies in Mathematics, 39, American
+  Mathematical Society, Providence, RI 2002.
+\end{thebibliography}
+
+\end{document}

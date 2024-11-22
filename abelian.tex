@@ -1,0 +1,429 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\ptn}{\mathfrak{p}}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{29}
+
+\section{Classification of finite abelian groups}\noindent
+We have now developed enough general theory to classify all the finite
+abelian groups, up to isomorphism. This means that we can list all
+possibilities for a given order $n$, and prove that any abelian group
+of order $n$ must be isomorphic to one of the groups on the list.
+
+Let $p$ be a prime.  By definition, a $p$-\emph{group} is a group in
+which every element has order a power of $p$.  Recall that Cauchy's
+theorem says that a finite group $G$ has an element of order $p$, for
+every prime $p$ dividing the order of $G$.  It follows immediately
+from Cauchy's theorem and Lagrange's theorem that any finite $p$-group
+must be of order $p^k$ for some $k \ge 1$.
+
+
+
+\begin{lem}\label{lem:Sylows}
+  Any finite abelian group is isomorphic to the direct product of its
+  Sylow subgroups.
+\end{lem}
+
+\begin{proof}
+Let $G$ be an abelian group of order $n$.  Since any subgroup of an
+abelian group is normal, all the Sylow subgroups of $G$ are normal.
+By the fundamental theorem of arithmetic, $n$ can be factored in the
+form $n = p_1^{k_1} p_2^{k_2} \cdots p_r^{k_r}$ where $p_1, p_2,
+\dots, p_r$ are the distinct prime factors of $n$. Let $G_j$ be the
+Sylow $p_j$-subgroup of $G$ of order $p_j^{k_j}$. Each Sylow subgroup
+is normal since every subgroup of an abelian group is normal. By
+Lagrange's theorem, the order of any element of $G_j$ is a power of
+$p_j$ and the order of any element of the product of the other Sylow
+subgroups is coprime to $p_j$. Thus the intersection of any $G_j$ with
+the product of the other Sylow subgroups is trivial, and it follows
+that $G = G_1 \times G_2 \times \cdots \times G_r$.
+\end{proof}
+
+\begin{rmk}
+It is not hard to show that the subgroup $G_j$ appearing in the above
+proof may also be described as $G_j = \{ x \in G \mid x^{q_j} = 1 \}$
+where $q_j = p_j^{k_j}$. This satisfying concrete description is often
+useful for computations.
+\end{rmk}
+
+
+The lemma reduces our task (understanding all finite abelian groups)
+to the task of understanding finite abelian $p$-groups. For this it
+will be useful to use the language of partitions.
+
+\begin{defn}\index{partition}
+A \emph{partition} of a positive integer $k$ is a sequence $\lambda =
+(\lambda_1, \lambda_2, \dots, \lambda_m)$ of positive integers such
+that $\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_m$ and $\lambda_1
++ \cdots + \lambda_m = k$. The number $m$ is called the \emph{length}
+of the partition $\lambda$.
+\end{defn}
+
+There is just one partition of $1$, namely $(1)$. The partitions of
+$2$ are $(2)$ and $1,1)$. The partitions of $3$ are $(3)$, $(2,1)$,
+and $(1,1,1)$.  The partitions of $4$ are $(4)$, $(3,1)$, $(2,2)$,
+$(2,1,1)$, and $(1,1,1,1)$. When writing partitions, people often use
+an \emph{exponential shorthand notation} for repeated entries, in
+which $\lambda_j^t$ stands for $\lambda_j$ repeated $t$ times. For
+example, in the shorthand notation, $(4,2^2,1^3) = (4,2,2,1,1,1)$.
+
+It is easy to construct abelian groups of order $p^k$, for a given
+fixed prime $p$. Pick any partition $\lambda = (\lambda_1, \lambda_2,
+\dots, \lambda_m)$ of the exponent $k$, and define
+\[
+  G(p,\lambda) = \Z_{p^{\lambda_1}} \times \Z_{p^{\lambda_2}} \times
+  \cdots \times \Z_{p^{\lambda_m}}.
+\]
+Since $G(p,\lambda)$ is a direct product of cyclic groups, it is a
+direct product of abelian groups, and hence is abelian. Since
+$\lambda_1 + \cdots + \lambda_m = k$, the order of $G(p,\lambda)$ is
+$p^k$, so $G(p,\lambda)$ is an abelian group of order $p^k$.
+
+
+\begin{example}
+The partitions of $5$ are $(5)$, $(4,1)$, $(3,2)$, $(3,1^2)$,
+$(2^2,1)$, $(2,1^3)$, and $(1^5)$. For any prime $p$, we have the
+following abelian groups of order $p^5$.
+\[
+\begin{array}{ll}
+  \lambda & G(p,\lambda) \\ \hline
+  (5) & \Z_{p^5} \\
+  (4,1) & \Z_{p^4} \times \Z_{p} \\
+  (3,2) & \Z_{p^3} \times \Z_{p^2} \\
+  (3,1^2) & \Z_{p^3} \times \Z_{p} \times \Z_p \\
+  (2^2,1) & \Z_{p^2} \times \Z_{p^2} \times \Z_p \\
+  (2,1^3) & \Z_{p^2} \times \Z_{p} \times \Z_p \times \Z_p \\
+  (1^5) & \Z_{p} \times \Z_p \times \Z_p\times \Z_p \times \Z_p .
+\end{array}
+\]
+In this example, it is not difficult to verify that all the groups in
+the list are pairwise non-isomorphic, because you can always find an
+element in one product group of a different order than all elements of
+the other. (For example, $\Z_{p^5}$ has an element of order $p^5$, but
+none of the others do, so $\Z_{p^5}$ is not isomorphic to any of the
+others.)
+\end{example}
+
+Based on the example, one naturally expects that if $\lambda \ne \mu$
+are distinct partitions of $k$ then $G(p,\lambda) \ncong
+G(p,\mu)$. This is indeed true, but somewhat awkward to prove at the
+moment, so we defer the proof until later in the analysis.
+
+It would be nice if the abelian $p$-groups we just constructed, namely
+the ones of the form $G(p, \lambda)$, where $\lambda$ is a partition,
+give \emph{all} the finite abelian $p$-groups up to isomorphism. We
+will prove that this is indeed the case, following a note by
+G.~Navarro\footnote{Navarro, Gabriel: \emph{On the fundamental theorem
+    of finite abelian groups.}  Amer. Math. Monthly 110 (2003), no. 2,
+  153--154.} published in 2003. 
+
+The key fact we need to prove is that any abelian $p$-group is
+isomorphic to a product of cyclic groups. The proof rests on the
+following pair of lemmas.
+
+
+\begin{lem}\index{p@$p$-group}\label{lem:A}
+  Suppose that $G$ is a finite abelian $p$-group, where $p$ is a
+  prime. If $G$ has a unique subgroup of order $p$ then $G$ is cyclic.
+\end{lem}
+
+\begin{proof}
+By induction on $|G|$. Consider the homomorphism $f: G \to G$ given by
+$f(x) = x^p$. This is a homomorphism because $G$ is abelian. Let $K$
+be the kernel of $f$. By hypothesis, $K$ is the only subgroup of $G$
+of order $p$. Then $G/K \cong f(G)$. If $K=G$ then $G$ is cyclic and
+we are done. Otherwise, $K$ is a proper subgroup of $G$ and hence
+$f(G)$ is not the trivial subgroup. Every subgroup of $f(G)$ is a
+subgroup of $G$, so $f(G)$ has a unique subgroup of order $p$, and
+thus is cyclic by the inductive hypothesis. So $G/K$ is cyclic. Then
+there is some $y \in G$ such that $yK$ generates $G/K$. Clearly $y \ne
+1$ as $yK$ has order $|G|/p$ in $G/K$. Let $H = \gen{y}$ be the cyclic
+subgroup of $G$ generated by $y$. Then $HK = G$. (Otherwise the order
+of $HK/K$ would be strictly less than $|G\/p$, in violation of the
+fact that $yK$ has order $|G|/p$.)  Now by Cauchy's theorem $H$ has a
+subgroup of order $p$, which must be $K$. Hence $K \subset H$ and $G =
+HK = H = \gen{y}$, so $G$ is cyclic.
+\end{proof}
+
+
+\begin{lem}\label{lem:B}
+  If $G$ is a finite abelian $p$-group, let $C$ be a cyclic subgroup
+  of maximal order. Then $G = C \times B$ for some subgroup $B$.
+\end{lem}
+
+\begin{proof}
+Again we use induction on $|G|$. If $G$ is cyclic then $G = C \times
+\{1\}$ and we are done. Otherwise, by the previous lemma $G$ has at
+least two subgroups of order $p$, but $C$ has only one. Let $K$ be a
+subgroup of order $p$ which is not contained in $C$. Then $C \cap K =
+\{1\}$. No homomorphic image of $G$ has a cyclic subgroup of order
+larger than $|C|$, so $CK/K \cong C$ is cyclic of maximal order in
+$G/K$. By the inductive hypothesis, $G/K = CK/K \times B/K$ for some
+subgroup $B$ of $G$. Since $K \subset B$, it follows that $G = (CK)B =
+CB$.  Furthermore, $C \subset CK$ and $B \cap CK = K$, so $C \cap B =
+C \cap B \cap CK = C \cap K = \{1\}$. Hence $G = C \times B$.
+\end{proof}
+
+
+
+
+
+
+\begin{thm}[classification of abelian $p$-groups]
+\label{thm:abelian-p}%
+  Suppose that $G$ is a finite abelian $p$-group, of order $p^k$ for
+  some $k \ge 1$. Then there is some partition $\lambda$ of $k$ such
+  that $G \cong G(p,\lambda)$. Furthermore, $G(p,\lambda) \ncong
+  G(p,\mu)$ for $\lambda \ne \mu$.
+\end{thm}
+
+\begin{proof}
+The proof is by induction on $|G|$.  If $G$ is cyclic, then $G \cong
+\Z_{p^k}$ and we are finished. Otherwise, let $C$ be a cyclic subgroup
+of $G$ of maximum possible order. Then $|C| = p^{\lambda_1}$ where
+$\lambda_1 < k$. By Lemma \ref{lem:B}, $G = C \times B$ with $|B| <
+|G|$. Note that $B$ is also a $p$-group; in fact $|B| =
+p^{k-\lambda_1}$. By the inductive hypothesis, $B$ is isomorphic to a
+product of cyclic groups of the form $G(p, (\lambda_2, \dots,
+\lambda_m))$, where $(\lambda_2, \dots, \lambda_m)$ is a partition of
+$k-\lambda_1$. Thus $G = C \times B \cong G(p,\lambda)$, where
+$\lambda = (\lambda_1, \lambda_2, \dots, \lambda_m)$. This proves the
+first claim.  It also proves the second claim, since if $C \times B =
+C \times B'$ then $B \cong B'$. 
+\end{proof}
+
+
+As an easy corollary, we obtain the desired classification theorem for
+finite abelian groups.
+
+\begin{thm}[classification of finite abelian groups]
+\index{classification!of~finite~abelian~groups}%
+  Any finite abelian group is isomorphic to a direct product of cyclic
+  groups. If $n = p_1^{k_1} \cdots p_t^{k_r}$ is the prime power
+  factorization of $n$ then the number of isomorphism classes of
+  finite abelian groups of order $n$ is $\ptn(k_1) \cdots \ptn(k_r)$,
+  where $\ptn(k)$ is the number of partitions of $k$.
+\end{thm}
+
+\begin{proof}
+Combine Lemma \ref{lem:Sylows} and Theorem \ref{thm:abelian-p}. 
+\end{proof}
+
+The function $\ptn(k)$ appearing in the last theorem is called the
+\emph{partition function}. There is no known explicit formula for
+$\ptn(k)$.  We are now finished with the classification of all finite
+abelian groups.
+
+
+\begin{example}
+Let $n = 1200 = 2^4 \cdot 3 \cdot 5^2$. Since $\ptn(4) = 5$,
+$\ptn(1)=1$, and $\ptn(2) = 2$, it follows that there are exactly $10
+= 5 \cdot 1 \cdot 2$ different abelian groups of order $1200$, up to
+isomorphism.  We can easily list all ten isomorphism types of the
+abelian groups of order $1200$.  They are indexed by ordered pairs
+$(\lambda, \mu)$ of partitions, such that $\lambda$ is a partition of
+$4$ and $\mu$ is a partition of $2$ (we can omit the unique partition
+of $1$ from our indexing), as follows:
+\[
+\begin{array}{ll}
+  (\lambda, \mu) & G(2,\lambda) \times G(3,(1)) \times G(5,\mu)
+  \\ \hline ((4), (2)) & \Z_{2^4} \times \Z_{3} \times \Z_{5^2}
+  \\ ((4), (1^2)) & \Z_{2^4} \times \Z_{3} \times \Z_{5} \times \Z_{5}
+  \\ ((3,1), (2)) & \Z_{2^3} \times \Z_2 \times \Z_{3} \times \Z_{5^2}
+  \\ ((3,1), (1^2)) & \Z_{2^3} \times \Z_2 \times \Z_{3} \times \Z_{5}
+  \times \Z_{5} \\ ((2^2), (2)) & \Z_{2^2} \times \Z_{2^2} \times
+  \Z_{3} \times \Z_{5^2} \\ ((2^2), (1^2)) & \Z_{2^2} \times \Z_{2^2}
+  \times \Z_{3} \times \Z_{5} \times \Z_{5} \\ ((2, 1^2), (2)) &
+  \Z_{2^2} \times \Z_{2} \times \Z_{2} \times \Z_{3} \times \Z_{5^2}
+  \\ ((2, 1^2), (1^2)) & \Z_{2^2} \times \Z_{2} \times \Z_{2} \times
+  \Z_{3} \times \Z_{5} \times \Z_{5} \\ ((1^4), (2)) & \Z_{2} \times
+  \Z_{2} \times \Z_{2} \times \Z_{2} \times \Z_{3} \times \Z_{5^2}
+  \\ ((1^4), (1^2)) & \Z_{2} \times \Z_{2} \times \Z_{2} \times \Z_{2}
+  \times \Z_{3} \times \Z_{5} \times \Z_{5}.
+\end{array}
+\]
+The orders of the individual factors in each product above are called
+the \emph{elementary divisors}\index{elementary~divisors} of the
+group.  Each isomorphism type is uniquely determined by its set of
+elementary divisors.
+
+
+The acute reader might be alarmed to notice that the cyclic group of
+order $1200$ appears to be missing from the above list. However, it is
+isomorphic to the first group on the list, so it is not actually
+missing.
+
+Because of the fact that $\Z_{mn} \cong \Z_m \times \Z_n$ whenever
+$m,n$ are relatively prime, there are many other ways to express each
+of the above isomorphism types as products of cyclic groups. With this
+in mind, we rewrite the above table in a different looking form (but
+still isomorphic correspondingly):
+\[
+\begin{array}{ll}
+  (1200) & \Z_{1200} \\ (5 \mid 240) & \Z_5 \times \Z_{240} \\ (2 \mid
+  600) & \Z_2 \times \Z_{600} \\ (10 \mid 120) & \Z_{10} \times
+  \Z_{120} \\ (4 \mid 300) & \Z_4 \times \Z_{300} \\ (20 \mid 60) &
+  \Z_{20} \times \Z_{60} \\ (2 \mid 2 \mid 300) & \Z_{2} \times \Z_{2}
+  \times \Z_{300} \\ (2 \mid 10 \mid 60) & \Z_{2} \times \Z_{10}
+  \times \Z_{60} \\ (2 \mid 2 \mid 2 \mid 150) & \Z_2 \times \Z_2
+  \times \Z_2 \times \Z_{150} \\
+  (2 \mid 2 \mid 10 \mid 30) & \Z_2 \times \Z_2
+  \times \Z_2 \times \Z_{10} \times \Z_{30}.
+\end{array}
+\]
+Although the second table looks very different from the first, it is
+merely another way of describing the isomorphism types as products of
+cyclic groups. In this description, the products are indexed by
+sequences $(d_1 \mid d_2 \mid \cdots)$ of divisors of the group order
+such that each $d_i$ divides the next $d_{i+1}$ and such that the
+product of all the $d_i$ is equal to the group order. Such sequences
+are called \emph{invariant factors}\index{invariant~factors} of the
+group. There is an algorithm for going going back and forth between
+elementary divisors and invariant factors, which we leave to the
+reader.
+\end{example}
+
+
+It would be nice to go on to solve the problem of classifying
+non-abelian finite groups up to isomorphism.  Alas, it is unknown how
+to do this in general. This remains an unsolved problem in group
+theory.
+
+
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item Prove that $\Z_m \times \Z_n \cong \Z_{mn}$ if $m,n$ are
+  relatively prime. 
+
+\item Use the result of the previous exercise to express $\Z_{330}$ as
+  an isomorphic product of simple groups. What are the composition
+  factors of $\Z_{330}$?
+
+\item Show that the composition factors of any abelian $p$-group are
+  all isomorphic to $\Z_p$.
+
+\item List all the partitions of 6 and 7. What is $\ptn(6)$ and
+  $\ptn(7)$?
+
+\item List all abelian groups of order $30$, up to isomorphism, giving
+  both the elementary divisors and invariant factors for each type.
+
+\item List all abelian groups of order $48$, up to isomorphism, giving
+  both the elementary divisors and invariant factors for each type.
+
+\item List all abelian groups of order $64$, up to isomorphism, giving
+  both the elementary divisors and invariant factors for each type.
+
+\item List all abelian groups of order $100$, up to isomorphism, giving
+  both the elementary divisors and invariant factors for each type.
+
+\item Prove that the number of isomorphism types of abelian groups of
+  order 128 is 15.
+
+\item Prove that there are 35 different abelian groups of order $2592
+  = 2^5 \cdot 3^4$ up to isomorphism. 
+
+\item Show that the generating function for the number $\ptn(n)$ of
+  partitions\index{partition} of $n$ is
+  $$\sum_{n=0}^{\infty} \ptn(n)x^{n} = \prod_{k=1}^{\infty}
+  \left({\frac {1}{1-x^{k}}}\right).$$ This means that you can compute
+  $\ptn(n)$ by taking the coefficient of $x^n$ in the product of the
+  various geometric series expansions on the right hand side. This
+  formula is due to Euler.
+\end{problems}
+
+\end{document}

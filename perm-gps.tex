@@ -1,0 +1,970 @@
+\documentclass[11pt]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{enumitem}
+\setlist{topsep=1pt,itemsep=0pt,parsep=1pt,leftmargin=0.7cm}
+\setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem*{conv*}{Convention}
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\compose}{\circ} % functional composition
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\iff}{\Leftrightarrow}
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{5}
+
+\section{Permutations}\noindent
+Lagrange and Galois studied permutations among the roots of
+polynomials as a way of understanding solutions of polynomial
+equations.  This eventually led to what is now called \emph{group
+  theory}.
+
+\begin{defn}\index{permutation}
+A {\em permutation} of a set $X$ is a bijection $X \to X$.  Write
+$\Sym_X$ for the set of all permutations of $X$; i.e.,
+\[ 
+\Sym_X = \{ \sigma: X \to X \mid \sigma \text{ is a bijection} \}.
+\] 
+In the special case $X = \n := \{1, 2, \dots, n \}$ we write $\Sym_n$
+instead of $\Sym_X$.
+\end{defn}
+
+So $\Sym_n$\index{S@$\Sym_n$} is the set of all permutations of the
+numbers from 1 to $n$. We can think of it as the set of all
+permutations of any $n$ things, since we can always assign numbers
+from 1 to $n$ to those things.
+
+If $X$ is a finite set of $n$ elements, then the number of
+permutations of $X$ is $n!$, the factorial of $n$. So the cardinality
+$|\Sym_n| = n!$. If $X$ is an infinite set then $\Sym_X$ is also
+infinite.
+
+
+
+\begin{defn}\index{two-line~notation}
+  If $\sigma \in \Sym_n$, then we can depict the permutation by
+  writing $$\sigma =
+  \begin{perm}{1&2&\cdots&n}{\sigma(1)&\sigma(2)&\cdots&\sigma(n)}
+  \end{perm}.$$ This is called the 
+  \emph{two-line notation} for a permutation.
+\end{defn}
+
+Read down the columns to see images of elements from the top row
+sitting in the corresponding position in the bottom row. In other
+words, if $\alpha$ maps $i$ to $j$ then we put $i$ over
+$j$ in the $i$th column of the two-line notation. 
+
+\begin{example}
+$\alpha = \begin{perm}{1&2&3&4&5}{4&1&3&5&2} \end{perm}$
+is the permutation which maps $1\to 4$, $2\to 1$, $3\to 3$, $4\to 5$,
+and $5\to 2$.  Note that $3$ is a {\em fixed point} for $\alpha$. 
+\end{example}
+
+\begin{defn}[permutation diagrams]\index{permutation diagram}
+Permutations can also be expressed by diagrams. A diagram is a
+directed graph with $2n$ vertices and $n$ edges, with the vertices
+arranged in two rows of $n$ each, such that each edge connects a
+single vertex in the top row to a single vertex in the bottom row.
+The vertices on the top and bottom rows are numbered 1 to $n$ in order
+from left to right. Then the diagram depicts the permutation $\alpha$
+that maps $i$ to $j$ if and only if there is an edge connecting vertex
+$i$ in the top row with vertex $j$ in the bottom row.
+\end{defn}
+
+\begin{example}
+We can express the permutation $\alpha$ in the previous example by the
+diagram
+\[ 
+\alpha =\begin{perm}{1&2&3&4&5}{4&1&3&5&2} \end{perm} =
+\begin{pdiag}{5}{1}
+  \pdmap{1}{4}\pdmap{2}{1}\pdmap{4}{5}\pdmap{5}{2} \pdendmapfill
+\end{pdiag}.
+\]
+Technically, the edges should all have arrows pointing down, but since
+all the arrows point in the same direction, it is customary to omit
+them.  You should be able to \emph{read} the diagram as a bijection by
+reading the edges from top to bottom as defining images of each
+numbered vertex.
+\end{example}
+
+
+
+
+\begin{defn}[multiplication of permutations]
+Given two permutations, say $\alpha, \beta \in \Sym_n$, we can get a new
+permutation $\alpha \compose \beta \in \Sym_n$ by the usual composition
+of functions. \emph{Convention:} We usually simplify notation and
+write the composite $\alpha \compose \beta$ as the ``product'' $\alpha
+\beta$. \emph{With this convention, we have to read such products as
+  composites.}
+\end{defn}
+
+Thus, $\alpha \compose \beta$ is the bijection defined by the rule
+$(\alpha \compose \beta)(j) = \alpha(\beta(j))$ for all $j \in \n$. In
+terms of the above convention, this reads as $(\alpha \beta)(j) =
+\alpha(\beta(j))$.
+
+We know that $\alpha \beta = \alpha \compose \beta$ is another
+permutation because the composite of two bijections is always a
+bijection.
+
+Let me remind you that composition of functions is not always
+commutative. That is, if $f, g$ are functions then it can happen that
+$f \compose g \ne g \compose f$. Since permutations are functions,
+this also applies to permutations.  So for permutations $\alpha,
+\beta \in \Sym_n$ it can happen that $\alpha\beta \ne \beta\alpha$.
+
+
+
+\begin{example}
+If $\alpha = \begin{perm}{1&2&3&4&5}{2&4&1&5&3}\end{perm}$ and $\beta
+= \begin{perm}{1&2&3&4&5}{3&1&4&5&2}\end{perm}$ are defined in terms
+of the two-line notation then we have
+\[
+\alpha \beta  =  
+\begin{perm}{1&2&3&4&5}{2&4&1&5&3}\end{perm} 
+\begin{perm}{1&2&3&4&5}{3&1&4&5&2}\end{perm} =
+\begin{perm}{1&2&3&4&5}{1&2&5&3&4}\end{perm}.
+\] 
+On the other hand, if we do the product the other way around we
+obtain
+\[
+\beta \alpha = 
+\begin{perm}{1&2&3&4&5}{3&1&4&5&2}\end{perm} 
+\begin{perm}{1&2&3&4&5}{2&4&1&5&3}\end{perm} = 
+\begin{perm}{1&2&3&4&5}{1&5&3&2&4}\end{perm}.
+\]
+You should check these results yourself to make sure that you
+understand the example.  Notice that $\alpha \beta \ne \beta \alpha$
+in this example.
+\end{example}
+
+In particular, you need to read $\alpha \beta = \alpha \compose \beta$
+as $\alpha$ of $\beta$, which is the same as $\beta$ followed by
+$\alpha$. In a composition $\alpha \compose \beta$, which is defined
+by $(\alpha \compose \beta)(j) = \alpha(\beta(j))$, the \emph{second}
+function is the \emph{first} to be applied to the
+argument.\footnote{This confusing order reversal is a consequence of
+  the fact that functions are normally written on the left of their
+  argument. It can be avoided by deciding instead to write functions
+  on the right of their argument.}
+
+\begin{example}
+Multiplication of permutations can also be calculated using
+permutation diagrams. For instance,
+\[
+\begin{pdiag}{5}{2}
+  \pdname{\alpha}\pdmap{1}{2}\pdmap{2}{4}\pdmap{3}{1}\pdmap{4}{5}\pdmap{5}{3}
+  \pdendmapfill
+  \pdname{\beta}\pdmap{1}{3}\pdmap{2}{1}\pdmap{3}{4}\pdmap{4}{5}\pdmap{5}{2}
+  \pdendmapfill
+\end{pdiag}
+=
+\begin{pdiag}{5}{1}
+  \pdmap{1}{1}\pdmap{2}{5}\pdmap{3}{3}\pdmap{4}{2}\pdmap{5}{4}
+  \pdendmapfill
+\end{pdiag}
+= \beta \alpha 
+\]
+computes $\beta \alpha$ in terms of the diagram, by reading the edges
+all the way from top to bottom in the joined diagram displayed on the
+left above. Again, because we are computing $\beta \alpha = \beta
+\compose \alpha$, we are computing $\alpha$ followed by $\beta$, so we
+must put the diagram of $\alpha$ above the diagram of $\beta$.
+\end{example}
+
+
+
+
+
+\begin{defn}[identity permutation]
+  The simplest permutation in $\Sym_n$ is the {\em identity} permutation,
+  which is just the identity mapping $id_X$ on the set $X=\n$.  We will
+  often write $id$ for this permutation.
+\end{defn}
+
+\begin{example}
+For instance, if $n=5$ we have $id
+= \begin{perm}{1&2&3&4&5}{1&2&3&4&5}\end{perm}$. The diagram of this
+permutation is 
+\[ id = 
+\begin{pdiag}{5}{1}
+  \pdmap{1}{1}\pdmap{2}{2}\pdmap{3}{3}\pdmap{4}{4}\pdmap{5}{5}
+  \pdendmapfill
+\end{pdiag}.
+\]
+\end{example}
+
+
+\begin{defn}[inverse permutation]\label{def:inverse-perm}
+\index{inverse of a permutation}%
+  Since a permutation $\alpha$ is a bijection, it is always an
+  invertible mapping.  Thus $\alpha^{-1}$ exists. It is defined by the
+  property $\alpha^{-1} \alpha = id = \alpha \alpha^{-1}$. 
+\end{defn}
+
+\begin{example}
+If $\alpha =
+\begin{perm}{1&2&3&4&5}{4&1&3&5&2}\end{perm}$
+in the two-line notation then $\alpha^{-1} =
+\begin{perm}{1&2&3&4&5}{2&5&3&1&4}\end{perm}$.
+Note that $\alpha \alpha^{-1} = id = \alpha^{-1}\alpha$.  
+\end{example}
+
+In terms of diagrams, the diagram of $\alpha^{-1}$ is obtained by
+turning the diagram of $\alpha$ upside down (and reversing the
+direction of its arrows).
+
+\begin{thm}[properties of permutation multiplication]
+  Let $\alpha, \beta, \gamma \in \Sym_n$. Then:
+  \begin{enumerate}
+  \item multiplication is associative: $(\alpha\beta)\gamma = \alpha
+    (\beta\gamma)$,
+  \item the identity is neutral for multiplication: $\alpha\, id = id\,
+    \alpha = \alpha$,
+  \item inverses exist: $\alpha^{-1} \in \Sym_n$ exists such that
+    $\alpha^{-1} \alpha = id = \alpha \alpha^{-1}$.
+  \end{enumerate}
+\end{thm}
+
+\begin{proof}
+(a) It is well known (and easy to check) that composition of functions
+  is associative. Since permutations are functions, composition of
+  permutations is associative.
+
+(b) This is obvious. 
+
+(c) We have already discussed this, in \ref{def:inverse-perm}.
+\end{proof}
+
+Another important property of permutation multiplication is: \emph{the
+  inverse of a product is the product of the inverses taken in reverse
+  order:} $(\alpha\beta)^{-1} = \beta^{-1}\alpha^{-1}$. The proof is
+an exercise.
+
+
+\begin{defn}[cycles and cycle notation]\index{cycle}
+  A permutation in $\Sym_n$ which maps $i_1 \to i_2 \to \cdots \to
+  i_{r-1} \to i_r \to i_1$ and which fixes all other numbers in the
+  set $\n$ is called an $r$-cycle. In the \emph{cycle notation} it is
+  written as $(i_1, i_2, \dots, i_r)$.
+\end{defn}
+
+\begin{example}
+  The permutation $\alpha =
+  \begin{perm}{1&2&3&4&5}{1&5&3&2&4}\end{perm}$
+  is a $3$-cycle in $\Sym_5$. In the {\em cycle notation} we write this
+  permutation as $\alpha = (2,5,4)$.
+\end{example}
+
+Note that the cycle notation is ambiguous unless $n$ is
+specified. Also, there is more than one way to write a cycle in the
+cycle notation, since for instance $(2,5,4) = (5,4,2) = (4,2,5)$ are
+all the same 3-cycle! Despite these deficiencies, the cycle notation
+is extremely useful. 
+
+\begin{rmk}\index{identity permutation}
+  The identity permutation $id$ in $\Sym_n$ is (by standard
+  convention) often written as the 1-cycle $(1)$. From now on we will
+  usually write $(1)$ for the identity permutation.
+\end{rmk}
+
+
+The inverse of a cycle is also a cycle of the same length: it is the
+cycle obtained by writing the numbers of the original cycle in reverse
+order. For instance, the inverse of $(2,5,4)$ is the cycle $(4,5,2)$. 
+
+\begin{defn}\index{transposition}
+A $2$-cycle is also known as a {\em transposition} or \emph{swap}. It
+simply interchanges two numbers and fixes all others. Every
+transposition is its own inverse.
+\end{defn} 
+
+\begin{defn}
+Two given cycles are said to be {\em disjoint} if they have no numbers
+in common. 
+\end{defn} 
+
+\begin{example}
+The cycles $(2,5,4)$ and $(3,7,1,9)$ are disjoint, while $(2,5,4)$ and
+$(3,5)$ are not.
+\end{example}
+
+
+
+\begin{thm}[disjoint cycle factorization] \label{B:disj}
+\index{disjoint cycle factorization}
+  Any permutation can be written as a product of disjoint
+  cycles. Moreover, disjoint cycles commute with one another, so the
+  product of disjoint cycles can be taken in any order.
+\end{thm}
+
+\begin{proof}
+If all numbers are fixed by the permutation, then it is identity, and
+can be expressed as a product of disjoint 1-cycles. Otherwise, let
+$i_1$ be the first number which is not fixed. It then maps to another
+number, say $i_2$, and so on. Because a permutation is a bijection on
+a \emph{finite} set, eventually we must reach a number $i_r$ which is
+mapped back to $i_1$, so we obtain an $r$-cycle $(i_1,i_2,\dots,
+i_r)$. Now continue the argument with the next number which is not
+fixed by the permutation, and which has not already appeared in some
+cycle. This process must terminate after finitely many steps since we
+are permuting finitely many elements. This proves the first claim. The
+second claim is obvious.
+\end{proof}
+
+
+\begin{example}
+The above proof is constructive, and highly computational, in that it
+provides a \emph{procedure} for computing such a product of disjoint
+cycles for any given permutation. Here is an illustrative example. Let
+$\alpha = \begin{perm} {1&2&3&4&5&6&7&8&9}
+  {2&5&3&1&8&9&4&7&6}\end{perm}$.  Then $\alpha$ sends $1\to 2 \to 5
+\to 8 \to 7 \to 4 \to 1$, which gives the 6-cycle $(1,2,5,8,7,4)$. The
+next number that doesn't appear in this cycle is 3, which is a fixed
+point. The next after that is 6, and $\alpha$ sends $6 \to 9 \to 6$,
+which gives a 2-cycle $(6,9)$. At this point every number not fixed by
+$\alpha$ appears in a cycle, so we are finished.  The permutation
+$\alpha$ has the cycle factorization $\alpha = (1,2,5,8,7,4)(6,9)
+=(6,9)(1,2,5,8,7,4)$. Some people might include the 1-cycle (3) in
+order to emphasize the fact that 3 is fixed, writing $\alpha =
+(1,2,5,8,7,4)(6,9)(3)$. This is fine, too.
+\end{example}
+
+It is a fundamental fact that every permutation is expressible as a
+product of transpositions (not necessarily disjoint). One way to prove
+this uses the following observation.
+
+\begin{lem}\label{B:trans} 
+  Any $r$-cycle can be written as a product of (not necessarily
+  disjoint) transpositions.
+\end{lem}
+
+\begin{proof} 
+One verifies the identity $(i_1, i_2, \dots, i_r) = (i_1,i_2)(i_2,i_3)
+\cdots (i_{r-1},i_r)$ by direct calculation.
+\end{proof}
+
+\begin{examples}
+1. $(3,4,5) = (3,4)(4,5)$.
+
+2. $(3,6,4,2) = (3,6)(6,4)(4,2)$.  
+\end{examples}
+
+It should also be noted that there is \emph{always} more than one way
+to express a given permutation as a product of transpositions. If
+$\sigma$ is any permutation and $\tau$ any transposition then $\sigma
+= \sigma\tau^2$ (because $\tau^2 = id$). Thus, if $\sigma$ is factored
+as a product of transpositions, then by tacking on two additional
+factors of $\tau$ you have found another such factorization of
+$\sigma$.
+
+Furthermore, there are \emph{other} ways of factoring into
+transpositions that do not arise from the formula in the lemma. For
+instance, check that $(3,4,5) = (4,5)(5,3)$.
+
+\begin{thm} \label{B:transpositionthm} 
+Any permutation can be written as a product of (not necessarily
+disjoint) transpositions.
+\end{thm}
+
+\begin{proof}
+Combine \ref{B:trans} with \ref{B:disj}.
+\end{proof}
+
+As already noted, there are always many different ways (in fact,
+infinitely many) to factor a permutation as a product of
+transpositions.
+
+
+
+\section*{Exercises}
+
+\begin{problems}
+\item Consider the permutations $\alpha = 
+  \begin{perm}
+    {1&2&3&4&5&6}{3&1&5&6&2&4}
+  \end{perm}$ and $\beta =
+  \begin{perm}
+    {1&2&3&4&5&6}{6&3&4&1&5&2}
+  \end{perm}$.
+\begin{enumerate}
+\item Compute the products $\alpha\beta$ and $\beta\alpha$.
+
+\item What permutation is $\alpha^{-1}$? 
+
+\item Compute $\alpha^2$ and $\alpha^3$.
+
+\item What is the smallest positive power of $\alpha$ which equals
+  identity? (I.e., compute the order of $\alpha$.)  
+\end{enumerate}
+
+\item Compute the order $|\beta|$ of $\beta = \begin{perm}
+    {1&2&3&4&5&6&7&8&9&10&11&12&13&14}{3&1&5&6&2&4&13&11&9&7&10&8&14&12}
+  \end{perm}$. Justify your answer. 
+
+
+\item 
+\begin{enumerate}
+\item Write out all 3-cycles in $\Sym_4$. How many are there?
+\item How many 3-cycles are there in $\Sym_n$?
+\item For any $r$, how many $r$-cycles are there in $\Sym_n$?
+\end{enumerate}
+
+
+\item 
+\begin{enumerate}
+\item Write the following permutation as a product of disjoint
+  cycles:
+  \[ \alpha =
+  \begin{perm}
+    {1&2&3&4&5&6&7&8&9}{6&1&7&5&4&2&8&9&3} 
+  \end{perm}.
+  \]
+
+\item Now write $\alpha$ as a product of transpositions. 
+\end{enumerate}
+
+\item Show that if $\alpha = \alpha_1 \alpha_2 \cdots \alpha_k$ is a
+  product of disjoint cycles, then $\alpha^t = \alpha_1^t \alpha_2^t
+  \cdots \alpha_k^t$. Show by an example that this may fail for
+  products of non-disjoint cycles.
+
+
+\item (Maps on the right).\index{maps on the right} Suppose we decide
+  to write functions on the \emph{right} of their argument instead of
+  on the left.  (This is called \emph{postfix} notation in computer
+  science.) This means that we write $(x)f$ instead of $f(x)$. One
+  usually reads $(x)f$ as \emph{the image of $x$ under $f$}. In this
+  notation, the definition of $f \compose g$ becomes $(x)(f \compose
+  g) = ((x)f)g$. In other words, this fixes the annoying order
+  reversal that we see when maps are written on the left.  Show that
+  if we adopt this convention then:
+  \begin{enumerate}
+  \item $(1,2,3) = (3,2)(2,1)$.
+  \item $(i_1, i_2, \dots, i_r) = (i_r, i_{r-1}) \cdots (i_3,i_2)(i_2,i_1)$.
+  \item The product $\alpha \beta$ can be computed by placing the
+    diagram of $\alpha$ above the diagram of $\beta$ and then reading
+    the edges from the top of $\alpha$ to the bottom of $\beta$.
+  \end{enumerate}
+
+\end{problems}
+
+
+\newpage\section{Permutation Groups}\noindent
+We now come to our first examples of groups, the permutation
+groups. These were first studied by Lagrange in the late 1700s.  Here
+are the two key definitions.
+
+
+\begin{defn}
+  Let $G$ be a nonempty subset of $\Sym_n$. 
+
+  (a) We say that $G$ is \emph{closed under products} if $\alpha, \beta
+  \in G$ implies $\alpha \beta \in G$.
+
+  (b) We say that $G$ is \emph{closed under inverses} if $\alpha \in
+  G$ implies $\alpha^{-1} \in G$.
+\end{defn}
+
+
+
+\begin{defn}\index{permutation~group}
+  A nonempty subset $G \subset \Sym_n$ is a \emph{group of
+    permutations}, or \emph{permutation group} for short, if the set
+  $G$ is closed under products and inverses.
+\end{defn}
+
+Notice that {\em any permutation group must contain the identity
+  permutation}, since it contains some element $\alpha$ (because it is
+nonempty) and contains $\alpha^{-1}$ (because of closure under
+inverses) and thus must contain $\alpha \alpha^{-1} = id = (1)$ (by
+closure under products).  Hence, if a given subset of $\Sym_n$ does
+not include the identity permutation then it cannot be a permutation
+group.
+
+\begin{examples} 
+1. The set $\Sym_n$ itself is a permutation group, called the
+\emph{symmetric group}\index{symmetric group} on $n$ letters. 
+
+2. The \emph{trivial group} is the group $\{ (1) \}$ consisting of
+just the identity permutation. This group is not interesting; thus the
+name.
+
+3. The group $K = \{ (1), (1,2), (3,4), (1,2)(3,4) \}$ is another
+example of a permutation group.
+\end{examples}
+
+
+
+\begin{defn}[order of a group]\index{order!of~a~group}
+The {\em order} of a permutation group is the number of elements in
+the group. In other words, the order of a group is its cardinality as
+a set. If $G$ is a group, then we always write $|G|$ for its order.
+\end{defn}
+
+
+Note that permutation groups always have finite order since they are,
+by definition, subsets of some $\Sym_n$, and $\Sym_n$ is itself a finite
+set. We will see examples of groups of infinite order later.
+
+
+\begin{defn}[powers of a permutation]
+Let $\alpha \in \Sym_n$ be a permutation and let $m\in \Z$ be a positive
+integer. We define:
+\begin{align*} 
+\alpha^m &= \alpha \alpha \cdots \alpha \quad (\text{$m$ factors})\\
+\alpha^0 &= (1) = id \\
+\alpha^{-m} &= \alpha^{-1} \alpha^{-1}\cdots \alpha^{-1} \quad(\text{$m$ factors})
+\end{align*}
+\end{defn}
+
+Notice that $(\alpha^m)^{-1} = \alpha^{-m}$. Furthermore, $\alpha^r
+\alpha^s = \alpha^{r+s}$ and $(\alpha^r)^s = \alpha^{rs}$ for all $r,s
+\in \Z$. So the usual laws of exponents (but only for integer
+exponents) are applicable to powers of permutations.
+
+
+\begin{lem}
+  Let $\alpha \in \Sym_n$. Then there must be some positive integer
+  $p$ such that $\alpha^p = id$.
+\end{lem}
+
+
+\begin{proof}
+Since the set $\Sym_n$ is closed under products, the set $S =
+\{\alpha, \alpha^2, \alpha^3, \dots \}$ of all positive integer powers
+of $\alpha$ is contained in $\Sym_n$. So the set $S$ must be a
+\emph{finite} set. This implies that there must be repetition in the
+powers of $\alpha$. In other words, there exist distinct positive
+integers $r,s$ such that $\alpha^r = \alpha^s$. We may assume that
+$r>s$ (otherwise we can just interchange them). Then it follows that
+\[
+  \alpha^{r-s} = \alpha^r \alpha^{-s} = \alpha^s \alpha^{-s} =
+  \alpha^0 = id.
+\]
+Since $r-s > 0$, this completes the proof of the lemma.
+\end{proof}
+
+\begin{defn}[order of a permutation]\index{order!of~an~element}
+Let $\alpha \in \Sym_n$.  The {\em order} of $\alpha$ (written as
+$\text{order}(\alpha)$ or $|\alpha|$) is the \underline{smallest}
+positive integer $m$ such that $\alpha^m = id$.
+\end{defn}
+
+Note that only verifying the property $\alpha^m = id$ is \emph{not}
+enough to prove that the order of $\alpha$ is $m$. You also need to
+show that the positive exponent $m$ is minimal with respect to that
+property. 
+
+\begin{example}
+  The order of the identity $id$ is the integer $1$: $|id| = 1$. 
+\end{example}
+
+\begin{example}
+  If $\alpha = \begin{perm}{1&2&3&4&5}{4&1&3&5&2}\end{perm}$ then
+  $|\alpha| = 4$, as you should verify by computing the successive
+  powers $\alpha^2$, $\alpha^3$, and $\alpha^4$. Since $\alpha^1 \ne
+  id$, $\alpha^2 \ne id$, $\alpha^3 \ne id$, but $\alpha^4 = id$, it
+  follows that $4$ is the smallest positive exponent of $\alpha$
+  giving the identity.
+\end{example}
+
+\begin{prop}
+  Let $\alpha$ be a permutation. If $|\alpha|=m$ and $\alpha^k = id$
+  for some positive integer $k$ then $k$ must be a multiple of $m$.
+\end{prop}
+
+\begin{proof}
+Divide $k$ by $m$ to get an integer quotient $q$ and remainder $r$, so
+that
+\[
+  k = qm+r \quad\text{and}\quad 0 \le r < m.
+\]
+Then $id = \alpha^k = \alpha^{qm+r} = (\alpha^m)^q \alpha^r = id\,
+\alpha^r = \alpha^r$, so $\alpha^r = id$. If $r>0$ then we contradict
+the fact that $|\alpha|=m$, so it follows that $r=0$ and thus $k = qm$
+as required.
+\end{proof}
+
+Since any permutation can be written as a product of disjoint cycles,
+the following result enables us to easily compute the order of any
+permutation. Note that if $\alpha = \alpha_1 \alpha_2 \cdots \alpha_k$
+is a product of disjoint cycles, then $\alpha^t = \alpha_1^t \alpha_2^t
+\cdots \alpha_k^t$, because disjoint cycles commute.
+
+\begin{prop} \label{B:order}
+The order of any $r$-cycle is $r$.  The order of a product $\alpha_1
+\alpha_2 \cdots \alpha_n$ of {\em disjoint} cycles is the least common
+multiple (lcm) of their individual orders.
+\end{prop}
+
+\begin{proof}
+Let $\alpha = (i_1, i_2, \dots, i_r)$ be any $r$-cycle. Then for any
+$j < r$, the map $\alpha^j$ sends $i_1$ to $i_j$ and hence cannot be
+equal to the identity $(1)$. On the other hand, it is easy to check
+that $\alpha^r = (1)$. This proves the first claim.  The proof of the
+second claim is left to you as an exercise.
+\end{proof}
+
+\begin{example}
+  If $\alpha = (6,9,5)(2,7,3,10)(1,11)$ then $|\alpha| =
+  \mathrm{lcm}(3,4,2) = 12$. This follows from the preceding result.
+\end{example}
+
+
+\begin{defn}[cyclic groups]\index{cyclic group}
+  Let $\alpha\in \Sym_n$. The smallest permutation group 
+  containing $\alpha$ is called the \emph{cyclic group} generated by
+  $\alpha$. This group is often written as $\gen{\alpha}$.
+\end{defn}
+
+\begin{prop}
+  Let $\alpha\in \Sym_n$, and let $G = \gen{\alpha}$ be the cyclic
+  group generated by $\alpha$. Then $G = \{id, \alpha, \alpha^2,
+  \dots, \alpha^{k-1} \}$, where $k = |\alpha|$.
+\end{prop}
+
+Note that the order of the cyclic group $G$ generated by $\alpha$ is
+the same as the order of $\alpha$ itself: if $G = \gen{\alpha}$ is
+cyclic then $|G| = |\alpha|$. This is a characteristic property of
+cyclic groups. The notation $C_k$ is often used for a cyclic group of
+order $k$.
+
+
+\begin{prop}\label{prop:inverse}
+Let $\alpha \in \Sym_n$. If $|\alpha| = m$ then $\alpha^{-1} =
+\alpha^{m-1}$.
+\end{prop}
+
+\begin{proof}
+$\alpha^{m-1} = \alpha^m \alpha^{-1} = (1) \alpha^{-1} = \alpha^{-1}$. 
+\end{proof}
+
+This implies the following useful fact.
+
+\begin{thm}[closure under products suffices]
+  Suppose that $G$ is a nonempty subset of $\Sym_n$. Then $G$ is a
+  permutation group if and only if the set $G$ is closed under
+  products.
+\end{thm}
+
+\begin{proof}
+Suppose that $\alpha \in G$. Since $G$ is closed under products, it is
+clear that $G$ must contain the subgroup $\gen{\alpha}$ generated by
+$\alpha$. So by Proposition \ref{prop:inverse}, $\alpha^{-1} =
+\alpha^{m-1} \in G$, where $m = |\alpha|$.
+\end{proof}
+
+
+\section*{Exercises}
+
+\begin{problems}
+
+\item Does there exist a permutation group of order $r$ for any given
+  positive integer $r$? Justify your answer.
+
+\item Compute the cyclic group $\gen{\alpha}$ generated by $\alpha$
+  for $\alpha = (1,2,3,4)$ in $\Sym_4$. What is the order of the group?
+
+\item Let $\alpha = (i_1, i_2, \dots, i_r)$ be an $r$-cycle. Write
+  $\alpha^2$ as a product of disjoint cycles. [You may have to
+  distinguish the cases where $r$ is odd or even.]
+
+\item Prove the second claim in Proposition \ref{B:order}. 
+
+\item Let $\alpha = (1,2)(3,4)$ and $\beta = (1,2,3,4)$ in
+  $\Sym_4$. By definition, the group $G=\gen{\alpha, \beta}$
+  \emph{generated} by $\alpha, \beta$ is the smallest permutation
+  group containing both $\alpha, \beta$. Find and list all the
+  elements of $G$. What is $|G|$?
+
+\item Let $\alpha = (1,2)$ and $\beta = (1,2,3)$ in $\Sym_3$. Let
+  $G=\gen{\alpha, \beta}$ be the group generated by $\alpha,
+  \beta$. Show that $G = \Sym_3$. 
+
+
+\item \label{ex-perm:adjacent} 
+ \begin{enumerate}
+  \item Show that $(1,3) = (2,3)(1,2)(2,3)$. 
+  \item Show that $(1,4) = (3,4)(2,3)(1,2)(2,3)(3,4)$.
+  \item Prove that for $j > 1$ we have $(1,j) =$
+  $$(j-1,j)(j-2,j-1)\cdots(1,2)\cdots(j-2,j-1)(j-1,j).$$
+  \item Prove that for $i < j$ we have $(i,j) =$
+  $$(j-1,j)(j-2,j-1)\cdots(i,i+1)\cdots(j-2,j-1)(j-1,j).$$
+ \end{enumerate}
+ \noindent Part (d) shows that it is possible to write any
+  transposition as a product of {\em adjacent} ones; i.e., ones of the
+  form $(k,k+1)$.
+
+
+\item \label{ex-perm:adjgen} Prove that $\Sym_n$ is generated by the
+  set $\{ (1,2), (2,3), \dots, (n-1,n) \}$ of adjacent transpositions.
+  [Hint: By Theorem \ref{B:transpositionthm} it is enough to show that
+    any transposition is expressible as a product of the ones in the
+    given set. Now use the result of Problem \ref{ex-perm:adjacent}.]
+
+\item  \label{ex-perm:twogen} 
+\begin{enumerate}
+\item Show that if $\alpha = (1,2)$, $\beta = (1,2,\dots,n)$ then for
+  any $1 < i <n$ we have $(i,i+1) = \beta^{i-1} \alpha
+  (\beta^{i-1})^{-1} = \beta^{i-1} \alpha\beta^{n-i+1}$. 
+
+\item  Prove that $\Sym_n$ is generated by the set $S = \{ (1,2),
+(1,2,3,\dots,n) \}$. [Hint: Use part (a) and the result of the
+  preceding exercise.]
+\end{enumerate}
+
+
+
+\end{problems}
+
+
+
+\newpage\section{The sign of a permutation}\noindent
+We have shown that any permutation can be factored as a product of
+transpositions, but in infinitely many ways. It is time to investigate
+this in greater detail.
+
+\begin{thm}[the identity is even]
+  Every factorization of the identity $id$ as a product of
+  transpositions must use an even number of transpositions.
+\end{thm}
+
+This might seem obvious, but a careful proof is difficult. The proof
+can be done by induction on the number of transpositions. We omit the
+proof, and refer to the excellent article\footnote{Keith Conrad,
+  \emph{The sign of a permutation},\\
+  \texttt{http://www.math.uconn.edu/~kconrad/blurbs/grouptheory/sign.pdf}.}
+by Keith Conrad (see the bibliography at the end).
+
+\begin{cor}
+  Let $\alpha \in \Sym_n$. Suppose that $\alpha = \sigma_1 \cdots
+  \sigma_r$ and $\alpha = \tau_1 \cdots \tau_s$ are two ways of
+  expressing $\alpha$ as a product of transpositions. Then the
+  difference $r-s$ must be an even number.
+\end{cor}
+
+\begin{proof}
+We have $id = \alpha \alpha^{-1} = \sigma_1 \cdots \sigma_r \tau_s
+\cdots \tau_1$. By the previous theorem, $r+s$ is even. This implies
+that $r-s$ must be even. (If $r-s$ is odd then $2r = (r+s) + (r-s)$
+would be odd, which is absurd.)
+\end{proof}
+
+The corollary implies that if we find one way to factor $\alpha \in
+\Sym_n$ as a product of an odd number of transpositions, then all ways
+of expressing $\alpha$ as a product of transpositions uses an odd
+number of them. The same holds if we replace ``odd'' by ``even.'' This
+means that the following definition makes sense.
+
+
+\begin{defn}\index{even permutation}\index{odd permutation}
+  Let $\alpha \in \Sym_n$. We say that $\alpha$ is an \emph{odd
+    permutation} if there is some way to express $\alpha$ as a product
+  of an odd number of transpositions.  We say that $\alpha$ is an
+  \emph{even permutation} if there is some way to express $\alpha$ as
+  a product of an even number of transpositions. The \emph{sign} of
+  $\alpha$ is\index{sign of a permutation} defined to be
+  \[
+    \sgn(\alpha) = 
+    \begin{cases}
+      -1 & \text{ if $\alpha$ is odd}\\
+      1 & \text{ if $\alpha$ is even}.
+    \end{cases}
+  \]
+\end{defn}
+
+
+\begin{examples}
+1. The sign of $id$ is $1$. (The identity is even.)  
+
+2. The sign of any transposition is $-1$. (A transposition is odd.)
+
+3. The sign of $(1,2,3) = (1,2)(2,3)$ is $1$. The $3$-cycle $(1,2,3)$
+is even.  
+
+4. The sign of any $r$-cycle is $(-1)^{r-1}$. The proof is an
+exercise.
+\end{examples}
+
+\begin{thm}[sign is multiplicative]\label{thm:sign-is-mult}
+  For any $\alpha, \beta \in \Sym_n$ we have $\sgn(\alpha \beta) =
+  \sgn(\alpha) \sgn(\beta)$.
+\end{thm}
+
+The proof is an easy exercise. 
+
+\begin{defn}\index{A@$\Alt_n$}\index{alternating group}
+  For any $n \ge 2$, the \emph{alternating group} $\Alt_n$ is the set
+  of all even permutations in $\Sym_n$.
+\end{defn}
+
+
+It remains to verify that the definition makes sense. To do so, we
+must show that the set $\Alt_n$ of even permutations is closed under
+products. This is an exercise. Note that $\Alt_1$ is the empty set.
+
+
+\begin{examples}
+  1. $\Alt_2 = \{ (1) \}$. So $|\Alt_2| = 1$.
+
+  2. $\Alt_3 = \{ (1), (1,2,3), (3,2,1) \}$. This is the same as the
+  cyclic group generated by $(1,2,3)$. So $|\Alt_3| = 3$. 
+
+  3. $\Alt_4 = \{ (1), (1,2,3), (1,2,4), (1,3,4), (2,3,4), (3,2,1),
+  (4,2,1), (4,3,1), \\(4,3,2),  (1,2)(3,4), (1,3)(2,4), (1,4)(2,3)\}$. So
+  $|\Alt_4| = 12$.
+
+  3. In general, for any $n \ge 2$, we have $|\Alt_n| = n!/2$. 
+\end{examples}
+
+\begin{prop}
+  $|\Alt_n| = n!/2$ for any $n \ge 2$. 
+\end{prop}
+
+\begin{proof}
+Let $\beta$ be any transposition, say $\beta = (1,2)$ for instance.
+Holding $\beta$ fixed, it is easy to check that the mapping $f: \Alt_n
+\to \Sym_n$ defined by $f(\alpha) = \alpha\beta$ is a bijection
+between the disjoint sets $\Alt_n$ and $\Sym_n - \Alt_n$. Hence
+$|\Alt_n| = |\Sym_n-\Alt_n|$. If we write $k = |\Alt_n|$ then the fact
+that $\Sym_n = \Alt_n \cup (\Sym_n - \Alt_n)$ along with the
+disjointness of the two sets implies that $|\Sym_n| = |\Alt_n| +
+|\Sym_n - \Alt_n|$. In other words, $n! = k+k$, so $k = n!/2$, as
+required.
+\end{proof}
+
+
+\begin{rmk}
+  It can be shown that $\sgn(\alpha) = (-1)^{I(\alpha)}$, where
+  $I(\alpha)$ is the number of \emph{inversions}\index{inversions} in
+  $\alpha$. By definition, an inversion occurs when $i < j$ but
+  $\alpha(i) > \alpha(j)$. You can count the number of inversions in
+  $\alpha$ by drawing the diagram of $\alpha$ and counting the number
+  of edge crossings.
+\end{rmk}
+
+
+\begin{rmk} 
+One important application of permutations is the following closed
+formula for the determinant\index{determinant} of an $n \times n$
+matrix $A = (a_{ij})$:
+\[
+\det A = \sum_{\alpha \in \Sym_n} \sgn(\alpha)\, a_{1,\alpha(1)}
+a_{2,\alpha(2)} \cdots a_{n,\alpha(n)}. 
+\]
+This formula says that to compute the determinant one must form a
+product of entries chosen one from each row and column, and then take
+the signed sum of all such products. 
+\end{rmk}
+
+
+
+\section*{Exercises}
+
+
+
+\begin{problems}
+
+\item Show the inverse of a permutation must have the same sign as the
+  permutation.
+
+\item Prove that for any $n \ge 2$ the set $\Alt_n$ of all even
+  permutations is a group.
+
+\item Let $S$ be the set of all odd permutations in some fixed
+  $\Sym_n$. Is $S$ a permutation group? Why or why not?
+
+\item Prove that for $n \ge 2$ the order of the alternating group
+  $\Alt_n$ is $n!/2$.  [Hint: Establish a bijection $f$ from $\Alt_n$
+  onto the set $B_n$ of all odd permutations in $\Sym_n$, by choosing
+  any transposition $\tau$ and setting $f(\alpha) = \tau\alpha$. Show
+  this is a bijection, and conclude that $|\Alt_n| = |B_n|$.]
+
+\item Prove Theorem \ref{thm:sign-is-mult}.
+
+
+
+
+\item Find a set of generators for $\Alt_n$, for $n \ge 3$.
+\end{problems}
+
+\end{document}
+

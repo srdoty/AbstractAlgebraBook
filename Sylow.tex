@@ -1,0 +1,789 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+\usepackage{xr}
+\externaldocument{actions}
+\externaldocument{products}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\ptn}{\mathfrak{p}}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{27}
+
+
+
+\section{The Sylow Theorems}\noindent
+It is rather remarkable that three of the most important general
+theorems about finite groups were proved by a high school teacher. He
+was Ludwig Sylow, in Norway, and he proved his famous theorems in a
+ten page paper published in 1872. If $p^r$ is the \emph{largest} power
+of a prime $p$ dividing the order of $G$, then Sylow showed:
+\begin{enumerate}[label=(\roman*)]
+\item $G$ has at least one subgroup of order $p^r$;
+\item any two such subgroups are conjugate;
+\item $G$ has $1+kp$ such subgroups, for some non-negative integer $k$.
+
+\end{enumerate}
+All of these statements are proved using the theory of group actions.
+Let us look at more precise statements of these facts. First we need
+some additional terminology. 
+
+
+\begin{defn}\index{p@$p$-subgroup}\index{Sylow~$p$-subgroup}
+Let $p$ be a prime divisor of the order of a finite group $G$.  A
+$p$-\emph{subgroup} of $G$ is any subgroup whose order is a power of
+$p$.  If $p^r$ is the highest power of $p$ dividing the order of $G$,
+then any subgroup of order $p^r$ is called a {\em Sylow $p$-subgroup}
+of $G$.
+\end{defn}
+
+Note that any Sylow $p$-subgroup is also a $p$-subgroup, but not vice
+versa. 
+
+\begin{example}
+Suppose $|G| = 250 = 2 \cdot 5^3$. The prime divisors of $G$ are just
+$p=2$ and $p=5$. Then the $2$-subgroups of $G$ are just the subgroups
+of order $2$, and they are also Sylow $2$-subgroups. The $5$-subgroups
+of $G$ are the subgroups of order $5$, $25 = 5^2$, and $125 =
+5^3$. The subgroups of order 125 are the Sylow 5-subgroups.
+\end{example}
+
+
+
+\begin{thm}[First Sylow Theorem]\index{Sylow~theorem!first}
+Let $G$ be a finite group and $p$ a prime divisor of $|G|$. Let $p^r$
+be the highest power of $p$ dividing $|G|$.  Then for every integer
+$s$ satisfying $0\le s \le r$ there exists a subgroup of $G$ of order
+$p^s$. In particular, a Sylow $p$-subgroup of $G$ (of order $p^r$)
+must exist.
+\end{thm}
+
+\begin{proof}
+Proceed by induction on the order of $G$. If $G$ has order 1 there is
+nothing to prove. So assume $|G| > 1$ and assume inductively that the
+theorem has been proved for all groups of order less than $|G|$. By
+the inductive hypothesis: If $G$ has a proper subgroup $H$ such that
+$p^s$ divides the order of $H$, then $H$ has a subgroup of order
+$p^s$, and hence so does $G$.
+
+Now we apply the class equation (Theorem \ref{classeqn}) for $G$,
+which states that
+\[
+   \textstyle |G|=|Z(G)| + \sum [G:Z_G(x_j)]
+\]
+where the $x_j$ range over a complete set of representatives of the
+conjugacy classes of $G$ not contained in the center $Z(G)$. Each
+$Z_G(x_j)$ is a proper subgroup of $G$ (or else $x_j$ would be in the
+center) so by the inductive hypothesis, if $p^s$ divides the order of
+any $Z_G(x_j)$ then $G$ contains a subgroup of order $p^s$ and we are
+done.
+
+The remaining case is that $p^s$ does not divide the order of any
+$Z_G(x_j)$. Then $p$ divides each index $[G:Z_G(x_j)]$, so from the
+class equation we conclude that $p$ must divide $|Z(G)|$. But $Z(G)$
+is abelian, so this means (by a standard lemma, proved in Lemma
+\ref{Cauchy-abelian} below) that the center $Z(G)$ has an element $a$ of
+order $p$. The subgroup $P = \gen{a}$ generated by $a$ has order $p$,
+so we are done if $s=1$.
+
+So assume that $s>1$. Observe that $P$ is a normal subgroup of $G$
+since $P$ is contained in the center $Z(G)$. Hence the quotient group
+$G/P$ is defined. The order of $G/P$ is $(p^rm)/p = p^{r-1}m$, for
+some integer $m$, so by the inductive hypothesis $G/P$ has a subgroup
+$H$ of order $p^{s-1}$. By the correspondence theorem this subgroup
+$H$ corresponds with a subgroup $H'$ of $G$ containing $P$, such that
+$H'/P \simeq H$. Thus $|H'| = p^s$ and we are done.
+\end{proof}
+
+
+In order to complete the proof of the first Sylow theorem, we need the
+following simple result, which amounts to Cauchy's theorem (see
+Theorem \ref{Cauchy}) in the abelian case.
+
+\begin{lem} \label{Cauchy-abelian} 
+Let $G$ be a finite abelian group and let $p$ be a prime divisor of
+$|G|$. Then $G$ has an element of order $p$.
+\end{lem}
+
+\begin{proof}
+By induction on the order of $G$. If $|G|=1$ there is nothing to
+prove. Assume that $|G|>1$ and that the theorem has been proved
+already for all abelian groups of order less than $|G|$. If $G$ has no 
+proper subgroup (other than $\{1\}$) then $G$ must be cyclic and the
+statement of the theorem is easy to see. 
+
+The remaining case is that $G$ has a proper subgroup $H \ne |{1|}$.
+If $p$ divides $|H|$ then we are done by the inductive hypothesis. So
+assume that $p$ does not divide $|H|$. Since $G$ is abelian, $H
+\triangleleft G$. So $G/H$ is an abelian group of order $|G|/|H|$.
+Now $p$ must divide $|G/H|$ since $p$ divides $|G|$ but not $|H|$.
+Moreover, $|G/H| < |G|$. Thus, by the inductive hypothesis, $G/H$ has
+an element $aH$ of order $p$. (The elements of $G/H$ are left cosets,
+by definition.) Let $b=a^k$ where $k = |H|$. Then one can check that
+the order of $b$ is $p$, since $(aH)^p = H$ implies that $a^p \in H$,
+so by a corollary to Lagrange's theorem $(a^p)^k = 1$, and thus $b^p =
+a^{kp} = 1$. This completes the proof, as no smaller positive power of
+$b$ can be 1.
+\end{proof}
+
+
+\begin{thm}[Second Sylow Theorem]\index{Sylow~theorem!second}
+Let $G$ be a finite group and $p$ a prime divisor of $|G|$. If $Q$ is
+a $p$-subgroup of $G$ and $P$ is any Sylow $p$-subgroup of $G$, then
+$Q$ must be contained in some conjugate of $P$. In particular, any two
+Sylow $p$-subgroups of $G$ must be conjugate.
+\end{thm}
+
+
+\begin{thm}[Third Sylow Theorem]\index{Sylow~theorem!third}
+Let $G$ be a finite group and $p$ a prime divisor of $|G|$.  Write
+$|G|=p^r m$ where $m$ is not divisible by $p$. If $n_p$ is the number
+of Sylow $p$-subgroups of $G$, then:
+\begin{enumerate}
+\item[(a)] $n_p \equiv 1 \pmod{p}$; and
+
+\item[(b)] $n_p$ divides $m$.
+\end{enumerate}
+\end{thm} 
+
+
+
+Proofs of the second and third Sylow theorems can be found in
+virtually any text on abstract algebra, so they are not reproduced
+here.
+
+Our first application of Sylow's theorems generalizes Lemma
+\ref{Cauchy-abelian} to include the non-abelian case.
+
+
+\begin{thm}[Cauchy's Theorem]\index{Cauchy's~theorem}\label{Cauchy} 
+Let $p$ be a prime divisor of the order of a finite group $G$. Then
+$G$ must have an element of order $p$.
+\end{thm}
+
+\begin{proof}
+By the first Sylow theorem, $G$ has a subgroup of order $p$. Any
+element of that subgroup (except the identity) must have order $p$, by
+Lagrange's theorem. 
+\end{proof}
+
+Notice how easy the proof is! This shows the power of the Sylow
+theorems. Note carefully, however, that we needed an independent proof
+of Lemma \ref{Cauchy-abelian} in the abelian case, since it is used
+in the proof of the first Sylow theorem.  
+
+Recall that we have earlier defined a $p$-group (where $p$ is a prime)
+to be any group in which the order of every element is a power of $p$.
+It follows (see Exercise \ref{exer:p-gp}) from Lagrange's theorem and
+Cauchy's theorem that the order of any finite $p$-group must be of the
+form $p^r$ for some $r \ge 1$.
+
+Here is another application of Sylow's theorems.
+
+\begin{prop}[the $pq$ theorem]\index{pq@$pq$-theorem} \label{pq}
+Let $|G| = pq$ where $p<q$ and $p,q$ are primes. If $p$ does not
+divide $q-1$ then $G$ is cyclic.
+\end{prop}
+
+
+\begin{proof}
+Let $H$ be a Sylow $p$-subgroup of $G$ and let $K$ be a Sylow
+$q$-subgroup of $G$. By the third Sylow theorem, the number of Sylow
+$p$-subgroups has the form $1+kp$ and divides $q$. If this number is
+$q$ then $p$ divides $q-1$, a contradiction. Thus the number of Sylow
+$p$-subgroups must be 1, so $H\triangleleft G$.
+
+Similarly, one can show there is only one Sylow $q$-subgroup, so $K
+\triangleleft G$.  Now $H \cap K = \{1\}$ by Lagrange's theorem, 
+so
+\[
+  |HK| = |H|\cdot|K|/|H\cap K| = pq 
+\]
+which proves that $HK=G$. Hence $G = H \times K$ is the direct product
+of its two Sylow subgroups. Since direct products of abelian groups
+are abelian, this shows that $G$ is abelian. In fact, if $x$ is a
+generator of the cyclic group $H$ and if $y$ is any generator of the
+cyclic group $K$ then $x$ and $y$ commute and the order of $xy$ is the
+least common multiple of $p$ and $q$, which is $pq$, so $xy$ has order
+$pq$. Thus $xy$ generates $G$, so $G$ is cyclic.
+\end{proof}
+
+The last result shows that, up to isomorphism, there is just one group
+(which must be the cyclic group) of order $pq$, where $p<q$ are two
+distinct primes such that $q \not\equiv 1 \pmod{p}$. So up to
+isomorphism we have just one group of order 15, one of order 33, one
+of order 35, etc.
+
+\begin{example}
+We apply the Sylow theorems to classify groups of order 21. Assume
+that $|G|=21 = 3 \cdot 7$. Note that the $pq$-theorem does not apply
+since $7$ is congruent to $1$ mod $3$. Let $n_7$ be the number of
+Sylow $7$-subgroups of $G$. By the third Sylow theorem,
+\[
+   n_7 \equiv 1 \pmod{7} \quad\text{and}\quad n_7 \mid 3.
+\]
+The positive divisors of $3$ are $1, 3$ but only $1$ is congruent to
+$1$ mod $3$, so $n_7 = 1$. So there is just one subgroup $H$ of order
+7. By the second Sylow theorem, $H$ is stable under conjugation and
+hence normal. We have proved that any group of order 21 must have a
+normal subgroup of order 7. Such a group is not simple, so at this
+point we also know that there is no simple group of order 21.
+
+We can be even more precise. Let $n_3$ be the number of Sylow
+$3$-subgroups. Then the third Sylow theorem implies that $n_3 = 1$ or
+$7$. Let $x \in G$ be a generator of $H$. Let $y \in G$ be an element
+of order 3; such an element must exist by Cauchy's theorem. Note that
+$H = \gen{y}$ is a Sylow 3-subgroup. We have $x^7 = 1$, $y^3 = 1$, and
+(since $H$ is normal) $yxy^{-1} \in H$. Since $H = \gen{x} = \{1, x,
+x^2, \dots, x^6\}$ is cyclic, it follows that $yxy^{-1} = x^k$ for
+some positive integer $k<7$.
+
+What are the possibilities for $k$? The fact that $y^3=1$ provides
+information on this question, as follows:
+\begin{align*}
+  x &= y^3xy^{-3} = y^2 (yxy^{-1}) y^{-2} = y^2 x^k y^{-2} = y (y x^k
+  y^{-1}) y^{-1} \\ &= y (y x y^{-1})^k y^{-1} = y (x^k)^k y^{-1} = y
+  x^{k^2} y^{-1}.
+\end{align*}
+Thus $x = y x^{k^2} y^{-1} = (yxy^{-1})^{k^2} = (x^k)^{k^2} =
+x^{k^3}$. Since $x$ has order 7, it follows that $k^3$ must be
+congruent to 1 mod 7, so $k = 1, 2$, or 4. We consider these cases
+below. Note that $G = \gen{x,y}$ is generated by $x, y$ by Proposition
+\ref{prop:counting-HK}.
+
+Case 1. If $k=1$ then $yxy^{-1} = x$; i.e., $xy=yx$. Since $x,y$ generate
+$G$ as noted above, this means that $G$ must be abelian. Furthermore,
+this implies that $K$ is normal in $G$, so in fact $G = H \times K$ is
+the direct product of $H$ and $K$. This implies that $G \cong Z_7
+\times \Z_3 \cong \Z_{21}$ is itself cyclic.
+
+Case 2. If $k=2$ then $yxy^{-1} = x^2$; i.e., $yx = x^2y$. The relations
+$x^7 =1$, $y^3 = 1$, and $yx = x^2y$ actually determine $G$
+uniquely. The existence of this group can be checked with a little
+more work. It is clearly not abelian.
+
+Case 3. If $k=2$ then $yxy^{-1} = x^4$. In this case $y^2 x y^{-2} = y
+x^4 y^{-1} = x^{16} = x^2$. Thus if we replace $y$ by $y^{2}$, which
+also generates $K$, then we are back in the previous case.
+
+This analysis proves that, up to isomorphism, there are just two
+groups of order 21, just one of which is abelian (the cyclic group of
+order 21).
+\end{example}
+
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{cc|cc|cc}
+  $n$ & number & $n$ & number & $n$ & number\\ \hline
+  1 & 1 & 9 & 2 & 17 & 1 \\
+  2 & 1 & 10 & 2 & 18 & 5 \\
+  3 & 1 & 11 & 1 & 19 & 1\\
+  4 & 2 & 12 & 5 & 20 & 5\\
+  5 & 1 & 13 & 1 & 21 & 2\\
+  6 & 2 & 14 & 2 & 22 & 2\\
+  7 & 1 & 15 & 1 & 23 & 1\\
+  8 & 5 & 16 & 14 & 24 & 15
+\end{tabular}
+\end{center}
+\caption{The number of groups of order 1--24, up to isomorphism}
+\end{table}
+We finish this section by displaying a brief table of the number of
+groups, up to isomorphism, of order up to 24. This can be justified by
+the Sylow theorems in conjunction with other results we have proved,
+but the task is not easy.  You can find much more extensive tables
+online.
+
+
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item Show that the element $b$ in the proof of \ref{Cauchy-abelian}
+has order $p$.
+
+\item Let $p$ be a given prime number. Prove that if $G$ is a finite
+group with just one Sylow $p$-subgroup, then that subgroup must be
+normal.
+
+\item Show that there is only one group of order $33$, up to
+  isomorphism. (In other words, every group of order 33 is isomorphic
+  to $\Z_{33}$.)
+
+\item\index{p@$p$-group}\label{exer:p-gp} Prove that if $G$ is a
+  finite group in which every element has order some power of $p$
+  (where $p$ is prime) then $|G| = p^r$ for some $r \ge 1$. (Such
+  groups are called $p$-groups.)
+
+\item Prove that no group of order $pq$, where $p,q$ are primes, is
+  simple. (Consider the possibility $p=q$ as well as $p\ne q$.)
+
+\item Use the Sylow theorems to prove that there is no simple group
+of order $30$.
+
+\item Use the Sylow theorems to prove that there is no simple group
+of order $56$.
+
+\item Show that any quotient of a solvable group must be solvable.
+
+
+\item Prove that if $G/Z(G)$ is cyclic then $G$ must be abelian.
+
+\item Show that if $|G| = 2p$ where $p$ is an odd prime then $G$ must
+  be isomorphic to either $\Z_{2p}$ or $\D_{p}$.
+
+\item Show that if $|G| = 12$ then either $G \cong \Alt_4$ or $G$ has
+  a normal subgroup of order $3$. [Hint: If $G$ does not have a normal
+    subgroup of order 3, consider the action of $G$ on the set $G/H$
+    by left multiplication, where $H$ is one of the Sylow
+    3-subgroups. This action induces a homomorphism from $G$ into
+    $\Sym_4$.]
+\end{problems}
+
+
+
+\newpage
+\section{Simplicity of $\Alt_n$}\noindent
+Our final application of the theory of group actions will be to prove
+the theorem (due to Galois) that the alternating groups $\Alt_n$ are
+all simple, except for $\Alt_4$.  This is the key result that shows
+that the general polynomial of degree 5 or higher is not solvable in
+terms of radicals.
+
+We begin with an analysis of the conjugacy classes of the symmetric
+group $\Sym_n$. We need to examine $\Sym_n$ because Galois proved that
+$\Sym_n$ is the symmetry group associated to a general polynomial of
+degree $n$.
+
+
+\begin{example} \label{CC:S5}
+Let's start by looking at the example of $\Sym_5$. Here is a list of
+all 120 elements of $\Sym_5$, produced by the GAP\footnote{The GAP Group
+  (\texttt{http://www.gap-system.org}).} software package: \tiny
+\begin{verbatim}
+gap> G := SymmetricGroup(5);
+Sym( [ 1 .. 5 ] )
+gap> List(G);
+[ (), (1,5), (1,2,5), (1,3,5), (1,4,5), (2,5), (1,5,2), (1,2), (1,3,5,2), 
+  (1,4,5,2), (2,3,5), (1,5,2,3), (1,2,3), (1,3)(2,5), (1,4,5,2,3), (2,4,5), 
+  (1,5,2,4), (1,2,4), (1,3,5,2,4), (1,4)(2,5), (3,5), (1,5,3), (1,2,5,3), 
+  (1,3), (1,4,5,3), (2,5,3), (1,5,3,2), (1,2)(3,5), (1,3,2), (1,4,5,3,2), 
+  (2,3), (1,5)(2,3), (1,2,3,5), (1,3,2,5), (1,4,5)(2,3), (2,4,5,3), 
+  (1,5,3,2,4), (1,2,4)(3,5), (1,3,2,4), (1,4)(2,5,3), (3,4,5), (1,5,3,4), 
+  (1,2,5,3,4), (1,3,4), (1,4)(3,5), (2,5,3,4), (1,5,3,4,2), (1,2)(3,4,5), 
+  (1,3,4,2), (1,4,2)(3,5), (2,3,4), (1,5)(2,3,4), (1,2,3,4,5), (1,3,4,2,5), 
+  (1,4,2,3,5), (2,4)(3,5), (1,5,3)(2,4), (1,2,4,5,3), (1,3)(2,4), 
+  (1,4,2,5,3), (4,5), (1,5,4), (1,2,5,4), (1,3,5,4), (1,4), (2,5,4), 
+  (1,5,4,2), (1,2)(4,5), (1,3,5,4,2), (1,4,2), (2,3,5,4), (1,5,4,2,3), 
+  (1,2,3)(4,5), (1,3)(2,5,4), (1,4,2,3), (2,4), (1,5)(2,4), (1,2,4,5), 
+  (1,3,5)(2,4), (1,4,2,5), (3,5,4), (1,5,4,3), (1,2,5,4,3), (1,3)(4,5), 
+  (1,4,3), (2,5,4,3), (1,5,4,3,2), (1,2)(3,5,4), (1,3,2)(4,5), (1,4,3,2), 
+  (2,3)(4,5), (1,5,4)(2,3), (1,2,3,5,4), (1,3,2,5,4), (1,4)(2,3), (2,4,3), 
+  (1,5)(2,4,3), (1,2,4,3,5), (1,3,2,4,5), (1,4,3,2,5), (3,4), (1,5)(3,4), 
+  (1,2,5)(3,4), (1,3,4,5), (1,4,3,5), (2,5)(3,4), (1,5,2)(3,4), (1,2)(3,4), 
+  (1,3,4,5,2), (1,4,3,5,2), (2,3,4,5), (1,5,2,3,4), (1,2,3,4), (1,3,4)(2,5), 
+  (1,4)(2,3,5), (2,4,3,5), (1,5,2,4,3), (1,2,4,3), (1,3)(2,4,5), (1,4,3)(2,5) 
+ ]
+\end{verbatim}\normalsize
+As you can see, the list is utter chaos. How can we impose any order
+on this chaos, and make sense of the list? Let's ask GAP to compute
+the elements of each conjugacy class, and see what happens: \tiny
+\begin{verbatim}
+gap> CC := ConjugacyClasses(G);
+[ ()^G, (1,2)^G, (1,2)(3,4)^G, (1,2,3)^G, (1,2,3)(4,5)^G, (1,2,3,4)^G, 
+  (1,2,3,4,5)^G ]
+gap> List( CC[1] );
+[ () ]
+gap> List( CC[2] );
+[ (1,2), (1,3), (1,4), (1,5), (2,3), (2,4), (2,5), (3,4), (3,5), (4,5) ]
+gap> List( CC[3] );
+[ (1,2)(3,4), (1,3)(2,4), (1,4)(2,3), (2,5)(3,4), (2,4)(3,5), (2,3)(4,5), 
+  (1,5)(3,4), (1,4)(3,5), (1,3)(4,5), (1,4)(2,5), (1,5)(2,4), (1,2)(4,5), 
+  (1,3)(2,5), (1,2)(3,5), (1,5)(2,3) ]
+gap> List( CC[4] );
+[ (1,2,3), (1,2,4), (1,2,5), (1,3,2), (1,3,4), (1,3,5), (1,4,2), (1,4,3), 
+  (1,4,5), (1,5,2), (1,5,3), (1,5,4), (2,3,4), (2,3,5), (2,4,3), (2,4,5), 
+  (2,5,3), (2,5,4), (3,4,5), (3,5,4) ]
+gap> List( CC[5] );
+[ (1,2,3)(4,5), (1,2,4)(3,5), (1,2,5)(3,4), (1,3,2)(4,5), (1,3,4)(2,5), 
+  (1,3,5)(2,4), (1,4,2)(3,5), (1,4,3)(2,5), (1,4,5)(2,3), (1,5,2)(3,4), 
+  (1,5,3)(2,4), (1,5,4)(2,3), (1,5)(2,3,4), (1,4)(2,3,5), (1,5)(2,4,3), 
+  (1,3)(2,4,5), (1,4)(2,5,3), (1,3)(2,5,4), (1,2)(3,4,5), (1,2)(3,5,4) ]
+gap> List( CC[6] );
+[ (1,2,3,4), (1,2,4,3), (1,3,2,4), (1,3,4,2), (1,4,2,3), (1,4,3,2), 
+  (2,3,4,5), (2,4,3,5), (2,4,5,3), (2,5,3,4), (2,3,5,4), (2,5,4,3), 
+  (1,3,4,5), (1,4,3,5), (1,4,5,3), (1,5,3,4), (1,3,5,4), (1,5,4,3), 
+  (1,4,5,2), (1,5,2,4), (1,2,4,5), (1,4,2,5), (1,5,4,2), (1,2,5,4), 
+  (1,5,2,3), (1,3,5,2), (1,5,3,2), (1,2,5,3), (1,2,3,5), (1,3,2,5) ]
+gap> List( CC[7] );
+[ (1,2,3,4,5), (1,2,3,5,4), (1,2,4,3,5), (1,2,4,5,3), (1,2,5,3,4), 
+  (1,2,5,4,3), (1,3,2,4,5), (1,3,2,5,4), (1,3,4,2,5), (1,3,4,5,2), 
+  (1,3,5,2,4), (1,3,5,4,2), (1,4,2,3,5), (1,4,2,5,3), (1,4,3,2,5), 
+  (1,4,3,5,2), (1,4,5,2,3), (1,4,5,3,2), (1,5,2,3,4), (1,5,2,4,3), 
+  (1,5,3,2,4), (1,5,3,4,2), (1,5,4,2,3), (1,5,4,3,2) ]
+\end{verbatim}\normalsize
+Ah, that's much better. Some order appears in the chaos. It seems that
+conjugacy classes might be a nice way to organize the elements in a
+large group. Let's analyze the results of the above computer
+calculation. What do you notice about each conjugacy class? A quick
+look reveals that each class consists of all elements that have the
+same {\em cycle type}. Each element of the second class is a 2-cycle,
+each element of the third is a product of two 2-cycles, and each
+element of the sixth class is a 4-cycle, and so forth.
+\end{example}
+
+There is obviously a nice theorem here. Let's formulate and prove it.
+First, we need the notion of a partition of $n$, which is an important
+concept in combinatorics.
+
+\begin{defn}\index{partition}
+  Let $n$ be a given positive integer. A \emph{partition} of $n$ is by
+  definition any set $\{\lambda_1, \lambda_2, \dots, \lambda_k\}$ of
+  positive integers that add up to $n$. 
+\end{defn}
+
+By standard convention, we will write partitions as ordered $k$-tuples
+of the form $\lambda = (\lambda_1, \lambda_2, \dots, \lambda_k)$ where
+the numbers are ordered from biggest to smallest. With this
+convention, the partitions of $n$ for the first few values of $n$ are
+displayed in the table below:
+\begin{center}\small
+\begin{tabular}{|c|l|}\hline
+  $n$ & partitions of $n$ \\ \hline
+  $1$ & $(1)$\\
+  $2$ & $(2)$, $(1^2)$\\
+  $3$ & $(3)$, $(2,1)$, $(1^3)$\\
+  $4$ & $(4)$, $(3,1)$, $(2^2)$, $(2,1^2)$, $(1^4)$\\
+  $5$ & $(5)$, $(4,1)$, $(3,2)$, $(3,1^2)$, $(2^2,1)$, $(2,1^3)$,
+        $(1^5)$\\ 
+  $6$ & $(6)$, $(5,1)$, $(4,2)$, $(4,1^2)$, $(3^2)$, $(3,2,1)$, 
+        $(3,1^3)$, $(2^3)$, $(2^2, 1^2)$, $(2,1^4)$, $(1^6)$\\
+\hline
+\end{tabular}
+\end{center}
+In the table, we used the notational trick of writing $a^k$ in place
+of $k$ repeated values of $a$. Thus, for instance, $(1^5) =
+(1,1,1,1,1)$. This useful shorthand is commonly used by people dealing
+with partitions.
+
+Let us display another table, indicating not the partitions
+themselves but just counting their number. In fact, the number of
+partitions of a given $n$ is usually denoted as $\ptn(n)$, and the
+function $\ptn$ is called the \emph{partition function}. 
+\begin{center}\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}\hline
+  $n$ & 1&2&3&4&5&6&7&8&9&10&11&12&13&14&15\\ \hline
+  $\ptn()n)$ &1&2&3&5&7&11&15&22&30&42&56&77&101&135&176\\
+  \hline
+\end{tabular}
+\end{center}
+An interesting (and infamous) open problem in mathematics is to find a
+finite closed formula for the number $\ptn()n)$ of partitions of
+$n$. Nobody knows how to do this, and it would be astonishing if
+someone solved it at this point.
+
+Now that we know about partitions, we can return to the problem of
+describing the conjugacy classes in the symmetric group $\Sym_n$.
+
+
+Let $\alpha$ be a permutation in $\Sym_n$. We know how to write
+$\alpha$ as a product of disjoint cycles. For convenience, let's do
+this in such a way that every number from 1 to $n$ actually appears,
+by inserting 1-cycles for all the fixed points. (Recall that fixed
+points are usually omitted in the notation.) For example, if $\alpha
+= \begin{perm}{1&2&3&4&5&6&7}{1&7&2&6&5&4&3} \end{perm}$ then we have
+$\alpha = (1)(2,7,3)(4,6)(5) = (2,7,3)(4,6)(1)(5)$. Recall that
+disjoint cycles commute, so we can reorder the factors any way we
+like; we have here chosen to write the product of cycles in decreasing
+order by cycle length.  Let us adopt this ordering convention: in this
+section  we will always write the product of cycles in order of
+decreasing cycle length, from longest to shortest. With this
+convention, the cycle type of a permutation $\alpha \in \Sym_n$ is a
+partition of $n$.
+
+
+\begin{defn}\index{cycle~type}
+The \emph{cycle type} of a permutation $\alpha$ is the partition
+$\lambda = (\lambda_1, \lambda_2, \dots, \lambda_k)$ of lengths of
+each cycle in the product.
+\end{defn}
+
+For example, if $\alpha = (2,7,3)(4,6)(1)(5)$ as above then the cycle
+type of $\alpha$ is the partition $(3,2,1,1) = (3,2,1^2)$.  For
+another example, if $\alpha = (7,3,5)(2,1,4)(8,6,10)(9) \in \Sym_{10}$
+then the cycle type of $\alpha$ is the partition $(3,3,3,1) =
+(3^3,1)$. 
+
+What is the cycle type of the identity permutation in $\Sym_n$? It has
+exactly $n$ fixed points, so in our convention it must be written as a
+product of $n$ 1-cycles. Thus the cycle type of the identity
+permutation in $\Sym_n$ is the partition $(1^n) = (1,1,\dots, 1)$.
+
+
+The cycle type of any permutation in $\Sym_n$ is a partition of
+$n$. For every partition of $n$, there exists a permutation $\alpha
+\in \Sym_n$ with that cycle type.
+
+\begin{example}
+The various cycle types for permutations in $\Sym_5$ are just the
+partitions of 5: $(5)$, $(4,1)$, $(3,2)$, $(3,1^2)$, $(2^2,1)$,
+$(2,1^3)$, and $(1^5)$. Notice that there are seven partitions of 5,
+and in Example \ref{CC:S5} we found exactly seven conjugacy classes in
+$\Sym_5$. This observation suggests the following general result.
+\end{example}
+
+
+\begin{thm}\index{conjugacy~classes~of~$\Sym_n$} \label{cycle-type}
+Two permutations in $\Sym_n$ are conjugate if and only if they have
+the same cycle type. Hence, the partitions of $n$ label the conjugacy
+classes of $\Sym_n$. The number of distinct conjugacy classes is the
+same as the number $\ptn()n)$ of partitions of $n$.
+\end{thm}
+
+
+\begin{proof}
+We only need to check the first claim, since all the other claims
+follow from it immediately.
+
+$(\Rightarrow)$: Assume that $\alpha, \beta \in \Sym_n$ are conjugate
+permutations.  This means that there exists some permutation $\gamma
+\in \Sym_n$ such that $\beta = \gamma \alpha \gamma^{-1}$. Now I claim
+that if
+\[
+   \alpha = (i_1,\dots, i_r)(j_1,\dots,j_s)(\dots)
+\]
+is the disjoint cycle decomposition of $\alpha$ then the disjoint
+cycle decomposition of $\beta = \gamma \alpha \gamma^{-1}$ is 
+\[
+  \beta = (i_1\gamma,\dots, i_r\gamma)(j_1\gamma,\dots,j_s\gamma)(\dots)
+\]
+and this proves that $\alpha$ and $\beta$ have the same cycle type, as
+desired.
+
+$(\Leftarrow)$: Conversely, if $\alpha, \beta$ have the same cycle
+type, say
+\begin{align*}
+\alpha &= (i_1,\dots, i_r)(j_1,\dots,j_s)(\dots) \\
+\beta &= (k_1,\dots, k_r)(m_1,\dots,m_s)(\dots)
+\end{align*}
+then define $\gamma$ to be the permutation sending $i_1 \to k_1$,
+\dots, $i_r \to k_r$, $j_1 \to m_1$, \dots, $j_s \to m_s$, and so on.
+A calculation shows that $\beta = \gamma\alpha \gamma^{-1}$, so
+$\alpha, \beta$ are conjugate. This completes the proof.
+\end{proof}
+
+\begin{example}
+We already calculated the conjugacy classes of $\Sym_5$ in Example
+\ref{CC:S5}. Counting the number of elements in each class gives us
+the following tabulation for the class equation of $\Sym_5$:
+\[
+  120 = 1+10+15+20+20+30+24.
+\]
+(This is just the fact that $G$ is the union of its conjugacy classes;
+see \ref{orbit-union}.) Note that the numbers on the right of the
+class equation all divide $|G|$. This is no accident, because of the
+fundamental orbit-stabilizer theorem (see \ref{osr} and
+\ref{conj-elt}), which says that the size of an orbit $C(x)$ is the
+same as the index $[G:Z_G(x)]$, which divides the group order $|G|$ by
+Lagrange's theorem.
+\end{example}
+
+\begin{example}\label{ex:A5}
+Now let's fire up GAP to compute the conjugacy class orders in the
+alternating group $\Alt_5$:  \tiny
+\begin{verbatim}
+gap> G := AlternatingGroup(5);
+Alt( [ 1 .. 5 ] )
+gap> CC := ConjugacyClasses(G);
+[ ()^G, (1,2)(3,4)^G, (1,2,3)^G, (1,2,3,4,5)^G, (1,2,3,5,4)^G ]
+gap> Size( CC[1] ); Size( CC[2] ); Size( CC[3] ); Size( CC[4] ); Size( CC[5] );
+1
+15
+20
+12
+12
+\end{verbatim}\normalsize
+As we see, there are just five classes in $\Alt_5$, and their cycle
+types are given by the partitions $(1^5)$, $(2^2,1)$, $(3,1^2)$,
+$(5)$, and $(5)$. This is an interesting observation, because it shows
+that there are two classes in $\Alt_5$ of the same cycle type. (Note
+that Theorem \ref{cycle-type}, which is a theorem about symmetric
+groups, fails for alternating groups.) The GAP calculation above gives
+us the following for the class equation of $\Alt_5$:
+\[
+  60 = 1+15+20+12+12.
+\]
+This calculation is going to be very useful in proving that $\Alt_5$
+is a simple group, the main goal of this section.
+
+Before leaving this example, notice that there is only one 1 in each
+of the class equations considered here. This proves that the center of
+$\Sym_5$ and the center of $\Alt_5$ are trivial, since $x \in Z(G)
+\Leftrightarrow Z_G(x)=G \Leftrightarrow |C(x)|=1$. 
+\end{example}
+
+We have the following general observation.
+
+\begin{lem} \label{normal-lem}
+Let $N$ be a normal subgroup of a group $G$. If $x \in N$ then $C(x)
+\subset N$. Thus $N$ is a union of certain conjugacy classes of $G$.
+\end{lem}
+
+\begin{proof}
+This follows immediately from the definitions. If $N$ is normal then
+$N$ is closed under conjugation, so of course $N$ contains all
+conjugates of any of its elements. 
+\end{proof}
+
+We are finally ready to prove the following result, originally proved
+by Galois. This is the culmination of all the information developed in
+this section.
+
+\begin{thm}\index{simplicity~of~$\Alt_5$}[Galois] 
+The alternating group $\Alt_5$ is a simple group. 
+\end{thm}
+
+\begin{proof}
+Suppose that $\Alt_5$ has a proper normal subgroup $N$. So the order
+$|N|$ satisfies $1 < |N| < 60$.  Also, $|N|$ must be a divisor of 60,
+by Lagrange's theorem, so $|N| = $ 2, 3, 4, 5, 6, 10, 12, 15, 20, or
+30. By the preceding lemma, $N$ is a union of conjugacy classes, so
+$|N|$ is a sum of the numbers 1, 15, 20, 12, 12 because of the class
+equation for $\Alt_5$ that we computed in Example \ref{ex:A5}. But of
+course we {\em must} include the number 1 in the sum, because $H$ must
+contain the identity element and its conjugacy class is a singleton.
+This is a contradiction: no such sum equals any divisor of $60$.  This
+contradiction proves that $\Alt_5$ has no proper normal subgroup,
+hence is simple.
+\end{proof}
+
+
+It is easy to see that $\Alt_2$ and $\Alt_3$ are simple, since
+$\Alt_2$ is trivial and $\Alt_3$ is of order 3, thus cyclic of prime
+order. (All cyclic groups of prime order are simple.)  See Exercise
+\ref{ex:Ansimple} for an outline of a proof that $\Alt_n$ is simple
+for all $n\ge 6$. Thus all the alternating groups are simple, except
+for $\Alt_4$.
+
+
+\section*{Exercises}
+\begin{problems}
+  
+
+\item Find a proper normal subgroup of $\Alt_4$, thus proving that
+  $\Alt_4$ is not a simple group.
+
+\item\index{simplicity of $\Alt_n$} \label{ex:Ansimple} Let $N$ be any
+  proper normal subgroup of $\Alt_n$ ($n\ge 6$).
+
+(a) Show that $N$ contains an element $\alpha \ne 1$ which has a
+fixed point $i \in \{1,\dots, n\}$.
+
+(b) Show that $N$ contains the subset $G_i$ of {\em all} permutations
+in $\Alt_n$ which fix $i$.
+
+(c) Show that $G_i$ is isomorphic with $\Alt_{n-1}$. (So $N$ contains
+an isomorphic copy of $\Alt_{n-1}$.)
+
+(d) Show that $N$ contains every $G_i$, for each $1 \le i \le n$.
+
+(e) Show that $\Alt_n$ must be simple, by showing that no $N$, with
+these properties, exists.
+
+
+
+
+\end{problems}
+\end{document}
+
+
+

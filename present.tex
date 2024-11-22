@@ -1,0 +1,357 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+\newtheorem{prob*}{Problems}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\ptn}{\mathfrak{p}}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{30}
+
+\section{Presentations of groups}\noindent
+The idea of presenting a group by generators and relations is known as
+\emph{combinatorial group theory}. The idea originated in a paper by
+Walther von Dyck in 1882; it is useful in algebraic topology and
+geometry. We give a brief crash course in the main ideas.
+
+\begin{defn}\index{free~group}
+  The \emph{free group} on generators $a,b,c, \dots$ is the group
+  consisting of all possible strings ({\em e.g.}
+  $aaba^{-1}bbbac^{-1}$) of the generators and their inverses, taken
+  in any order, with the understanding that whenever a symbol $x$ and
+  its inverse $x^{-1}$ appear next to one another, we are allowed to
+  reduce the string by omitting the pair ({\em i.e.} we cancel
+  $xx^{-1}$ and $x^{-1}x$ whenever they appear).  A string is {\em
+    reduced} if no such cancellations are possible, and the elements
+  of the free group are precisely the reduced strings of any
+  length. Obviously, any free group is infinite, since there is no
+  limit to the length of the strings.
+\end{defn}
+
+By definition, there are no other relations between the generators in
+a free group, besides the relation which says we can cancel an element
+multiplied by its inverse. In a free group, as in any group, we allow
+ourselves to write $a^n$ as a shorthand for the string $aaa\cdots a$
+($n$ times repeated) and similarly $a^{-n}$ as a shorthand for
+$a^{-1}a^{-1}\cdots a^{-1}$ (repeated $n$ times). 
+
+An important element of the free group is the {\em empty string}
+$\epsilon$, which is the only string of length zero. Given two strings
+$s_1$ and $s_2$ in a free group, we multiply then by juxtaposition;
+that is, $s_1s_2$ is the string obtained by joining the symbols of
+$s_1$ with the symbols of $s_2$ to make a new string. For instance,
+if $s_1 = a^3b^2a^{-2}bab$ and $s_2 = b^{-1}a^{-2}b^5cb$ then
+\begin{align*}
+  s_1s_2 &= a^3b^2a^{-2}bab\, b^{-1}a^{-2}b^5cb \\
+  &= a^3b^2a^{-2}ba \, a^{-2}b^5cb \\
+  &= a^3b^2a^{-2}b a^{-1}b^5cb 
+\end{align*}
+remembering our rules for reducing adjacent pairs of symbols and their
+inverse. It is easy to see that the free group is a group, with
+$\epsilon$ serving as its identity element. What is the inverse of a
+given string?
+
+The free group on one generator $a$ is obviously abelian, since the
+only strings we can form using one symbol $a$ are powers of $a$, and
+powers of $a$ surely commute with one another. It is easy to see that
+the free group $G$ on a single generator $a$ is isomorphic with the
+infinite (additive) cyclic group $\Z$; the isomorphism is given by the
+map $G \to \Z$ defined by the rule $a^m \to m$.
+
+A free group with more than one generator is never abelian, since the
+equality $ab=ba$ for two generators $a,b$ would be a non-trivial
+relation (and thus the group would no longer be ``free'').
+
+
+\begin{thm}
+  Any group is isomorphic to a quotient of some free group.
+\end{thm}
+
+
+\begin{proof} (Sketch)
+Here's a sketch of the procedure to prove this fact, and it gives a
+method of constructing the group as a quotient of a free group. Given
+a group $G$, let $S=\{a,b,c, \dots \}$ be a set of elements of $G$
+which generates $G$ (so that $G=\gen{S}$). At worst, we could take $S
+= G$ but usually we can pick a much smaller generating set, as we have
+seen in numerous examples. Let $F$ be the free group on the generators
+in the set $S$, and in the free group $S$ let $N$ be the subgroup
+consisting of all strings in the generators which evaluate to the
+identity in the given group $G$. Then one can prove that $N$ is a
+normal subgroup of $F$, and moreover that $F/N \simeq G$. This is done
+by the first isomorphism theorem, using a natural homomorphism from
+$F$ onto $G$.
+\end{proof}
+
+\begin{rmk}
+In practice, one would like to choose the generating set $S$ to be as
+small as possible. Also, it is customary to specify the normal
+subgroup $N$ by finding a (smallest possible, or at least nice in some
+way) set of generators for it. These generators of $N$ are known as
+the \emph{defining relations} of $G$. 
+\end{rmk}
+
+\begin{example}
+An example of a group given by generators and relations is the
+dihedral group $\D_n$, which is given by two generators $r,d$ subject
+to the defining relations
+\[
+ r^n=1; \quad d^2 = 1; \quad rdr = d.
+\]
+It is easy to see that these relations hold in $\D_n$, but rather
+harder to show that any other relations between these generators will
+be consequences of these relations. To do this, you need to prove that
+the corresponding elements
+\[
+  r^n; \quad d^2; \quad rdrd
+\]
+generate a normal subgroup $N$ of the free group $F$ on the generators
+$r,h$ such that $F/N \simeq \D_n$. This can be shown with a bit of work. 
+\end{example}
+
+
+\begin{example}
+The symmetric group $\Sym_n$ is generated by transpositions, we have
+proved a long time ago. In fact, it is generated by the the
+\emph{adjacent interchanges}; these are the special transpositions
+\[
+  t_1=(1,2), t_2=(2,3), \dots, t_{n-1} = (n-1,n).
+\]
+It is not hard to verify that these $n-1$ generators satisfy the
+relations
+\begin{gather*}
+ t_i^2 = 1; \quad t_it_j=t_jt_i \text{ (if $|i-j|>1$)};
+ \\ t_it_{i+1}t_i = t_{i+1}t_it_{i+1}
+\end{gather*}
+for all values of the indices $i,j$ for which the equations make sense
+in $\Sym_n$. The last two relations are known as the \emph{braid
+  relations}.
+
+It is harder to verify, yet true, that these relations actually {\em
+  define} $\Sym_n$, in the sense that every other relation between
+generators is a consequence of these. In other words, the
+corresponding elements
+\begin{gather*}
+  t_i^2; \quad t_it_jt_it_j \text{ (if $|i-j|>1$)}; \quad
+  t_it_{i+1}t_it_{i+1}t_it_{i+1}
+\end{gather*}
+obtained from the relations (by writing each relation in the form $R =
+1$) generates a normal subgroup $N$ such that $\Sym_n \simeq F/N$
+where $F$ is the free group on the symbols $t_1, \dots, t_{n-1}$.
+\end{example}
+
+
+
+\begin{defn}\index{generators~and~relations}\index{presentation}
+In general, if $G$ is a group given by generators $g_1, g_2, \dots$
+with defining relations $R_1, R_2, \dots$ then we will write
+\[
+ G \simeq \gen{g_1, g_2, \dots \mid R_1, R_2, \dots} 
+\]
+to indicate this.  Such a description of $G$ (by generators and
+relations) is called a {\em presentation} of $G$.
+\end{defn}
+
+A presentation $G = \gen{g_1, g_2, \dots \mid R_1, R_2, \dots}$
+describes $G$ as $F/N$ where $F$ is the free group generated by $g_1,
+g_2, \dots$, and $N$ is the normal subgroup of $G$ generated by $R_1,
+R_2, \dots$. Note that if one is given a generator $R$ for $N$ then
+$R$ is a string in the symbols $g_1, g_2, \dots$ (and their inverses)
+which is identity in $G$; sometimes the relation $R$ is expressed as
+an equation $R = 1$, or any equation equivalent to it. For instance,
+one of the generators of the set of relations in $\D_n$ is $rdrd$, and
+it is customary to write this as the relation $rdrd=1$ in $\D_n$,
+which is equivalent to the equation $rdr=d$ (since $d^2=1$).
+
+\begin{examples}
+In the notation just introduced, we write out presentations for each
+of the groups $C_n = $ cyclic group of order $n$, $\D_n =$ the
+dihedral group of symmetries of a regular $n$-gon, and $\Sym_n =$
+symmetric group on $n$ letters:
+\begin{gather*}
+ C_n = \gen{x \mid x^n = 1}\\ \D_n = \gen{ r,d \mid r^n=1,\ 
+  d^2=1,\ rdr=d }\\
+\Sym_n = \gen{t_1, \dots, t_{n-1} \mid t_i^2=1,\ 
+  t_it_j=t_jt_i\text{ (if $|i-j|>1$)},\ 
+  t_it_{i+1}t_i= t_{i+1}t_it_{i+1} }.
+\end{gather*}
+The presentation of $\Sym_n$ is called the \emph{Coxeter
+  presentation}. There is an elaborate theory of \emph{Coxeter
+  groups}, which are groups defined by generators and relations
+subject to certain conditions. Coxeter groups have applications to Lie
+groups.
+\end{examples}
+
+Although it is satisfying to describe a group by means of generators
+and relations, there are some issues with this approach. Here are
+three fundamental problems formulated by Max Dehn in 1911. These
+problems are important for presentation theory as well as
+applications.  Let $G$ be a group defined by means of a given
+presentation. Dehn's problems are:
+\begin{enumerate}[label=\Roman*.]
+\item\index{word~problem} (Word problem) For an arbitrary word $w$ in
+  the generators, decide in a finite number of steps whether or not
+  $w = 1$ in $G$.
+
+\item\index{conjugacy~problem} (Conjugacy problem) For two arbitrary
+  words $w_1, w_2$ in the generators, decide in a finite number of
+  steps whether or not $w_1$ and $w_2$ are conjugate in $G$.
+
+\item\index{isomorphism~problem} (Isomorphism problem) For an arbitrary
+  group $H$ defined by means of another presentation, decide in a
+  finite number of steps whether or not $G \cong H$.
+\end{enumerate}
+
+Unfortunately, it has been proven that all three problems are in
+general \emph{undecidable}\index{undecidable} in the sense of
+mathematical logic. Roughly speaking, a problem is undecidable if it
+is not possible to design a Turing machine to solve it. It is
+generally understood that algorithms are equivalent to Turing
+machines, so the undecidability of these problems effectively means
+that there is no general algorithm to solve them.
+
+That may sound rather discouraging, but in fact there are many classes
+of presentations for which all three problems have been solved, so the
+situation is not so dire as it may seem. Much more is known about
+combinatorial\index{combinatorial group theory} group theory; the
+book \emph{Combinatorial Group Theory} by Magnus, Karass, and Solitar
+is a classic reference.
+
+
+\section*{Exercises}
+\begin{problems}
+  
+\item Find a presentation by generators and relations of the Klein
+  four group $K_4$, using two generators. 
+
+\item Show that the group given by the presentation $\gen{a,b \mid a^5
+  = b^2 = 1, ba = a^2b}$ is isomorphic to $\Z_2$.
+
+\item Show that the group $G = \gen{x,y \mid x^2=y^n = 1, xyx =
+  y^{-1}}$ is isomorphic to $\D_n$.
+
+\item Find a minimal presentation of the group $\Z_2 \times \Z_3$.
+
+\item What is the minimum number of generators needed to generate the
+  group $G = \Z_2 \times \Z_2 \times \Z_2$? Find a presentation of
+  this group.
+
+\item Show that the quaternion group\index{quaternion~group}
+  $Q = \{\pm 1, \pm i, \pm j, \pm k \}$, in which $i^2=j^2=k^2 = -1$,
+  $(-1)^2 = 1$, and the symbols $i,j,k$ multiply like standard unit
+  vectors according to usual cross-product rules in $\R^3$, is
+  presented by $\gen{ a,b \mid a^2=b^2 = (ab)^2 }$.
+
+\item\index{braid~group} Artin's \emph{braid group} $\mathbb{B}_n$ can
+  be defined by the presentation
+  $$\gen{t_1, \dots, t_{n-1} \mid t_it_j=t_jt_i \text{ (if $|i-j|>1$)
+    }; \quad t_it_{i+1}t_i= t_{i+1}t_it_{i+1} }.$$ Show that $\Sym_n$
+  is a homomorphic image of $\mathbb{B}_n$ and compute the kernel.
+
+\item 
+\begin{enumerate}
+  \item Show that the symmetric group $\Sym_n$ is generated by the
+    $n$-cycle $c = (1,2,3,4,\dots,n)$ and the transposition $t =
+    (1,2)$.
+
+  \item (May be difficult) Find a set of defining relations on these
+    generators that gives a presentation of $\Sym_n$ by these two
+    generators and the relations you found.
+\end{enumerate}
+
+\item (May be difficult) Find a presentation by generators and
+  relations for the alternating group $\Alt_n$. [Hint: You may wish to
+    start with the fact that $\Alt_n$ is generated by 3-cycles.]
+
+
+\end{problems}
+
+\end{document}

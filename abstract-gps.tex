@@ -1,0 +1,1121 @@
+\documentclass[11pt]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{16}
+
+\section{Abstract groups}\noindent
+The axiomatic definition of abstract group\index{abstract~group} is
+based on special classes of examples of groups, such as permutation
+groups and matrix groups.  Those examples share some common features:
+closure under products and inverses, associativity, and identity. In
+the definition we are about to give, closure under products is
+implicit in the definition of binary operation, while closure under
+inverses is an axiom.
+
+We start with the concept of a binary
+operation\index{binary~operation} on a set. Intuitively, a binary
+operation is a \emph{law of combination} which combines two elements
+of a set to produce another element of the set. Ordinary addition and
+multiplication are canonical examples.
+
+\begin{defn}
+Let $S$ be any given set. Any function from $S \times S$ to $S$ is
+called a {\em binary operation} or \emph{law of combination} on the
+set $S$. If $f$ is a binary operation then tradition demands that we
+write $x\,f\,y$ for the value\footnote{Writing a function between its
+  arguments is called {\em infix} notation in computer science.} at
+the input pair $(x,y)$ instead of the usual $f(x,y)$.
+\end{defn}
+
+In this context the word \emph{binary} refers to the fact that the
+function depends on two input variables. By the same token, a
+\emph{unary operation} on the set $S$ would be a function from $S$ to
+itself. For example, the function that sends each integer to its
+negative is a unary operation on the set $\Z$ of integers.
+
+\begin{examples}
+1. Addition ($+$) is a binary operation on any of the usual number
+sets $\N$, $\Z$, $\Q$, $\R$, $\C$. Multiplication ($\cdot$) is another
+binary operation on any of the sets $\N$, $\Z$, $\Q$, $\R$, $\C$.
+
+2. Matrix multiplication is a binary operation on the set
+$\text{Mat}_n(F)$ of all $n \times n$ matrices with entries in a given
+field $F$.
+
+3. Composition of functions is a binary operation on the set $\Sym_n$
+of permutations of $\underline{\mathbf{n}} = \{1, \dots, n\}$.
+
+
+4. More generally, composition of functions is a binary operation on
+the set $S^S$ of all self-maps $S \to S$ of \emph{any} set $S$.
+
+5. Here is a binary operation $\#$ on the finite set $S=\{a,b,c,d\}$
+which is defined by means of a ``multiplication'' table as follows:
+$$
+\begin{array}{|c|cccc|}\hline
+\#& a&b&c&d\\ \hline
+a & a&a&d&d\\
+b & b&b&c&c\\
+c & a&d&b&c\\
+d & b&c&a&d\\
+\hline
+\end{array}
+$$ This table defines a law of combination for pairs of elements of
+$S$. For instance, it says that $a\#c = d$ and $c\#b = d$. For finite
+sets $S$, we can always define a binary operation (law of combination)
+on $S$ by a table.
+\end{examples}
+
+
+
+It is important to realize that closure under products is built in to
+the definition of a binary operation: to say that $*$ is a binary
+operation on $S$ \emph{means} that $S$ is closed under $*$, since all the
+values $x*y$ must fall again within $S$, for any $x,y \in S$. This is
+just another way of saying that $*$ is a function mapping $S \times S
+\to S$.
+
+
+
+\begin{defn}
+\index{definition~of~group}\index{group~axioms}\label{def:group}
+A {\em group} is a set $G$ along with a given binary operation $*$
+on $G$, such that the following three axioms hold:
+\begin{enumerate}
+\item[(G1)] The operation $*$ is {\em associative}: $(a*b)*c =
+  a*(b*c)$ for all $a,b,c \in G$.
+
+\item[(G2)] There is an {\em identity} element $e \in G$ satisfying:
+  $e*a = a = a*e$ for all $a\in G$.
+
+\item[(G3)] Each $a \in G$ has an {\em inverse} in $G$: given $a \in
+  G$ there exists some $a' \in G$ such that $a*a' = a'*a = e$.
+\end{enumerate}
+\end{defn}
+
+
+Note that closure under $*$ is implicit in this definition, since $*$
+is a binary operation on $G$. Moreover, closure under inverses is the
+content of axiom (G3).
+
+
+When describing a group we should specify not only the set $G$ but
+also the binary operation $*$ on $G$, since a given set can have many
+different binary operations defined on it. People often use a notation
+such as $(G,*)$ to denote a group. If the binary operation $*$ is
+implied by context, then we often just write $G$ for simplicity.
+
+
+\begin{defn}\index{abelian~group}
+An {\em abelian}\footnote{In honor of Niels Henrik Abel
+  (1802--1829).} group is any group $(G,*)$ in which the commutative
+law holds: $a*b=b*a$, for all $a,b\in G$.
+\end{defn}
+
+As we have seen, matrix and permutation groups are usually not
+abelian, because matrix multiplication and functional composition are
+usually not commutative. 
+
+
+\begin{thm}[Basic properties]\label{gpprop} 
+Let $(G,*)$ be any group, with binary operation $*$, and let $a,d,x,y
+\in G$.
+\begin{enumerate}
+\item The identity element $e \in G$ in axiom {\rm(G2)} is unique.
+
+\item The inverse of any $a \in G$ in axiom {\rm(G3)} is unique.
+
+\item The equation $a*x=a*y$ implies that
+  $x=y$.  (This is called {\em left cancellation}.)
+
+\item The equation $x*a=y*a$ implies that
+  $x=y$.  (This is called {\em right cancellation}.)
+
+\item Each of the equations $a*x=b$, $x*a = b$ ($a,b\in G$) has a
+  unique solution $x \in G$.
+
+\item\index{inverse~of~a~product} The inverse of a product is the
+  product of the inverses in reverse order.
+\end{enumerate}
+\end{thm}
+
+
+\begin{proof} 
+(a) Suppose that $e$, $f$ are identity elements of $G$. Then by
+  axiom (G2) we have $e*a=a$ and $a=a*f$ for all $a\in G$. In
+  particular, taking $a=f$ in the first equality and $a=e$ in the
+  second, we get $e*f=f$ and $e=e*f$. Hence $e=f$. This proves
+  uniqueness of identity.
+
+(b) Suppose that $b$, $c$ are both inverses of a given $a \in G$. Then
+  $a*b=e=b*a$ and $a*c=e=c*a$ by axiom (G3). By the associative law
+  (G1) we have $c*(a*b) = (c*a)*b$, so $c*e=e*b$, so $c=b$ by
+  (G2). This proves uniqueness of inverses.
+
+(c) Suppose $a*x=a*y$. Then $a'*(a*x) = a'*(a*y)$ where $a'$ is the
+  inverse of $a$. By (G1) this implies that $(a'*a)*x = (a'*a)*y$, so
+  by (G3) we have $e*x = e*y$, which implies by (G2) that $x=y$.
+
+
+(d) This is proved similarly to (c), except we multiply by the
+  inverse $a'$ on the right instead of on the left.
+
+(e) Suppose that $a*x=b$. Then by left multiplication by the inverse
+  $a'$ of $a$ we have $a'*(a*x) = a'*b$, so by (G1) we have $(a'*a)*x
+  = a'*b$. Thus by (G3) we have $e*x = a'*b$, so by (G2) we obtain $x
+  = a'*b$. This is the unique solution.  This proves the first
+  claim. The other claim is proved similarly, using right
+  multiplication instead of left multiplication.
+
+(f) Given two elements $a,b$ of $G$ let their respective inverses be
+  $a',b'$. Then by axiom (G3) we have $a*a'=e$, $b*b'=e$. Thus 
+  \[
+    (a*b)*(b'*a') = a*(b*b')*a' = (a*e)*a' = a*a' = e,
+  \]
+  where we used generalized associativity for the first equality. Let
+  $z$ be the inverse of $a*b$. Then $(a*b)*z = e$ by (G3). So $(a*b)*z
+  = (a*b)*(b'*a')$. By left cancellation we obtain $z = b'*a'$, i.e.,
+  the inverse of $a*b$ is $b'*a'$. This proves the statement for
+  products of length two, and it easily extends to products of more
+  than two elements, by induction on the length of the product.
+\end{proof}
+
+
+
+\subsection*{Additive versus multiplicative notation}
+\index{additive~notation}\index{multiplicative~notation}%
+If the binary operation $*$ is written as addition ($+$) or
+multiplication (\,$\cdot$\,) then the group is known as an \emph{additive}
+group or a \emph{multiplicative} group, respectively.
+
+If $(G,+)$ is an additive group, it is customary to denote the
+identity element by the symbol $0$ and the inverse of $a$ by the
+symbol $-a$.  In this case the group axioms take the following form:
+
+(G1)\quad $(a+b)+c = a+(b+c)$; 
+
+(G2)\quad $0+a=a=a+0$; 
+
+(G3)\quad $a+(-a) = 0 = (-a)+a$.
+
+\noindent
+It is customary to use the additive notation for a group {\em only for
+  abelian groups} and we shall follow that convention in this course.
+
+If $(G, \cdot)$ is a multiplicative group, it is customary to
+abbreviate products $a \cdot b$ by $ab$. In this case we usually
+denote the identity element by the symbol $1$ and the inverse of $a$
+by the symbol $a^{-1}$. Then the group axioms take the form:
+
+(G1)\quad $(ab)c = a(bc)$; 
+
+(G2)\quad $1a=a=a1$; 
+
+(G3)\quad $aa^{-1} = 1 = a^{-1}a$.
+
+The default notation for the group operation is multiplicative
+notation, but additive groups appear frequently as well.
+
+
+
+\begin{examples} \label{ex}
+(a) Any permutation group is a group. Any matrix group is a group. 
+
+(b) The dihedral group $\D_n$ is a group. All symmetry groups are
+  groups.
+
+(c) The \emph{abstract cyclic group} is the multiplicative group $C_n$
+  generated by a symbol $x$ subject to the relation $x^n = 1$. As a
+  set, $C_n = \{1, x, x^2 \dots, x^{n-1}\}$, so $|C_n| = n$.
+
+(d) Any vector space\index{vector~space} $V$ gives an additive abelian
+  group $(V,+)$ under vector addition. The identity element is the
+  zero vector $\mathbf{0}$ in $V$ and the additive inverse of a vector
+  $\mathbf{v} \in V$ is the vector $-\mathbf{v}$. In particular,
+  $(\R^n, +)$ is an example of such a group, and more generally we
+  have the group $(F^n, +)$ where $F$ is any field.
+
+(e) Any ring\index{ring} $R$ (commutative or not) contains \emph{two}
+  groups. One is the additive abelian group $(R,+)$, in which $0$ is
+  the additive identity and the inverse of $a$ is written as $-a$. In
+  particular, $(\Z, +)$, $(\Q, +)$, $(\R,+)$, $(\C, +)$ are all
+  additive abelian groups. Also, $(\Z_n, +)$ is an additive abelian
+  group, for any positive integer $n$.
+
+(f) Recall that $R^\times = R^*$\index{R@$R^\times$} is the set of
+  units\footnote{A \emph{unit} is an invertible element.} in a given
+  ring $R$. The second group in the ring $R$ is the
+  \emph{multiplicative group of units} in $R$, i.e., the group
+  $(R^\times, \cdot)$ or just $R^\times$ for short.  In particular,
+  for any positive integer $n$, we have the multiplicative group
+  $\Z_n^\times$ of units in the ring $\Z_n$. The abelian group
+  $\Z_n^\times$ is of extreme importance for modern cyptography.
+
+(g) Let $F$ be any field\index{field}. Then by definition $F^\times =
+  F-\{0\}$, the set of all nonzero elements of $F$, since every
+  nonzero element of a field is invertible. So the previous example
+  gives in this case the group $(F^\times, \cdot) = (F-\{0\}, \cdot)$,
+  which is called the {\em multiplicative group of the field} $F$.
+
+(h) The {\em trivial group}\index{trivial~group} is the set $\{e\}$
+  consisting of only one element, with $e*e=e$.
+\end{examples}
+
+The number of elements of a group is called its
+\emph{order}.
+
+\begin{defn}\index{order!of~a~group}
+  Let $(G,*)$ be a group. The {\em order} of the group is the
+  cardinality $|G|$ of the set $G$. If the set $G$ is an infinite set
+  then we often write $|G| = \infty$ and call $G$ an infinite group,
+  otherwise $G$ is a finite group.
+\end{defn}
+
+The word \emph{order} is also used in group theory in another way, as
+follows, when speaking about an element of a group.
+
+\begin{defn}\label{def:order-elt}\index{order!of~an~element}
+  Let $a \in G$ where $(G,*)$ is a group.  The {\em order} of $a$ is
+  the least positive integer $r$ such that $a$ combined with itself
+  $r$ times yields the identity element $e$.  If no such $r$ exists,
+  then the order is defined to be $\infty$.
+\end{defn}
+
+In any group, the order of the identity element is always 1.  Since
+the word \emph{order} has two different meanings within group theory,
+we always have to determine its usage from the context.
+
+\begin{lem}\label{lem:inverse-if-finite}
+  If $a$ is an element of order $r$ in a group $(G,*)$, then the
+  inverse of $a$ is equal to $a* \cdots *a$ ($r-1$ factors) obtained
+  by combining $a$ with itself $r-1$ times.
+\end{lem}
+
+\begin{proof}
+  Let $b$ be equal to $a* \cdots *a$ ($r-1$ factors). Then it is clear
+  that $a*b = e = b*a$. It follows from uniqueness of inverses that
+  $b$ equals the inverse of $a$.
+\end{proof}
+
+
+
+Now we discuss \emph{laws of exponents}\index{laws~of~exponents} in
+groups. We need to distinguish between multiplicative and additive
+groups, which use different notation.  If $a$ is an element of a
+multiplicative group, then we define $a^n$ to be $aa\cdots a$ ($n$
+times repeated) for any positive integer $n$, we define $a^0 = 1$, and
+we define $a^{-n} = (a^{-1})^n$.  Note that $(a^n)^{-1} =
+a^{-n}$. Moreover, we have
+\[
+  a^m\,a^n = a^{m+n}, \qquad (a^m)^n = a^{mn}
+\]
+for any $m,n \in \Z$.
+
+In an additive group we have to use a different notation. In this case we
+define $n a$ to be $a+a+\cdots+a$ ($n$ summands) for any positive
+integer $n$, we define $0 a = 0$, and we define $(-n) a = n(-a)$. 
+Note that $-(na) = (-n)a$.  Moreover, 
+\[
+  ma + na = (m+n)a, \qquad n(ma) = (nm)a
+\]
+for any $m,n \in \Z$. In an additive group, ``powers'' are written as
+multiples, because in ordinary arithmetic repeated addition is written
+as a multiple while repeated multiplication is written as a power.
+
+
+\begin{rmk}
+We can rephrase Definition \ref{def:order-elt} in terms these
+notations as follows.  In a multiplicative group the order of $a$ is
+the least positive integer $r$ such that $a^r = 1$. In the additive
+case the order of $a$ is the least positive integer $r$ such that $ra
+= 0$.
+\end{rmk}
+
+Now we define the important notion of isomorphism of groups. 
+
+\begin{defn}
+  Let $(G,*)$ and $(H,\#)$ be given groups. An \emph{isomorphism} of
+  $G$ onto $H$ is any bijection $f \colon G \to H$ such that $f(a*b) =
+  f(a)\#f(b)$ for all $a,b \in G$. Whenever such an $f$ exists then we
+  say that $G$ is \emph{isomorphic} to $H$, and write $G \cong H$ or
+  $G \simeq H$ (interchangeably).
+\end{defn}
+
+So an isomorphism is a bijective mapping from one group to the other
+which matches up products in the two groups. If one group is an
+additive group and the other a multiplicative group then this means
+that sums get matched with products.
+
+If two groups are isomorphic then {\em they are essentially the same
+  group}, except for the form of their elements. In particular,
+isomorphic groups must have the same structural properties (i.e, they
+have same order, the same number of subgroups, etc). The following is
+easy to check.
+
+
+\begin{thm}\label{thm:iso}\index{isomorphism}
+  Isomorphism of groups is an equivalence relation on the class of
+  groups: it is reflexive, symmetric, and transitive.
+\end{thm}
+
+\begin{example}\index{R@$\R^+$}
+It is easy to check that the set $(\R^+, \cdot)$ of all positive real
+numbers is a group under multiplication. We claim that the
+multiplicative group $(\R^+, \cdot)$ is isomorphic to the additive
+group $(\R, +)$ of real numbers. The isomorphism is given by the
+natural logarithm function $x \mapsto \ln x$. We know this function is
+invertible (its inverse is the exponential function $x \mapsto e^x$)
+so it is a bijection of $\R^+$ onto $\R$. Furthermore, the equation
+$\ln(ab) = \ln(a) + \ln(b)$ says that products in $\R^+$ match up with
+sums in $\R$, so the function $\ln$ is indeed a group isomorphism, as
+claimed.
+\end{example}
+
+
+If a group $(G,*)$ is finite then it may be described by giving its
+complete multiplication table. (Replace multiplcation by addition if
+it is an additive group.) For instance, the addition table of
+$(\Z_4,+)$ and the multiplication table of the cyclic group $G =
+\gen{\alpha}$ generated by a $4$-cycle $\alpha$ are displayed in the
+tables below
+\[
+\begin{array}{|c|cccc|} \hline
++&0&1&2&3\\ \hline 
+0&0&1&2&3\\ 1&1&2&3&0\\ 
+2&2&3&0&1\\ 3&3&0&1&2\\ \hline
+\end{array}
+\qquad \qquad
+\begin{array}{|c|cccc|} \hline
+\cdot&1&\alpha&\alpha^2&\alpha^3\\ \hline 
+1&1&\alpha&\alpha^2&\alpha^3\\ \alpha&\alpha&\alpha^2&\alpha^3&1\\ 
+\alpha^2&\alpha^2&\alpha^3&1&\alpha\\ \alpha^3&\alpha^3&1&\alpha&\alpha^2\\ 
+\hline
+\end{array}
+\]
+where we write the numbers $0, 1, 2, 3$ as a shorthand for the
+corresponding residue classes $[0], [1], [2], [3]$ in $\Z_4$. Note
+that the correspondence 
+\[
+  [0] \to 1 = \alpha^0, \quad [1] \to \alpha = \alpha^1, \quad [2] \to
+  \alpha^2, \quad [3] \to \alpha^3
+\] 
+defines an isomorphism between the two groups. In a more succinct
+notation, the isomorphism is defined by $f([x]) = \alpha^x$ for $x =
+0,1,2,3$.
+
+
+The multiplication table of a finite group has the property that the
+elements in any row of the table form a permutation of the elements of
+any other row. The same is true of the columns of the table. In
+particular, no element appears twice in any row or any column. You
+should be able to show how these claims follow from the group axioms.
+
+Consider a group of order $2$. Assume that its binary operation is
+written multiplicatively, so $G = \{1, a\}$ as a set, where $1$ is the
+identity element and $a \ne 1$ (else the group would have order
+$1$). Then necessarily $a^2=1$, because $a^2=a$ implies $a=1$. So the
+group multiplication table must look like the one on the left below:
+\[
+\begin{array}{|c|cc|} \hline
+\cdot&1&a\\ \hline 
+1&1&a\\
+a&a&1\\
+\hline
+\end{array}
+\qquad \qquad
+\begin{array}{|c|cc|} \hline
++&0&1\\ \hline 
+0&0&1\\
+1&1&0\\
+\hline
+\end{array}
+\]
+The table on the right is the addition table for the additive group
+$(\Z_2,+)$. It should be clear that the two groups are
+isomorphic. This analysis shows that any group of two elements must be
+isomorphic to $\Z_2$. This argument can be extended to prove that any
+group of three elements must be isomorphic to $\Z_3$.
+
+
+%\newpage
+\section*{Exercises}
+\begin{problems}\small
+
+\item Explain your reasoning for:
+\begin{enumerate}
+\item Is $\N = \{1,2,3,\dots \}$ a group under addition? If we
+  include $0$ is it a group?
+\item Is $\N= \{1,2,3,\dots \}$ a group under multiplication?
+\item Is the set $\Z$ of integers a group under addition? 
+\item Is $\Z$ a group under multiplication? 
+\item Is $\Z-\{0\}$ a group under multiplication? 
+\end{enumerate}
+
+
+\item What is wrong with writing $\frac{a}{b}$ for $ab^{-1}$ in a
+  (nonabelian) multiplicative group? If you think there is nothing
+  wrong with it, then how will you write $b^{-1} a$ when $ab^{-1} \ne
+  b^{-1}a$?
+
+\item Prove that any group of three elements must be isomorphic to
+  the additive group $\Z_3$ by analyzing its multiplication table.
+
+\item Suppose that $G = \{1,a,b,c\}$ is a multiplicative group of four
+  elements in which $1$ is the identity element. By analyzing the
+  possible multiplication tables, prove that $G$ is isomorphic to
+  either $(Z_4,+)$ or to a group in which $a^2=b^2=c^2=1$. (The latter
+  group is called the Klein 4-group\index{Klein~four~group}.)
+
+\item List the elements in the following multiplicative groups:
+
+(a) $(\Z^\times,\cdot)$,\qquad
+(b) $(\Z_6^\times, \cdot)$,\qquad
+(c) $(\Z_8^\times, \cdot)$,\qquad
+(d) $(\Z_{15}^\times, \cdot)$.
+
+\item Give multiplication tables for the groups in the previous
+  problem.
+
+\item Prove that $|\Z_n^\times| = \varphi(n)$, where $\varphi(n)$ is
+  \emph{Euler's phi-function} from number theory.
+
+\item Prove that the elements in any row of the group multiplication
+  table of a finite group $G$ form a permutation of the elements of
+  the first row. Then do the same for columns. 
+
+\item In this problem, we write $\Z_n$ for the additive group
+  $(\Z_n,+)$. Find the order of:
+
+(a) 1 in $\Z_7$, \qquad 
+(b) 2 in $\Z_7$, \qquad 
+(c) 1 in $\Z_{10}$, \qquad 
+(d) 2 in $\Z_{10}$, \qquad 
+(e) 3 in $\Z_{10}$.
+
+\item In this problem, we write $\Z_n$ for the additive group
+  $(\Z_n,+)$. Find the order of any $a \in \Z_n$ and prove your
+  answer.
+
+\item In this problem, we write $\Z_n^\times$ for the multiplicative
+  group $(\Z_n^\times, \cdot)$ of units. Find the orders of:
+
+(a) $1,2,3,4,5,6$ in $\Z_7^\times$, \qquad
+(b) $1,2,4,5,7,8$ in $\Z_{9}^\times$, \qquad
+(c) $1,3,7,9$ in $\Z_{10}^\times$.
+
+
+\item\label{prob:circle-gp} (The circle group) Let $S^1$ be the set of
+  all points on the usual unit circle in the plane $\R^2$.  Show that
+  $S^1$ is a group under the law of combination given by
+  \[
+    (\cos \theta, \sin \theta) * (\cos \theta', \sin \theta') = (\cos
+    (\theta + \theta'), \sin(\theta + \theta')).
+  \] 
+  Be sure to give a formula for the inverse of elements of this group,
+  and prove that they really are inverses. 
+
+\item Show that the circle group of the previous problem is isomorphic
+  to the matrix group $\SO(2)$.
+
+
+\item Find an isomorphism of the multiplicative group $\Z^\times$ onto
+  the additive group $\Z_2$.
+
+
+
+\item Consider the set $G$ of all $2 \times 2$ real matrices of the
+  form $[\begin{smallmatrix} a&-b\\b&a \end{smallmatrix}]$.
+  \begin{enumerate}
+  \item Show that $G$ is a group under ordinary matrix addition, and
+    find an isomorphism from the additive group $(\C, +)$ onto $G$.
+  \item Now let $G'$ be the subset of $G$ consisting of all elements
+    of $G$ except the zero matrix. Show that $G'$ is a group under
+    ordinary matrix multiplication. 
+  \item Find an isomorphism from the multiplicative group $(\C^\times,
+    \cdot)$ onto $G'$.
+  \end{enumerate}
+
+\item Prove part (f) of Theorem \ref{gpprop} using right
+cancellation instead of left cancellation.
+
+
+\item Prove that isomorphism of groups is an equivalence relation
+on the class of groups (Theorem \ref{thm:iso}).
+
+
+\item Prove that if $G$ is a group in which every element (except the
+  identity) has order 2 then $G$ must be abelian.
+
+\item \label{prob:monoids} (Monoids) A \emph{monoid} is a set $M$
+  along with a binary operation $*: M \times M \to M$ such that $*$ is
+  associative and there is an identity element $e \in M$. Show that
+  $(\N, +)$ and $(\Z, \cdot)$ are monoids but not groups.
+
+
+  
+
+\item Show that a set $R$ with two binary operations $+, \cdot$ is a
+  ring\index{ring} if and only if the following three properties hold:
+  \begin{enumerate}
+  \item $(R,+)$ is an additive abelian group. Denote its identity
+    element by $0$.
+  \item $(R, \cdot)$ is a multiplicative monoid (see Problem
+    \ref{prob:monoids} for the definition of monoid). Denote its
+    identity element by $1$.
+  \item Addition and multiplication are connected by the distributive
+    laws: $a(b+c) = ab+ac$ and $(b+c)a = ba+ca$, for all $a,b,c \in
+    R$.
+  \end{enumerate}
+  Thus, one could take the three properties as the definition of ring.
+
+
+
+\item Show that a set $F$ with two binary operations $+, \cdot$ is a
+  field\index{field} if and only if the following four properties hold:
+  \begin{enumerate}
+  \item $(F,+)$ is an additive abelian group. Denote its identity
+    element by $0$.
+  \item $(F-\{0\}, \cdot)$ is a multiplicative abelian group. Denote
+    its identity element by $1$.
+  \item $1 \ne 0$.
+  \item Addition and multiplication are connected by the distributive
+    law: $a(b+c) = ab+ac$, for all $a,b,c \in F$.
+  \end{enumerate}
+  Thus, one could take the four properties as the definition of field.
+
+\end{problems}
+
+ 
+
+\newpage
+\section{Subgroups}\noindent
+Finding subgroups inside known groups is an important way of finding
+new examples of groups. 
+
+\begin{defn}\index{subgroup}
+  Let $(G,*)$ be a group. A subset $H$ of $G$ is called a
+  \emph{subgroup} of $G$ if $(H,*)$ is a group in its own right. We
+  write $H<G$ (or $H \le G$ interchangeably) to denote that $H$ is a
+  subgroup of $G$. A subgroup $H$ is a \emph{proper} subgroup of $G$
+  (written as $H \lneqq G$) if $H \ne G$.
+\end{defn}
+
+
+By definition, permutation groups are subgroups of some $\Sym_n$ and
+matrix groups are subgroups of some $\GL_n(F)$, where $F$ is a field.
+So we have already seen many examples of subgroups.
+
+Note that every group is regarded as a subgroup of itself. (So in the
+above notation, writing $G<G$ is perfectly valid.) In any group the
+subset consisting solely of the identity element is always a subgroup;
+this subgroup is called the \emph{trivial} subgroup.
+
+In order for a given subset $H$ of a group $G$ to be a subgroup, it is
+clearly necessary that the binary operation $*: G \times G \to G$
+restricts to a binary operation $*: H \times H \to H$. This is just
+another way of saying that $H$ must be closed under products.
+
+The following theorem covers both the multiplicative and additive
+cases together. In the latter case, you should read ``sum'' for
+``product'' in the theorem, because $a*b = a+b$ when the operation $*$
+is equal to $+$. 
+
+
+\begin{thm}[The subgroup criterion]\index{subgroup~criterion}
+  Let $H$ be a nonempty subset of a given group $(G,*)$.  Then $H$ is
+  a subgroup of $G$ if and only if $H$ is closed under products and
+  inverses. (Closure under products means that $a*b \in H$ whenever
+  $a,b \in H$, and closure under inverses means that $H$ contains the
+  inverse of each of its elements.)
+\end{thm}
+
+\begin{proof}
+  ($\implies$) Suppose that $H$ is a subgroup of $G$. Then the fact
+  that $H$ is a group in its own right means that when we restrict the
+  operation $*\colon G \times G \to G$ to the subset $H \times H$, it
+  induces a binary operation $*\colon H \times H \to H$. This is
+  equivalent to saying that $H$ is closed under products. Also, the
+  fact that axiom (G3) holds for $H$ means that each $a \in H$ has an
+  inverse $a'$ in $H$; that must also be its inverse in $G$ since
+  inverses in $G$ are unique.  This implies that $H$ is closed under
+  inverses.
+
+  ($\impliedby$) Suppose that $H$ is a nonempty subset of $G$ which is
+  closed under products and inverses. Then the restriction of $*$ to
+  $H \times H$ maps into $H$, and thus defines a binary operation on
+  $H$. Axiom (G1) is automatic in $H$ since it holds in the bigger set
+  $G$. Axiom (G3) for $H$ is just closure under inverses, which is
+  true by assumption. Finally, closure under products and inverses
+  implies that the identity $e$ is in the set $H$, since there must be
+  some $a \in H$ (because $H$ is nonempty) and then its inverse $a'$
+  is in $H$ and thus $a*a' = e \in H$ by closure under products. This
+  proves axiom (G2) for $H$.
+\end{proof}
+
+The following result is a slightly simplified version of the subgroup
+criterion. 
+
+
+\begin{thm}[Simplified subgroup criterion]
+  Let $H$ be a nonempty subset of a given group $G$, and write $b'$
+  for the inverse of $b \in G$.  Then $H$ is a subgroup of $G$ if and
+  only if $a*b' \in H$ for all $a,b \in H$.
+\end{thm}
+
+\begin{proof} 
+($\implies$) Suppose $H<G$. Then by the subgroup criterion, for any
+  $a,b \in H$ it follows that $b' \in H$ and hence $a*b' \in H$.
+
+($\impliedby$) For the converse, suppose that $H$ is a nonempty
+  subset and $a*b' \in H$ for all $a,b \in H$. Since $H$ is non-empty
+  there is at least one element $c \in H$. Hence $c*c' \in H$, so the
+  identity $e \in H$.  Hence $b' = e*b' \in H$ for every $b\in H$,
+  proving that $H$ is closed under inverses. Finally, if $a,b$ are any
+  elements of $H$, then $b'\in H$ as we have just shown. Note that
+  $(b')' = b$, so $b = d'$ where $d = b' \in H$. Hence the product
+  $a*b = a*d'$ must be an element of $H$. This shows that $H$ is
+  closed under products. So $H<G$ by the subgroup criterion.
+\end{proof}
+
+
+The criterion for finding subgroups of a \emph{finite} group is even
+simpler: we only have to check closure under products.
+
+\begin{cor}[Subgroup criterion for finite groups]
+  Let $H$ be a nonempty subset of a given finite group $G$.
+  Then $H$ is a subgroup of $G$ if and only if $a*b \in H$ for all
+  $a,b \in H$.
+\end{cor}
+
+\begin{proof}
+Every element of a finite group must have finite order, so closure
+under products implies also closure under inverses. (By Lemma
+\ref{lem:inverse-if-finite}, if $a$ has order $r$ then the inverse
+of $a$ is obtained by combining $a$ with itself $r-1$ times.)
+\end{proof}
+
+
+\begin{example}
+We compute the subgroups of $\Sym_3$, the symmetric group on 3 letters,
+using the finite subgroup criterion. We have (in the
+cycle notation)
+\[
+\Sym_3 = \{(1), (1,2), (2,3), (1,3), (1,2,3), (3,2,1) \}.
+\] 
+Here we use $(1)$ for the identity permutation. The smallest subgroup
+of $\Sym_3$ is the trivial subgroup $\{(1)\}$. Next we have the two
+element subgroups $\{(1), (1,2) \}$, $\{(1), (2,3)\}$, and
+$\{(1),(1,3)\}$. The subgroup $\{(1),(1,2,3), (3,2,1) \}$ is of order
+3. Finally, we have $\Sym_3$ itself, a subgroup of order 6. It is easy
+to check that these are the only subgroups of $\Sym_3$.
+\end{example}
+
+
+\begin{thm}\index{intersection~of~subgroups}
+  The intersection of any number of subgroups of a given group $G$ is
+  always a subgroup of $G$.
+\end{thm}
+
+\begin{proof}
+This is an application of the subgroup criterion. Suppose that $I$ is
+some indexing set and $H_i \le G$ for each $i \in I$. Then we need to
+show that $K = \bigcap_{i \in I} H_i$ is a subgroup of $G$. Note that
+$K$ is nonempty since the identity element belongs to each subgroup
+$H_i$ and hence belongs to the intersection $K$. Suppose that $x,y \in
+K$. Then $x, y \in H_i$ for all $i \in I$. Since $H_i$ is a subgroup,
+this means that both $x*y$ and the inverse of $x$ are in $H_i$, for
+all $i \in I$, so $x*y \in K$ and the inverse of $x$ is in $K$. By the
+subgroup criterion, $K$ is a subgroup of $G$.
+\end{proof}
+
+In contrast, unions of subgroups are usually \emph{not} subgroups.
+
+
+\begin{defn}\index{subgroup~generated~by~a~set}
+  If $S$ is any set of group elements in some group $G$ then $\gen{S}$
+  is the smallest subgroup of $G$ containing the elements of $S$. The
+  subgroup $\gen{S}$ is called the subgroup \emph{generated by} the
+  set $S$. In particular, if $a \in G$ is a group element, then we
+  write $\gen{a}$ short for $\gen{\{a\}}$; this is called the
+  \emph{cyclic subgroup generated by} $a$.
+\end{defn}
+
+\begin{examples}
+1. If $a \in G$ has finite order $r$, then $\gen{a} = \{ 1, a, a^2,
+\dots, a^{r-1} \}$ if $G$ is a multiplicative group, and $\gen{a} = \{
+0, a, 2a, \dots, (r-1)a \}$ if $G$ is an additive group. In either
+situation, $\gen{a}$ is isomorphic to the abstract cyclic group $C_r$
+of order $r$.
+
+2. In the additive group $\Z$ of integers, we have $\gen{1} = \Z$ and
+$\gen{-1} = \Z$. Hence $\Z$ is a cyclic group under
+addition). Furthermore, $\gen{0} = \{0\}$ (the trivial group) and
+$\gen{2} = \gen{-2} = 2\Z$ (the subgroup of even integers).
+
+3. In the multiplicative group $\R^\times$ of nonzero real numbers,
+the subgroup $\gen{\pi} = \{ \pi^k \mid k \in \Z \}$. This group is a
+proper subgroup of $\R^\times$, and it is isomorphic to the additive
+group $\Z$. More generally, for \emph{any} chosen element $a \in
+\R^\times$, it can be seen that $\gen{a} = \{ a^k \mid k \in \Z \}$.
+
+4. Even more generally, suppose that $a \in R^\times$ is an element of
+infinite order in the multiplicative group of units in a ring
+$R$. Then $\gen{a} = \{ a^k \mid k \in \Z \}$ is an infinite cyclic
+group isomorphic to the additive group $\Z$.
+\end{examples}
+
+
+\begin{defn}\index{generators}
+  If $S$ is a set of elements of a group $G$, we say that $G$ is
+  \emph{generated by} $S$ if $G = \gen{S}$. If there is a
+  \emph{finite} set $S$ with this property then we say that $G$ is
+  \emph{finitely generated}. A group is called \emph{cyclic} if it is
+  generated by a single element: i.e., if $G = \gen{a}$ for some $a
+  \in G$.
+\end{defn}
+
+If $G$ is generated by a set $S$, then every element of $G$ can be
+expressed as a product of elements of $S$ and their inverses.
+
+
+\begin{examples}
+1. The symmetric group $\Sym_n$ is generated by the set of
+transpositions it contains.  
+
+2. The general linear group $\GL(n)$ is generated by the set of
+elementary matrices.
+
+3. The dihedral group $\D_n$ is generated by the two elements $r, d$
+defined earlier, so $\D_n = \gen{r,d}$. (Recall that $r$ is a basic
+rotation and $d$ a reflection.)
+
+4. The additive group $(\Z,+)$ of integers is cyclic, because $\Z =
+\gen{1}$. So is the additive group $(\Z_n,+)$ of integers modulo $n$,
+because $\Z_n = \gen{[1]}$.
+
+5. Every finite group is finitely generated. So is every cyclic group
+(including any infinite cyclic group). 
+
+6. The additive group $\R$ of real numbers is not finitely generated.
+
+7. The matrix group $\GL(n)$ is not finitely generated. (We have
+proved that the set $S$ of all elementary matrices generates $\GL(n)$,
+but $S$ is an infinite set. It turns out that no finite generating set
+exists, but it isn't so easy to prove.)
+\end{examples}
+
+Next we investigate another way to find subgroups from subsets of
+elements of a given group.
+
+\begin{defn}\index{centralizer}\index{center}
+  Suppose that $S$ is a set of elements of a group $(G,*)$. The
+  \emph{centralizer} of $S$ in $G$ is the subgroup $Z_G(S) = \{ x \in
+  G \mid x*s = s*x \text{ for all } s \in S \}$. The \emph{center} of
+  $G$ is $Z(G) = Z_G(G) = \{ x \in G \mid x*g = g*x \text{ for all } g
+  \in G \}$, the centralizer of $G$ in itself. If $a \in G$ then we
+  write $Z_G(a)$ short for $Z_G(\{a\})$.\index{ZG@$Z(G)$}
+\end{defn}
+
+It is an exercise to verify that centralizers really are subgroups. In
+particular, this implies that the center $Z(G)$ of a group $G$ is
+always a subgroup. The center is, by definition, the set of elements
+that commute with all the elements of the group.
+
+\section*{Exercises}
+
+\begin{problems}
+
+\item Show that the set $\{ \pm 1, \pm i\}$ is a subgroup of the
+  multiplicative group $\C^\times$. Is it a cyclic group? 
+
+\item Show by example that a union of two subgroups need not be a
+  subgroup.
+
+\item Show that the set $2\Z$ of all even integers is a subgroup of
+  the additive group $\Z$, but the set $2\Z+1$ of all odd integers is
+  not a subgroup.
+
+\item Show that for any integer $n$, 
+  \begin{enumerate}
+  \item the set $n\Z$ of all multiples of $n$ is a subgroup of the
+    additive group $\Z$.
+  \item the subgroup $n\Z$ is isomorphic to $\Z$ itself. 
+  \item these are the only subgroups of $\Z$; i.e., every subgroup of
+    $\Z$ is of the form $n\Z$ for some integer $n$.
+  \end{enumerate}
+
+\item If $G$ is any subgroup of $\GL(n)$, let $H = \{ A \in G \mid
+  \det A = \pm 1 \}$. Prove that $H < G$.
+  
+\item Let $F$ be a field. If $G$ is any subgroup of $\GL_n(F)$, let $H
+  = \{ A \in G \mid \det A = \pm 1 \}$. Prove that $H < G$.
+
+\item\index{Klein~four~group} \label{prob:Klein-4-group} (Abstract
+  Klein 4-group) The abstract \emph{Klein 4-group} $K$ may be defined
+  as the (unique) group $\{1,a,b,c\}$ of four elements such that $1$
+  is the identity and $a, b, c$ all have order 2.
+  \begin{enumerate}
+  \item Show that this description determines the group $K$ uniquely,
+    by writing out its only possible multiplication table.
+  \item Find all the subgroups of $K$.
+  \end{enumerate}
+
+
+\item Prove that if $\alpha$ is an element of order $n$ in a
+  permutation group $G$ then the subgroup $\gen{\alpha}$ generated by
+  $\alpha$ is isomorphic to the additive group $(\Z_n, +)$.
+
+
+
+\item\index{cyclic~group} \label{exer:cyclic} (Classification of
+  cyclic groups) Prove that if $(G,*)$ is a cyclic group then it is
+  isomorphic with either the additive group $\Z_n$ for some $n$ or
+  with the additive group $\Z$ of all integers.
+
+\item Apply the previous exercise to deduce that the additive group
+  $(\R,+)$ is not cyclic. 
+
+\item Show by contradiction that the additive group $(\Q, +)$ is not
+  cyclic.
+
+\item Show that every subgroup of a cyclic group must be
+  cyclic. [Hint: Use the result of Exercise \ref{exer:cyclic}.]
+
+\item Show that the group $(\Z_n,+)$ is generated by $[a] \in \Z_n$ if
+  and only if $a,n$ are relatively prime. Use this to deduce that a
+  cyclic group of order $n$ has exactly $\varphi(n)$ generators.
+  [Hint: Use the result of Exercise \ref{exer:cyclic} for the second
+    part.]
+
+
+\item If $H$ is a subgroup of a group $(G,*)$ and $a \in G$, let
+  $a*H*a' = \{a*h*a' \mid h \in H \}$, where $a'$ is the inverse of
+  $a$. 
+  \begin{enumerate}
+  \item Show that $a*H*a'$ is a subgroup of $G$. 
+  \item If $H$ is finite, say $|H|=n$, then what is $|a*H*a'|$?
+  \end{enumerate}
+
+\item Show that the dihedral group $\D_n$ ($n \ge 3$) is not cyclic.
+
+\item Show that if $G$ is a group of order $n$ then $G$ is cyclic if
+  and only if it has an element of order $n$.
+
+\item Write $\Z_n$ for the additive group $(\Z_n,+)$. Show that $\Z_n
+  = \gen{a}$ for $a \in \Z_n$ if and only if $\gcd(a,n) = 1$.
+
+\item Show that the multiplicative group $\F_7^\times$ is cyclic by
+  finding a generator. Do the same for $\F_{13}^\times$.
+
+\item Is the multiplicative group $\Z_8^\times$ cyclic? Same question
+  for $\Z_{10}^\times$. Justify your answers.
+
+\item Find a minimal generating set for the Klein 4-group (see Exercise
+  \ref{prob:Klein-4-group}).
+
+\item Show that the matrix group $\O(2)$ is generated by the set
+  $\SO(2) \cup \{A\}$, where $A \in \O(2)$ is any improper orthogonal
+  matrix.
+
+\item Show that if $a,b$ are elements of some multiplicative group $G$
+  then $\gen{a} < \gen{b}$ if and only if $a = b^k$ for some integer
+  $k$.
+
+
+\item\index{quaternion~group} (The quaternion group) The quaternion
+  group is the group $Q = \{ \pm 1, \pm i, \pm j, \pm k\}$ of order 8
+  defined by the following multiplication table:
+  \[
+  \begin{array}{r|rrrrrrrr|}
+  \cdot&1&-1&i&-i&j&-j&k&-k\\ \hline
+  1 & 1&-1&i&-i&j&-j&k&-k\\
+  -1& -1&1&-i&i&-j&j&-k&k\\
+  i & i&-i&-1&1&k&-k&-j&j\\
+  -i& -i&i&1&-1&-k&k&j&-j\\
+  j & j&-j&-k&k&-1&1&i&-i\\
+  -j& -j&j&k&-k&1&-1&-i&i\\
+  k & k&-k&j&-j&-i&i&-1&1\\
+  -k& -k&k&-j&j&i&-i&1&-1\\ \hline
+  \end{array}
+  \]
+  in which $1$ is the identity element, $i,j,k$ all behave like
+  imaginary units in that $i^2 = j^2 = k^2 = -1$, and products of any
+  pair chosen from $i,j, k$ behave like cross products of the standard
+  unit vectors in $\R^3$.
+
+  \begin{enumerate}
+  \item Find the cyclic subgroups $\gen{-1}$, $\gen{i}$, $\gen{j}$,
+    and $\gen{k}$.
+  \item Show that $Q$ is not cyclic.
+  \item Find a minimal set of generators of $Q$, and justify your
+    answer.
+  \item Compute the center $Z(Q)$.
+  \end{enumerate}
+  
+  Note: The quaternion group $Q$ is related to Hamilton's
+  \emph{quaternions}, which puts a division ring structure on
+  Euclidean four dimensional space.
+
+\item Let $C = \{z \in \C \colon |z| = 1\}$ be the set of all complex
+  numbers of unit norm, where as usual the \emph{norm} (length) of a
+  complex number $z = x+iy$ is defined to be $|z| = \sqrt{x^2+y^2}$.
+  By Euler's identity $e^{i\theta} = \cos \theta + i \sin \theta$
+  (valid for all $\theta \in \R$) it follows that $C = \{ e^{i\theta}
+  \mid \theta \in \R \}$.
+  \begin{enumerate}
+  \item Prove that $C$ is a subgroup of the multiplicative group
+    $\C^\times$. 
+  \item Find an isomorphism from $S^1$ onto $C$, where $S^1$ is the
+    circle group defined in a previous exercise.
+  \end{enumerate}
+
+
+\item If $G = \D_n$ find $Z_G(r)$ where $r$ is the basic
+  rotation. Then find $Z_G(f)$ where $f$ is any reflection.
+
+\item Prove that if $a \in G$ then $\gen{a} < Z_G(a)$. 
+
+\item Prove that $Z_G(S) < G$ for any set $S$ of elements in a group
+  $G$. Why does this also prove that the center $Z(G) < G$?
+
+\item Compute the center of $\D_4$ and justify your answer.
+
+\item Show that $Z(\Sym_n)$ for $n \ge 3$ is the trivial group.  What
+  is $Z(\Sym_2)$?
+
+\item Prove that $Z(G)$\index{center}\index{ZG@$Z(G)$} is always
+  abelian.\index{abelian~group}
+
+\item Show that $Z(\D_n)$ has order 1 or 2 depending whether $n$ is
+  odd or even, respectively.
+
+
+\item Prove that $Z(G) = G$ if and only if $G$ is abelian. 
+
+\item \label{exer:adjacent} This problem is about permutations, written
+  in terms of the cycle notation.
+ \begin{enumerate}
+  \item Show that $(1,3) = (2,3)(1,2)(2,3)$. 
+  \item Show that $(1,4) = (3,4)(2,3)(1,2)(2,3)(3,4)$.
+  \item Prove that for $j > 1$ we have $(1,j) =$
+  $$(j-1,j)(j-2,j-1)\cdots(1,2)\cdots(j-2,j-1)(j-1,j).$$
+  \item Prove that for $i < j$ we have $(i,j) =$
+  $$(j-1,j)(j-2,j-1)\cdots(i,i+1)\cdots(j-2,j-1)(j-1,j).$$
+
+ \noindent This shows that it is possible to write any transposition
+ as a product of {\em adjacent} ones; i.e., ones of the form
+ $(k,k+1)$.
+ \end{enumerate}
+
+
+\item \index{generators}\label{ex:adjgen} Prove that $\Sym_n$ is
+  generated by the set $\{ (1,2), (2,3), \dots, (n-1,n) \}$ of
+  \emph{adjacent} transpositions.  [Hint: Use Problem
+    \ref{exer:adjacent}.]
+
+\item\index{generators} \label{ex:twogen} 
+  \begin{enumerate}
+  \item Show that if $\alpha = (1,2)$, $\beta = (1,2,\dots,n)$ are
+    permutations written in the cycle notation then for any $1 < i <n$
+    we have $(i,i+1) = \beta^{i-1} \alpha (\beta^{i-1})^{-1} =
+    \beta^{i-1} \alpha\beta^{n-i+1}$.
+
+  \item Prove that $\Sym_n$ is generated by the set $S = \{ (1,2),
+    (1,2,3,\dots,n) \}$. [Hint: Use part (a) and the result of the
+    preceding exercise.]
+  \end{enumerate}
+\end{problems}
+
+\end{document}

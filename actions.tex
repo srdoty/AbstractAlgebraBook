@@ -1,0 +1,850 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\im}{\operatorname{im}}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{24}
+
+\section{Group actions}\noindent
+Group actions are useful for a variety of purposes. Not only do they
+give us new information about groups themselves, but there are also
+important applications to physics, chemistry, geometry and
+combinatorics. 
+
+
+\begin{defn}\index{group~action}\index{action~of~a~group}
+Let $G$ be a group and $X$ a set. We say that $G$ \emph{acts on} the
+set $X$ (on the left) if there is a mapping $G \times X \to X$,
+written as $(g,x) \mapsto g\cdot x$, satisfying the properties
+\[
+  (gh)\cdot x = g\cdot(h\cdot x); \qquad  1\cdot x = x 
+\]
+for all $g,h \in G$ and all $x \in X$.  When $G$ acts on $X$, one
+equivalently says that $X$ is a $G$-set.\index{G@$G$-set}
+\end{defn}
+
+As you might guess, if $G$ acts (on the left) on $X$ then people often
+abbreviate $g\cdot x$ to $gx$.  It is also useful to consider right
+actions. A \emph{right action} of a group $G$ on a set $X$ is a
+mapping $X \times G \to X$, written as $(x,g) \mapsto x\cdot g$,
+satisfying the properties
+\[
+  x\cdot (gh) = (x \cdot g)\cdot h); \qquad  x \cdot 1 = x 
+\]
+for all $g,h \in G$ and all $x \in X$. For the sake of definiteness,
+all the actions that we will consider below are left actions, but all
+the results proved for left actions have counterparts for right
+actions.
+
+
+\begin{examples}
+  1. The dihedral group\index{dihedral~group} $\D_n$ acts on the set
+  of vertices of a regular $n$-gon. It also acts on the set of edges
+  of the regular $n$-gon.
+
+2. Any matrix group $G$ of $n \times n$ matrices over a field $F$ acts
+on the vector space $V = F^n$ by matrix multiplication; more
+precisely, if $A \in G$ is a matrix in the group $G$ and $x$ is a
+(column) vector in $F^n$ then the matrix product $Ax \in F^n$ gives
+the action of $A$ on $x$.
+
+3. In particular, the orthogonal group $\O(2)$ of $2 \times 2$
+orthogonal matrices acts on the vector space $V=\R^2$ of points in the
+Euclidean plane. Given a point $x \in \R^2$ and a matrix $A \in
+\O(2)$, the action of $A$ on $x$ is given by $Ax \in \R^2$.
+\end{examples}
+
+Usually we think of a given $G$-set $X$ as a set of ``points'' so that
+we can use geometric language. The action of $G$ moves points in $X$
+to other points in $X$. Starting from a given point and observing
+where it moves (as $G$ acts) determines the orbit of the point.
+
+\begin{defn}[Orbit and stabilizer]
+\index{orbit}\index{stabilizer}%
+If $G$ is a group acting on a set $X$, the {\em orbit} of a point $x
+\in X$ is the set $O_x = \{ gx \mid g\in G \}$.  Note that $O_x
+\subset X$.  The {\em stabilizer} of the point $x$ is the subgroup
+$G_x = \{g\in G \mid gx =x \}$.
+\end{defn}
+
+\begin{lem}\label{lem:stab-is-a-subgp}
+  For any $G$-set $X$, the stabilizer $G_x$ of a point $x \in X$ is
+  always a subgroup of $G$.
+\end{lem}
+
+The proof is an easy exercise for the reader. Note that we do
+\emph{not} claim that $G_x$ is a normal subgroup. In fact, it is not
+always normal.
+
+
+
+\begin{prop} \label{eqrel}  
+Let $G$ be a group acting on a set $X$. Consider the relation $\sim$
+on $X$ defined by $x \sim y$ if and only if there exists some $g \in
+G$ such that $y=gx$. Then $\sim$ is an equivalence relation on
+$X$. The equivalence classes for $\sim$ are precisely the orbits. Thus
+the action of $G$ partitions $X$ into a disjoint union of its distinct
+orbits.
+\end{prop}
+
+
+Again, the proof is an easy exercise.
+
+
+The following result could be called the \emph{fundamental theorem} of
+group actions.\index{fundamental~theorem!of~group~actions}
+
+\begin{thm}[The orbit-stabilizer theorem]
+\index{orbit-stabilizer~theorem}\label{osr}% 
+ Let $G$ be a group acting on a set $X$. Let $x \in X$. Then $|O_x| =
+ [G:G_x]$. In words: the cardinality of the orbit of $x$ equals the
+ index of the stabilizer of $x$.
+\end{thm}
+
+\begin{proof}
+We need to find a bijection between $O_x$ and $G/G_x =$ the set of left
+cosets of $G_x$ in $G$. Given a point $g\cdot x \in O_x$, where $g
+\in G$, send it to the left coset $gG_x$.  This rule defines a map $f:
+O_x \to G/G_x$.
+
+The map $f$ is well-defined since if $g\cdot x = h\cdot x$ for $g,h
+\in G$ then by left multiplication by $h^{-1}$ we get $(h^{-1}g)\cdot
+x = x$, so $h^{-1}g \in G_x$ and thus $gG_x=hG_x$.  The map $f$ is
+injective since if $gG_x = hG_x$ then $h^{-1}g \in G_x$ so
+$(h^{-1}g)\cdot x = x$, so $g\cdot x = h\cdot x$.  The map $f$ is
+surjective because any left coset $gG_x$ is the image of the point
+$g\cdot x$ in the orbit of $x$.
+
+Thus, $f$ is a bijective function from $O_x$ to the set $G/G_x$ of
+left cosets of $G_x$. The index $[G:G_x]$ is by definition the number
+of left cosets, so the proof is complete.
+\end{proof}
+
+
+
+Although the theorem holds generally, for any group (finite or
+infinite) acting on any set (finite or infinite), it is most useful
+when $G$ is finite, in which case $[G:G_x]=|G|/|G_x|$ by Lagrange's
+theorem. This gives a nice corollary of the orbit-stabilizer theorem.
+
+
+\begin{cor}\label{countG}
+  Suppose that $G$ is a finite group acting on a set $X$. Then for any
+  point $x \in X$ we have $|G| = |G_x|\cdot |O_x|$.
+\end{cor}
+
+\begin{proof}
+Lagrange's theorem says that $[G:G_x]=|G|/|G_x|$. The orbit-stabilizer
+theorem says that $[G:G_x] = |O_x|$, so $|O_x| = |G|/|G_x|$ and the
+result follows.
+\end{proof}
+
+
+
+In case the $G$-set $X$ is finite we have the following result, which
+can be used to count the number of points in the set $X$.
+
+
+\begin{cor} \label{orbit-union}
+  Let $X$ be a finite $G$-set. Let $O_{x_1}, \dots, O_{x_k}$ be the
+  distinct orbits. Then $|X| = \sum_{i=1}^k \; [G:G_{x_i}]$.
+\end{cor}
+
+\begin{proof}
+Since the action of $G$ partitions $X$ into disjoint orbits, we can
+write $X$ as the union of its distinct orbits:
+\[
+ X = \textstyle \bigcup_{i=1}^k \; O_{x_i} = O_{x_1} \sqcup O_{x_2} \sqcup
+ \cdots \sqcup O_{x_n}.
+\]
+Since the orbits listed are non-overlapping (i.e., pairwise disjoint)
+we have
+\[
+ |X| = \sum_{i=1}^k |O_{x_i}| = \sum_{i=1}^k [G:G_{x_i}]
+\]
+where the last equality on the line above is justified by Theorem
+\ref{osr}. This completes the proof.
+\end{proof}
+
+
+
+\begin{rmk}\index{orbit~representatives}
+The set $\{x_1, \dots, x_k\}$ in the preceding
+result is called a \emph{complete set of orbit representatives}. To
+obtain such a set, one chooses exactly one element from each distinct
+orbit.
+\end{rmk}
+
+Here is one more piece of terminology that is often used in the theory
+of group actions.
+
+
+\begin{defn}\index{transitive~action}
+Let $X$ be a $G$-set. We say that the action of $G$ is {\em
+  transitive}, or that $G$ acts \emph{transitively}, if there is only
+one orbit. This means that we can get from any point $x \in X$ to any
+other point $y \in X$ by acting by a suitable group element.
+\end{defn}
+
+
+\begin{example}
+  The action of $\D_n$ on the set of vertices (or the set of edges) of
+  a regular $n$-gon is transitive.
+\end{example}
+
+
+\section*{Exercises}
+
+\begin{problems}
+
+\item Let $X$ be a $G$-set. Prove Lemma \ref{lem:stab-is-a-subgp},
+  that the stabilizer $G_x$ of any point $x\in X$ is a subgroup of
+  $G$.
+
+\item Prove Proposition \ref{eqrel}.
+
+\item Let $\D_4$ act on the set of vertices of a square by its natural
+  action.
+  \begin{enumerate}
+  \item Is the action transitive? 
+  \item Compute the stabilizer of a vertex.
+  \end{enumerate}
+
+\item Let $\Sym_4$ act on the set $\{1,2,3,4\}$ by $\alpha \cdot j =
+  \alpha(j)$, for each $j \in \{1,2,3,4\}$.
+  \begin{enumerate}
+  \item Is the action transitive?
+  \item Compute the stabilizer of $4$. What group is it isomorphic to?
+  \end{enumerate}
+
+\item Let $\Sym_n$ act on the set $\n = \{1, \dots, n\}$ by $\alpha
+  \cdot j = \alpha(j)$, for each $j \in \n$.
+  \begin{enumerate}
+  \item Is the action transitive?
+  \item Compute the stabilizer of $n$. What group is it isomorphic to?
+  \end{enumerate}
+
+\item Is the action of $\GL_2(\R)$ on $\R^2$ given by $A\cdot X = AX$
+  (ordinary matrix multiplication) transitive? Justify your answer.
+
+\item Let $X = \{1,2,3\}$. Consider the action of the alternating
+  group $\Alt_3 = \{ (1), (1,2,3), (3,2,1) \}$ on $X$ defined by
+  $\alpha \cdot j = \alpha(j)$. 
+  \begin{enumerate}
+  \item How many orbits are there?
+  \item Describe the orbits completely.
+  \item Compute the stabilizer of $3$. 
+  \end{enumerate}
+
+
+
+\item Let $X$ be the set of line segments connecting any two vertices
+  of the square, i.e., the edges and the diagonals. The group $\D_4$
+  acts on the set $X$ in a natural way: if $L$ is a line segment
+  connecting vertices $i$ and $j$ and $g \in \D_4$ then $g\cdot L$ is
+  the line segment connecting vertices $g\cdot i$ and $g \cdot j$. 
+  \begin{enumerate}
+  \item Describe the orbits completely. (You may wish to number the
+    vertices of the square.) How many orbits are there?
+  \item Compute the stabilizer of one of the diagonals.
+  \item Compute the stabilizer of one of the edges.
+  \end{enumerate}
+
+\end{problems}
+
+
+
+\newpage
+\section{Applications of group actions}\noindent
+We now consider a few examples of the theory of group actions. As we
+will see, group actions are useful to count the size of various sets;
+thus group actions are a useful tool in
+\index{combinatorics}combinatorics.\footnote{Combinatorics, roughly
+  speaking, is the science of counting.}
+
+\begin{example}\index{rotation~group}
+The rotation group $\SO_2(\R)$ acts on the set $\R^2$ by ordinary
+matrix multiplication: $A\cdot x = Ax$ for any $A \in \SO_2(\R)$ and
+any $x \in \R^2$ (considered as a column vector).  The orbit of any
+point $(a,b) \in \R^2$ is a circle of radius $\sqrt{a^2+b^2}$.
+\end{example}
+
+
+\begin{example}\index{dihedral~group}
+Consider the symmetry group $G=\D_n$ of a regular $n$-gon in the
+plane. Let $v$ be a given vertex of the $n$-gon. Clearly $\D_n$ has
+$n$ different rotations, and the rotation subgroup $\gen{r}$ generated
+by the basic rotation $r$ acts transitively on the set $X$ of all $n$
+vertices.  Of all the rotations, only the identity fixes $v$. There is
+just one reflection that fixes $v$, namely the reflection across the
+(unique) line of symmetry of the figure passing through the vertex
+$v$. This proves that the stabilizer $G_v$ of the point $v$ has order
+2, since $G_v$ consists of just the identity and the indicated
+reflection. Hence, by Corollary \ref{countG} we conclude that $|\D_n|
+= |O_v|\cdot |G_v| = n\cdot 2 = 2n$.  Group actions provide a tool to
+prove rigorously that $|\D_n|=2n$, something we found difficult
+earlier because we lacked the appropriate theory and terminology.
+\end{example}
+
+
+\begin{example} 
+Let $G$ be the group of proper symmetries of a cube. (Recall that
+proper symmetries are rotations.)  We are going to use Corollary
+\ref{countG} to count the number of elements of $G$. Clearly $G$ acts
+on the set of 8 vertices of the cube. The action is transitive since
+you can get from any chosen vertex to any other, by an appropriate
+sequence of rotations. Let us fix a chosen vertex, call it $v$. Then
+$|O_v|=8$.  Moreover, the only rotations fixing $v$ are the three
+rotations whose axis lies along the diagonal line segment connecting
+$v$ to its opposite vertex. (It helps to hold an actual cube in your
+hands to see this.) So $|G_v|=3$. Thus by Corollary \ref{countG} we
+conclude that $|G| = 8\cdot 3 = 24$. So the octahedral group has $24$
+elements. (Recall that the symmetry group of the cube and the
+octahedron are the same group, since the cube and octahedron are dual
+polyhedra.)
+
+By similar methods you should be able to count the number of proper
+symmetries of a tetrahedron (12) and the number of proper symmetries
+of a dodecahedron or its dual, an icosahedron (60). Without the aid of
+the orbit =stabilizer theorem, counting the size of these groups would
+be rather daunting
+\end{example}
+
+
+
+\begin{example} 
+Consider the group $\Sym_n$ acting on the set $\n = \{1, \dots, n \}$
+in the natural way: $\alpha \cdot j = \alpha(j)$.  This action is
+transitive because one can get from any $i$ to any $j$ by a suitable
+permutation. So if we fix a chosen number $i$ then $O_i = \{1,\dots,
+n\}$. The number of permutations that fix $i$ is $|\Sym_{n-1}|$, since
+we are free to permute the other $n-1$ positions arbitrarily. Thus by
+Corollary \ref{countG} we conclude that $|\Sym_n|=n
+|\Sym_{n-1}|$. Since $|\Sym_1|=1$, we conclude by a simple induction
+on $n$ that $|\Sym_n| = n!$ for any positive integer $n$. This gives a
+new proof (via the orbit-stabilizer theorem) that $|\Sym_n| = n!$.
+\end{example}
+
+
+
+\begin{defn} (Permutation Representation)
+\index{permutation~representation}\label{permrep}%
+Let $X$ be a $G$-set. Given $g \in G$, consider the map $\varphi_g: X
+\to X$ given by the rule $x \mapsto g\cdot x$. In other words,
+$\varphi_g(x) = g\cdot x$.  Then the map $\varphi_g$ is a bijection
+(exercise), so $\varphi_g$ is a permutation of the set $X$.  In other
+words, $\varphi_g \in \Sym_X$, the group of permutations of $X$.  The
+rule $\varphi(g) = \varphi_g$ for each $g\in G$ defines a function
+$\varphi$ from $G$ to $\Sym_X$.  This map $\varphi \colon G \to
+\Sym_X$ is called the \emph{permutation representation} of the given
+$G$-set $X$.
+\end{defn}
+
+\begin{lem}\label{lem:perm-rep-is-a-homo}
+  The permutation representation $\varphi \colon G \to \Sym_X$ is a
+  group homomorphism.
+\end{lem}
+
+\begin{proof}
+We need to check that $\varphi(gh) = \varphi(g) \varphi(h)$. In other
+words, we must check that $\varphi_{gh} = \varphi_g \circ
+\varphi_h$. We can verify this equality of functions by verifying that
+the functions on the two sides of the equality act the same on every
+possible input. So consider any $x \in X$. Then by definition, we have
+\[
+  \varphi_{gh}(x) = (gh) \cdot x, \qquad (\varphi_g \circ
+  \varphi_h)(x) = \varphi_g(\varphi_h(x)) = \varphi_g(h \cdot x) = g
+  \cdot(h \cdot x).
+\]
+These are the same by the definition of group actions.
+\end{proof}
+
+The permutation representation provides a way to model abstract group
+elements $g \in G$ by permutations $\varphi_g$ of $X$, in such a way
+that the group multiplication is reproduced in the permutations.
+
+Every group action gives rise to a permutation representation in this
+way. We now apply this observation to prove the following important
+result.
+
+
+\begin{thm}[Cayley's theorem]\index{Cayley's~theorem} 
+Every group is isomorphic to a group of permutations on some set $X$.
+In particular, every finite group $G$ is isomorphic to a subgroup of
+$\Sym_n$ where $n = |G|$.
+\end{thm}
+
+\begin{proof}
+Consider the action of $G$ on $G$ itself by left multiplication:
+$g\cdot x = gx$ for any $g,x \in G$. Here we are taking the set $X$ to
+be $G$ itself.  We use the permutation representation of Definition
+\ref{permrep}.  By Lemma \ref{lem:perm-rep-is-a-homo}, we know that
+$\varphi: G \to \Sym_G$ is a group homomorphism. The kernel of
+$\varphi$ is trivial, since $\varphi(g) = id_G$ implies that
+$\varphi_g = id_G$, which in turn implies that $gx=x$ for all $x \in
+G$. This forces $g=1$.
+
+Thus we have an injective homomorphism $\varphi: G \to \Sym_G$. This
+homomorphism induces an isomorphism of $G$ onto its image, which is a
+subgroup of $\Sym_G$. In other words, we have produced an isomorphism
+from $G$ to a group of permutations, as was desired.
+
+To get the last statement, in case $G$ is finite, just number the
+elements of $G$ from 1 to $n$. Then permutations of $G$ can be
+regarded as permutations of the set $\mathbf{n} = \{1, \dots, n\}$;
+i.e., $\Sym_G \cong \Sym_n$ where $n =|G|$.
+\end{proof}
+
+
+
+
+In the proof of Cayley's theorem above, we considered the action of
+$G$ on itself by left multiplication.  Another way that a group $G$
+can act on itself is by conjugation.  Analysis of this action leads to
+important structural information about the group.
+
+
+\begin{defn}\index{conjugation} \label{conj-elt}
+Given $g,x \in G$ define $g\cdot x = gxg^{-1}$. This action of $G$ on
+itself is called \emph{conjugation}. The element $gxg^{-1}$ is called
+a \emph{conjugate} of $x$.
+\end{defn}
+
+
+
+The orbits for the conjugation action are called {\em conjugacy
+  classes}\index{conjugacy~classes}, and $G$ is the disjoint union is
+its distinct conjugacy classes. If two elements of $G$ lie in the same
+conjugacy class, they are said to be \emph{conjugate} in $G$.  We
+write $C(x)$ for the conjugacy class of $x$; i.e.,
+$C(x) = \{ gxg^{-1} \colon g \in G\}$.
+
+
+\begin{defn}\index{centralizer}
+Given an element $x \in G$, its stabilizer is the subgroup $G_x$ given
+by
+\[
+  \{ g\in G \mid gxg^{-1} = x \} = \{ g\in G \mid gx=xg \}.
+\]
+This subgroup is known as the {\em centralizer} of $x$, denoted by
+$Z_G(x)$.
+\end{defn}
+
+
+In words, the centralizer of $x$ is the set of all $g \in G$ which
+commute with the element $x$.  In this context, the orbit-stabilizer
+theorem (Theorem \ref{osr}) says that
+\[
+   |C(x)| = [G:Z_G(x)]
+\] 
+for any $x \in G$. (Because, $C(x)=O_x$ and $Z_G(x)=G_x$ in the
+earlier notation.)
+
+Notice that the center $Z(G)$ of the group $G$ is contained in every
+centralizer: $Z(G) \subset Z_G(x)$, for any $x\in G$. In fact, $Z(G)$
+is equal to the intersection of all the centralizers:
+$Z(G)=\bigcap_{x\in G} Z_G(x)$.
+
+
+\begin{defn}\index{center}
+For any subset $S$ of $G$, the centralizer of $S$ by $Z_G(S) =
+\bigcap_{x\in S} Z_G(x)$. Then $Z_G(S) = \{ g\in G \mid gx=xg,
+\forall\ x\in S\}$. In words, the centralizer of a subset $S$ is the
+set of all elements of $G$ commuting with all elements of $S$.
+\end{defn}
+
+In this notation, the center $Z(G)$ is equal to the centralizer of
+$G$; i.e., $Z(G) = Z_G(G)$. This is clear from the definitions.
+
+Let me point out that if $z$ is an element of the center $Z(G)$ then
+the conjugacy class of $z$ (the orbit) is just the singleton set
+$\{z\}$ (since $z$ commutes with all elements, so $gzg^{-1} = z$ for
+any $g$) and $Z_G(z) = G$.
+
+
+These notions lead us to the following important theorem, which gives
+new information about finite groups.
+
+\begin{thm}[The class equation]\index{class~equation}\label{classeqn}
+Let $G$ be a finite group, $Z(G)$ the center of $G$. Let $x_1, \dots,
+x_t$ be a complete set of representatives for the conjugacy classes
+that are disjoint from $Z(G)$. Then
+\[
+   |G| = |Z(G)| + \sum_{j=1}^t [G:Z_G(x_j)].
+\]
+\end{thm}
+
+
+\begin{proof}
+This is a restatement of Corollary \ref{orbit-union}. Label the
+elements of $Z(G)$ by $z_1, z_2, \dots, z_s$. Then $z_1, \dots, z_s,
+x_1, \dots, x_t$ is a complete set of representatives of the conjugacy
+classes, so by Corollary \ref{orbit-union} we have
+\[
+  |G| = \sum_{i=1}^s [G:Z_G(z_i)] + \sum_{j=1}^t [G:Z_G(x_j)].
+\]
+But each $[G:Z_G(z_i)]$ in the first sum is equal to 1 since $Z_G(z_i)
+= G$ by the remarks above, so the first sum is equal to $s$, the
+number of elements in $Z(G)$, and the result is proved.
+\end{proof}
+
+
+
+\begin{defn}\index{p@$p$-group}
+Let $p$ be a prime. A $p$-{\em group} is a group in which every
+element is of prime power order $p^r$, for some positive integer $r$.
+\end{defn}
+
+Note that any group of order $p^r$ for a positive integer $r$ must be
+a $p$-group, by Lagrange's theorem.  The study of $p$-groups is quite
+important for understanding finite groups. It turns out that
+$p$-groups are the most difficult class of finite groups to
+understand, partly because there are so many of them.  For instance,
+it is known that there are 267 different groups of order $64 = 2^6$,
+up to isomorphism. We will have more to say about $p$-groups later.
+
+
+Here are two immediate applications of the class equation, each of
+which is a result about $p$-groups.
+
+
+
+\begin{cor} Let $p$ be a prime number. 
+\begin{enumerate}
+\item Any group of order $p^r$ ($r \ge 1$) must have at least $p$
+  elements in its center.
+
+\item All groups of order $p^2$ are abelian. 
+\end{enumerate}
+\end{cor}
+
+
+\begin{proof}
+(a) By the class equation, $p^r = |Z(G)|+\sum [G:Z_G(x_j)]$. But each
+  $Z_G(x_j)$ is a {\em proper} subgroup of $G$ since otherwise $x_j$
+  would be in the center. So, by Lagrange's Theorem, the order of
+  $Z_G(x_j)$ must be a proper divisor of $p^r$. But that means the
+  order is of the form $p^m$ for some $m<r$ and so each $[G:Z_G(x_j)]$
+  is divisible by $p$.  It follows that $|Z(G)|$ must be divisible by
+  $p$. Part (a) is proved.
+
+(b) If we can show that $Z(G) = G$ then we are done, because $Z(G)$ is
+  obviously abelian. So suppose not. Then there exists some $x \in G$
+  with $z \notin Z(G)$. Now $Z_G(x)$ is a subgroup of $G$ containing
+  $Z(G)$. By part (a), $Z(G)$ must have at least $p$ elements, so the
+  same is true of $Z_G(x)$. By Lagrange's Theorem, it follows that
+  $|Z_G(x)|$ is either $p$ or $p^2$. But $|Z_G(x)|$ cannot be equal to
+  $p^2$ or else $x$ would belong to the center, contrary to our
+  assumption on $x$. So $|Z_G(x)|$ must equal $p$.  But this implies
+  that $Z_G(x)=Z(G)$. But $x\in Z_G(x)$ ($x$ commutes with itself) so
+  $x \in Z(G)$. This is a contradiction.  The contradiction forces
+  $Z(G)=G$, so $G$ is abelian. Part (b) is proved.
+\end{proof}
+
+
+Next we consider the conjugation action on subsets of $G$.  Recall
+that in set theory the power set of a set $S$ is the collection
+$\mathcal{P}(S)$ of all subsets of $S$.  Any group $G$ acts on its
+power set $X = \mathcal{P}(G)$ by conjugation, as follows.
+
+\begin{defn}
+Given any subset $S$ of $G$, and any element $g \in G$, the conjugate
+$gSg^{-1} = \{gsg^{-1} \colon g \in G\}$ of $S$ by $g$ is another
+subset of $G$. Thus the rule $g\cdot S = gSg^{-1}$ for any $g \in G$,
+$S \in \mathcal{P}(G)$ defines an action of $G$ on the set
+$\mathcal{P}(G)$.
+\end{defn}
+
+The orbit of a given subset $S$ for this action is the set of all
+conjugates $gSg^{-1}$ of $S$; this set is sometimes denoted
+$C(S)$. The power set $\mathcal{P}(G)$ of $G$ is the disjoint union of
+these conjugacy classes. The stabilizer of the subset $S$ is 
+\[
+   N_G(S) = \{ g \in G \mid gSg^{-1} = S \} = \{ g\in G \mid gS = Sg \},
+\]
+which is called the {\em normalizer}\index{normalizer} of $S$ in
+$G$. Note that the set equality $gS=Sg$ does \emph{not} mean that
+$gs=sg$ for each $s \in S$; rather it means that for every $s\in S$
+there is some $s'\in S$ such that $gs = s'g$.  In this context, the
+orbit-stabilizer theorem (Theorem \ref{osr}) says that
+\[
+  |C(S)| = [G:N_G(S)]
+\]
+for any subset $S$ of $G$. 
+
+ 
+Note that if $H$ is a given subgroup of $G$ then $H \triangleleft G$
+if and only if $N_G(H) = G$. This follows readily from the definitions. 
+
+\section*{Exercises}
+
+\begin{problems}
+
+\item Compute the conjugacy classes of $\Sym_3$. How many elements are
+  in the centralizer $Z_{\Sym_3}(\alpha)$ if $\alpha$ is a 3-cycle?
+
+\item Compute the conjugacy classes of $\Sym_4$. How many elements are
+  in the centralizer $Z_{\Sym_4}(\alpha)$ if $\alpha$ is a 4-cycle?
+
+\item Let $G$ be a group. Prove that:
+\par(a) The center $Z(G)$ is a subgroup of any centralizer $Z_G(x)$,
+for any $x\in G$. 
+\par(b) $Z(G) = \bigcap_{x\in G} Z_G(x)$. 
+
+\item Prove that for any subset $S$ of a group $G$, $Z_G(S)$ must be a
+  subgroup of $N_G(S)$. 
+
+\item Prove that if $H < G$ then $H \triangleleft G$ if and only if
+  $N_G(H) = G$.
+
+\item (a) Prove that the map $\varphi_g$ of \ref{permrep} is a bijection. 
+\par (b) Verify that $\varphi$ (see \ref{permrep}) is a homomorphism.
+
+\item Use a permutation representation of the dihedral group $\D_3$ to
+  find a permutation group isomorphic to $\D_3$. Write out a list of
+  the elements of the permutation group, and explain how the
+  isomorphism is defined.
+
+\item Use a permutation representation of the cyclic group $\Z_n$ to
+  find a permutation group isomorphic to $\Z_n$. Explain how the
+  isomorphism is defined.
+
+\item If $G$ is a group of order $p^r$ where $r$ is a positive integer
+  and $p$ is a prime, then show that every subgroup of $G$ has order
+  $p^k$ for some integer $k \le r$.
+
+\item If $G$ is a group of order $p^r$ where $r$ is a positive integer
+  and $p$ is a prime, then show that $|Z(G)| = p^k$ where $k \ge 1$.
+
+\end{problems}
+
+
+
+\newpage
+\section{Burnside's Lemma}\noindent
+Another important application of group actions is the result commonly
+known as Burnside's lemma. This result was proved originally by Georg
+Frobenius in 1887, so it is not due to Burnside. Burnside included it
+in his popular 1897 book \emph{On the Theory of Groups of Finite
+  Order}. By an accident of history, the result has become known as
+Burnside's lemma.
+
+
+\begin{thm}[Burnside's lemma]\index{Burnside's lemma}
+  Let $G$ be a finite group acting on a finite set $X$. Then the
+  number $N$ of orbits is given by 
+  \[
+    N = \frac{1}{|G|} \sum_{g \in G} |X^g|
+  \]
+  where $X^g = \{ x \in X \mid g \cdot x = x\}$ is the set of fixed
+  points of $g$.
+\end{thm}
+
+
+\begin{proof}
+First we prove the result in case $G$ acts transitively. Then $N=1$
+and we need to show that $|G| = \sum_{g \in G} |X^g|$. Let 
+\[ T = \{(g,x) \in G \times X \mid g \cdot x = x\}. \]
+Fix some $x \in X$. The pair $(g,x) \in T$ if and only if $g \in G_x$,
+so the number of such pairs is $|G_x|$. Since the action is
+transitive, $G_x$ is conjugate to $G_y$ for any $y \in X$, so $|G_y| =
+|G_x|$ for all $y \in X$. So if we sum over $y$ we get
+\[
+  |T| = \sum_{y \in X} |G_y| = \sum_{y \in X} |G_x| = |X| \cdot |G_x| = |G|
+\]
+where the final equality is by the orbit-stabilizer theorem. On the
+other hand, fix some $g \in G$ and count $|T|$ another way. The pair
+$(g,x) \in T$ for some $x \in X$ if and only if $g \cdot x = x$, so
+the set of $x \in X$ with this property is just $X^g$. Summing over
+all $g \in G$ we get
+\[
+  |T| = \sum_{g \in G} |X^g|.
+\]
+By transitivity of equality, the right hand side of each of the last
+two displayed equations are equal, which proves the theorem in the
+transitive case.
+
+Now we consider the general case. Observe that $G$ acts transitively
+on each of its $N$ orbits. Thus the formula we just proved applies to each
+orbit. Also the total number of fixed points of a group element is the
+sum of the number of fixed points in each orbit. Hence
+\[
+  N |G| = \sum_{g \in G} |X^g|.
+\]
+This proves the result after dividing both sides by $|G|$.
+\end{proof}
+
+This simple counting formula has many useful applications. We give
+just one example here to whet the reader's appetite.
+
+\begin{example}
+Suppose that we wish to count the number of ways to color the vertices
+of a regular pentagon by red and green. There are two ways to color
+each vertex, and five vertices, so the simplest answer to our question
+is that there are $32 = 2^5$ colorings.
+
+But we are usually interested in more sophisticated counting
+questions. Suppose that we are making a necklace with five red and
+green beads. We do not wish to distinguish between patterns which are
+the same under a symmetry of the pentagon, because such patterns
+produce the same necklace. 
+
+To count these, let $X$ be the set of all 32 patterns. The symmetry
+group $\D_5$ of the pentagon acts on $X$, and we want to know how many
+orbits there are. The Burnside lemma will tell us the answer, as soon
+as we have computed the number of fixed points of each symmetry. 
+
+Case 1. $X^1 = X$. Obviously each element of $X$ is fixed by $1 \in
+\D_5$. So $|X^1| = 32$. 
+
+Case 2. $|X^r|=2$. The only patterns fixed by a rotation $r$ are the
+ones in which all colors are the same, either all red or all green.
+This holds true for all three non-trivial rotations.
+
+Case 3. $|X^{d}|=8$. Recall that a basic reflection $d$ fixes one
+vertex and interchanges the other four vertices in opposite pairs.
+The only patterns fixed by the basic reflection $d$ are therefore those
+that have the same color on opposite vertices. So there are two
+colorings for the fixed vertex, and two each for the opposite pairs,
+for a total of $2^3=8$ colorings left fixed by $d$. The same is true
+of each of the other four reflections.
+
+Now we apply the Burnside formula. The identity element of $\D_5$
+produces 32 fixed points, each of the four non-trivial rotations
+produces 2 fixed points, and finally each of the five reflections
+gives 8 fixed points, so the number of orbits is
+\[
+  N = \frac{1}{10}(32 + 4 \cdot 2 + 5 \cdot 8) = 8.
+\]
+This solves our problem. There are exactly 8 distinct colorings by two
+colors of a necklace with five beads.
+\end{example}
+
+
+Chemists use Burnside's lemma to count chemical compounds. For
+example, a benzene molecule can be modeled by six carbon atoms in a
+regular hexagon in a plane. One of three radicals can be attached to
+each carbon atom to form a benzene molecule. Counting the number of
+possible benzene molecules is thus an exercise in Burnside's lemma.
+
+There is a generalization of Burnside's lemma known as the \emph{Polya
+  enumeration theorem}. Applications of group theory to counting
+problems abound, and we can only hint at the possibilities here.
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item Determine the number of necklaces with 6 beads of two possible
+  colors.
+
+\item Determine the number of necklaces with 4 beads of three possible
+  colors.
+
+\item Determine the number of necklaces with 5 beads of three possible
+  colors.
+
+\item A benzene molecule can be modeled by six carbon atoms in a
+  regular hexagon in a plane. One of three radicals can be attached to
+  each carbon atom to form a benzene molecule. Count the number of
+  possible benzene molecules using Burnside's lemma.
+
+\item In how many ways can the faces of a cube be colored by three
+  colors up to rotational symmetry? [Hint: The answer should be 57.]
+
+\end{problems}
+
+
+
+\end{document}
+
+

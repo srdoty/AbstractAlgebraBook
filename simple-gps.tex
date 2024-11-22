@@ -1,0 +1,448 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[nohead,margin=1.50in]{geometry} %set margins
+\usepackage{amsmath,amssymb,amsthm,pdiag} %AMS packages for math stuff
+\usepackage{multicol} % for use in HW section
+\usepackage{enumitem}
+  \setlist{topsep=1pt,itemsep=0pt,parsep=1pt}
+  \setenumerate[1]{label=(\alph*)}
+
+\newenvironment{problems}
+{
+ \begin{enumerate}[topsep=1pt,itemsep=0pt,parsep=2pt,leftmargin=0.6cm,%
+ label={\arabic*.}, ref=\arabic*] \small
+}
+{
+ \end{enumerate}
+}
+
+%%% Define some theorem and example environments. The starred versions
+%%% are un-numbered and the unstarred versions are numbered.
+\newtheoremstyle{plain}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\slshape}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
+\swapnumbers
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{examples}[thm]{Examples}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{rmks}[thm]{Remarks}
+\newtheorem{conv}[thm]{Convention}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{examples*}{Examples}
+\newtheorem*{rmk*}{Remark}
+\newtheorem{rmks*}{Remarks}
+\newtheorem*{conv*}{Convention}
+
+
+%%% Define some convenient abbreviations for common mathematical
+%%% notations.
+\newcommand{\R}{\mathbb{R}} % use \R for the real numbers
+\newcommand{\C}{\mathbb{C}} % use \C for the complex numbers
+\newcommand{\Z}{\mathbb{Z}} % use \Z for the integers
+\newcommand{\Q}{\mathbb{Q}} % use \Q for the rationals
+\newcommand{\N}{\mathbb{N}} % use \N for the natural numbers
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\compose}{\circ} % functional composition
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\PSL}{\mathrm{PSL}}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\Orth}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\underline{\mathbf{n}}}
+\newcommand{\Sym}{\mathbb{S}}
+\newcommand{\Alt}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newenvironment{perm}[2]{\left(\begin{smallmatrix}#1 \\ #2}{\end{smallmatrix}\right)}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\normal}{\triangleleft\,}%better than \lhd
+\newcommand{\morenormal}{\triangleright}
+
+\allowdisplaybreaks
+\parskip=2pt
+
+%\title{Document Title}
+%\author{author's name}
+
+\begin{document}%\maketitle
+\setcounter{section}{22}
+
+
+\section{Simple groups}\noindent
+The notion of a simple group was introduced by Galois. Around 1981, a
+complete classification of the finite simple groups was obtained. This
+was the culmination of many decades of effort of many researchers. The
+classification theorem is regarded as one of the most important
+achievements of twentieth century mathematics; see Appendix C for a
+brief history of its proof.
+
+Some of the theorems in this section will be stated without
+proof. They are given here for the sake of general knowledge of the
+subject, and will not be used in the sequel.
+
+
+\begin{defn}[Galois]\index{simple~group}
+A group $G$ is called {\em simple} if it has no normal subgroups other
+than $\{1\}$ and $G$ itself.
+\end{defn}
+
+This means that $G$ is simple if and only if the only quotient groups
+of $G$ are isomorphic to $\{1\}$ and $G$.
+
+Notice that the definition of a simple group is analogous to the
+definition of a prime number in the integers. A prime integer is one
+which has no factors other than the trivial ones, and a simple group
+is one which has no factor groups other than the trivial ones.
+
+
+\begin{examples}  
+  1. Every cyclic group\index{cyclic~group} of prime order is a
+simple group. This is an easy consequence of Lagrange's theorem.
+
+  2. Every alternating group
+  $\Alt_n$ is simple, except for $\Alt_4$. This was discovered by
+  Galois, and the proof is not easy.
+\end{examples}
+
+The following result, known as the \emph{correspondence theorem}, is
+another basic theorem about homomorphisms and quotient groups.
+
+
+\begin{thm}[correspondence theorem]\index{correspondence~theorem} 
+\label{CT}% 
+Let $K$ be any normal subgroup of a given group $G$ and let $\pi: G
+\to G/K$ be the canonical homomorphism.  Then the mapping $H \mapsto
+\pi(H)=H/K$ defines a bijective correspondence between the subgroups
+of $G$ containing $K$ and the subgroups of $G/K$.  Furthermore, in
+this correspondence $H \normal G$ if and only if $H/K \normal G/K$.
+\end{thm}
+
+
+\begin{proof}
+This is an exercise in using the isomorphism theorems.
+\end{proof}
+
+As an application of the correspondence theorem, we describe a way of
+``factoring'' a given finite group into a list of simple groups,
+analogous to the way in which we factor a given positive integer
+into its prime factors.  
+
+Suppose that $G$ is a given finite group.  Let $N_1$ be a proper
+normal subgroup of $G$ which is as large as possible.  Then by the
+correspondence theorem $G/N_1$ has no nontrivial proper normal
+subgroup, so $G/N_1$ is simple. Next, choose a proper normal subgroup
+$N_2$ of $N_1$ that is as large as possible. Then as before, the
+quotient $N_1/N_2$ must be simple. Continue in this way as long as
+possible. Eventually you will arrive at a subgroup $N_{k-1}$ in which
+the largest proper normal subgroup is the trivial subgroup $\{1\}$,
+and the process terminates with $N_k = \{1\}$. We know that the
+process must terminate since $G$ is finite.  
+
+A series of normal subgroups such as the one we just described is
+called a {\em composition series} of $G$. It describes a way in which
+$G$ can be factored as a series of simple group quotients. This
+explains the interest in simple groups: in some sense every finite
+group can be described by a series of simple groups.
+
+These observations lead to the following definition.
+
+
+\begin{defn}\index{composition~series}
+Let $G$ be a group. A {\em composition series} of $G$ is a sequence of
+normal subgroups
+\[
+G = N_0 \morenormal N_1 \morenormal N_2 \morenormal \cdots \morenormal
+N_{k-1} \morenormal N_k = \{1\}
+\] 
+where $N_j/N_{j+1}$ is a simple group for each $j$. The various
+simple quotient groups $N_j/N_{j+1}$ are called the {\em composition
+  factors} of $G$.
+\end{defn}
+
+The following important theorem says that the set of composition
+factors of a finite group are uniquely determined by the group, apart
+from the order in which they are produced. This is a fundamental
+property of every finite group.
+
+
+\begin{thm}[Jordan--H\"older]\index{Jordan--H\"older~theorem}
+Any finite group has a composition series. Moreover, its composition
+factors are unique, except for order and isomorphism.  In other words,
+if
+\[
+G = N_0 \morenormal N_1 \morenormal N_2 \morenormal \cdots \morenormal
+N_{m-1} \morenormal N_m = \{1\}
+\]
+and
+\[
+G = K_0 \morenormal K_1 \morenormal K_2 \morenormal \cdots \morenormal
+K_{n-1} \morenormal K_n = \{1\}
+\]
+are any two composition series for $G$, then $m=n$ and there is a
+permutation $\alpha \in \Sym_n$ such that $N_i/N_{i+1} \cong
+K_{\alpha(i)}/K_{\alpha(i+1)}$ for each $i$.
+\end{thm}
+
+\begin{proof} The existence of the composition series was proved in the
+remarks preceding the theorem. The proof of the uniqueness statement
+is omitted, but can be easily found by consulting the literature.
+\end{proof}
+
+Recall that the fundamental theorem of arithmetic says that every
+positive integer can be written as a product of primes, and the prime
+factors are unique apart from their order. The Jordan--H\"{o}lder
+theorem is somewhat analogous, it says that every finite group has a
+composition series in which the composition factors are simple groups,
+and the composition factors are unique apart from their order. In this
+analogy, the simple groups are analogous to prime numbers.
+
+The following definition is based on the fundamental work of Galois on
+solutions of polynomial equations.
+
+\begin{defn}\index{solvable~group}
+A group $G$ is called {\em solvable} if it has a series of normal
+subgroups
+\[
+G = N_0 \morenormal N_1 \morenormal N_2 \morenormal \cdots \morenormal
+N_{k-1} \morenormal N_k = \{1\}
+\] 
+such that the quotient group $N_j/N_{j+1}$ is cyclic of prime order,
+for each $j$.
+\end{defn}
+
+In other words, the composition factors of a solvable group are all
+cyclic groups of prime order. Later we will prove that \emph{any
+  finite abelian group is solvable}.
+
+
+The reason for the terminology `solvable' is explained by the
+following result, known as the \emph{fundamental theorem of Galois
+  theory}. This is the famous result that connects group theory to the
+ancient problem of solving polynomial equations. The proof is beyond
+the scope of this course, and will not be discussed here.
+
+
+
+\begin{thm}[Galois]\index{fundamental~theorem!of~Galois~theory}
+Let $p(x)$ be an irreducible polynomial with rational coefficients,
+and let $G = \mathrm{Gal}(p)$ be its Galois group. Then the complex
+roots of $p(x)$ are expressible in terms of radicals if and only if
+$G$ is a solvable group.
+\end{thm}
+
+
+
+
+The following famous result is usually known as the \emph{odd order
+  theorem}. It was first proved in 1963 by Walter Feit and John
+Thompson.
+
+\begin{thm}[the Feit--Thompson odd order theorem]
+\index{odd~order~theorem}\index{Feit--Thompson~theorem}% 
+  Every finite group of odd order is solvable.
+\end{thm}
+
+This was a landmark result in group theory.  The published proof of
+this theorem appeared in {\em Pacific Journal of Mathematics},
+vol.\ 13, pp.\ 775--1029. Yes, that is correct: the proof occupies 255
+printed pages! Perhaps we can be forgiven for not giving the proof here.
+
+
+
+
+\section*{Exercises}
+\begin{problems}
+
+\item Use Lagrange's theorem to prove that every cyclic group of prime
+  order is a simple group.
+
+\item Compute the composition factors of $\Sym_2$ and $\Sym_3$. Are
+  they solvable groups?
+
+\item Show that $\Alt_3$ is simple. 
+
+\item Compute the composition factors of $\Sym_4$. Is $\Sym_4$ a
+  solvable group? Justify your answer.
+
+\item Assuming that $\Alt_5$ is a simple group (this was proved by
+  Galois) show that $\Sym_5$ is not a solvable group. 
+
+\item Let $p$ be a prime. Show that the dihedral group $\D_p$ of order
+  $2p$ is a solvable group, by computing its composition factors.
+
+\item Find a composition series of $\D_4$, and compute its composition
+  factors. Is $\D_4$ a solvable group? 
+
+
+\item \label{ex:quintic} Galois proved that the alternating group
+  $\Alt_5$ is simple. Galois also showed that the symmetry group of
+  the general quintic equation (degree 5 polynomial with arbitrary
+  variable coefficients) is $\Sym_5$. Assuming these facts, prove that
+  the roots of a general quintic\index{quintic~equation} cannot be
+  expressed in terms of radicals.
+
+\item Prove the correspondence theorem (Theorem \ref{CT}).
+
+\item Show that if $G$ is a group of prime power order $p^r$ for a
+  prime $p$ and $r \ge 1$ then the composition factors of $G$ are all
+  isomorphic to $\Z_p$.
+
+\end{problems}
+
+
+\newpage
+%\appendix
+\setcounter{section}{1}
+\renewcommand{\thesection}{\Alph{section}}
+\section{Appendix: Brief history of simple groups}\noindent
+The notion of a simple group was introduced by Galois in 1831.  He
+knew that the cyclic groups of prime order, and the alternating groups
+$\Alt_n$ for $n\ge 5$, were examples of simple groups. Jordan found
+some more simple groups (they were matrix groups) in 1870, and
+L.E.\ Dickson in Chicago found some more in the years between 1892 and
+1905. Around 1905 Miller and Cole showed that five groups described by
+E.\ Mathieu in 1861 were in fact simple groups; these five, which did
+not seem to fit in with other known examples, came to be known as {\em
+  sporadic} groups.
+
+No other examples of finite simple groups were discovered until the
+1950s.  Then a French mathematician, Claude Chevalley, had an
+important insight which led him to construct infinitely many new
+examples of finite simple groups, using matrix groups as a tool in the
+construction. Other examples quickly followed in the 1960s and 1970s,
+including new sporadic groups. During those decades, research into
+finite group theory was intense, and the focus was on simple
+groups. Most of the new finite simple groups discovered during those
+years are linear groups or variations thereof.
+
+The study of simple groups has led to a truly colossal theorem: the
+{\em classification} of all finite simple groups. This was supposedly
+achieved around 1981.\footnote{Actually, although the theorem was
+  announced in 1981 as finished, there was a gap in the proof, in that
+  a classification of the so-called quasi-thin groups was never
+  completely written down.  This gap was only very recently filled in,
+  by the 2004 publication of a two-volume work of 1,221 pages by
+  Aschbacher and Smith. (Stephen Smith is a professor at the
+  University of Illinois at Chicago.)}  
+
+\begin{thm}[the classification theorem]
+\index{classification!of~finite~simple~groups}%
+  Every finite simple group is isomorphic to one of the following
+  groups:
+ \begin{enumerate}
+ \item A cyclic group of prime order.
+ \item An alternating group of degree at least 5.
+ \item A simple group of Lie type, including both 
+   \begin{itemize}
+   \item the classical Lie groups, namely the simple groups related to
+     the projective special linear, unitary, symplectic, or orthogonal
+     transformations over a finite field;
+   \item the exceptional and twisted groups of Lie type (including the
+     Tits group).
+   \end{itemize}
+ \item One of the 26 sporadic simple groups.
+ \end{enumerate}
+\end{thm}
+
+
+
+The proof of this theorem took decades of effort on the part of
+hundreds of mathematicians.  According to the preface of a
+book\footnote{Gorenstein, Daniel; Lyons, Richard; Solomon, Ronald,
+  \emph{The classification of the finite simple groups.}  Mathematical
+  Surveys and Monographs, 40.1. American Mathematical Society,
+  Providence, RI, 1994.} on the classification:
+\begin{quote}
+  The existing proof of the classification of the finite simple groups
+  runs to somewhere between 10,000 and 15,000 journal pages, spread
+  across some 500 separate articles by more than 100 mathematicians,
+  almost all written between 1950 and the early 1980s.
+\end{quote}
+The proof followed a plan that was outlined by Daniel Gorenstein at a
+group theory conference at the University of Chicago in 1972. At the
+time, the experts were skeptical.  Some experts were on record
+predicting that a complete classification of the finite simple groups
+would take hundreds of years to achieve.  But a University of Chicago
+Ph.D.\ student in the audience, Michael Aschbacher (now a professor at
+Cal Tech), went to work on Gorenstein's plan, producing a series of
+breakthroughs that eventually, with a lot of help from others, led to
+the classification, following rather precisely the plan outlined by
+Gorenstein. This took only nine years, and the experts were
+astonished!
+
+
+
+
+\begin{examples}[and remarks]
+1. Every cyclic group of prime order is simple. This is an easy
+consequence of Lagrange's theorem.
+
+2. The alternating groups $\Alt_n$ for $n \ge 5$ are simple. This fact
+was first proved by Galois, and the fact that $\Alt_5$ is simple is the
+reason why the quintic equation is unsolvable in terms of radicals.
+
+3. In the classification of finite simple groups, most of the simple
+groups are linear groups (i.e., groups of matrices) over finite
+fields.
+
+
+4. There are 26 sporadic simple groups. The largest of these is known
+as the \emph{Monster}\index{Monster~group}; it was discovered around
+1980 by Robert Greiss at the University of Michigan. It has about
+$8\times 10^{53}$ elements --- more than the number of atoms in the
+universe!  The Monster is a group of rotations in a euclidean space of
+196883 dimensions. In other words, we can represent its elements by
+$n \times n$ matrices where $n=196883$.
+
+5. In 1998 at the International Congress of Mathematicians in Berlin,
+a Fields Medal\footnote{The Fields Medal has generally been regarded
+  as the highest honor a mathematician can achieve, since there is no
+  Nobel prize for mathematics.} was awarded to Richard Borcherds for
+his work on settling the so-called {\em Monstrous Moonshine
+  Conjecture} of Conway and Norton, which gives a connection between
+the Monster group and a certain function which appears in conformal
+field theory in physics. To accomplish this, Borcherds invented a
+subject known as ``vertex operator algebras'' and in particular
+defined a new Lie algebra known as the Monster Lie algebra. It turns
+out that vertex operator algebras have applications to physics.
+\end{examples}
+
+Currently there are two teams of mathematicians working on a revision
+of the proof of the classification theorem. Their stated goal is to
+reduce the length of the proof to between 3,000 and 4,000 pages.
+
+
+
+\renewcommand{\thesection}{\arabic{section}}
+\end{document}
