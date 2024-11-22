@@ -42,7 +42,7 @@ pdflatex all-in-one
 ```
 in a terminal. (This assumes that you have kept the name of the main
 file `all-in-one.tex` intact. If you change that name, then use the
-new name above.)  Yes, you do need to run pdflatex more than
+new name instead.)  Yes, you do need to run pdflatex more than
 once, and makeindex at least once.
 There are other approaches and other compilation commands
 available; see the LaTeX documentation for your local installation
